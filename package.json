@@ -49,8 +49,7 @@
     "*.{js,jsx}": [
       "prettier --config .prettierrc --write",
       "eslint --fix",
-      "echo siema",
-      "git add ."
+      "git add"
     ]
   }
 }
