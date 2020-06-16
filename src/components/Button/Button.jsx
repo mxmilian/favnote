@@ -7,7 +7,7 @@ const Button = styled.button`
   height: 4.7rem;
   border: none;
   border-radius: 5rem;
-  font-family: 'Montserrat', serif;
+  font-family: 'Montserrat', sans-serif;
   font-weight: 500;
   font-size: 1.6rem;
   text-transform: uppercase;
