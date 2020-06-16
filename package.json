@@ -36,6 +36,21 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.20.0",
     "eslint-plugin-react-hooks": "^2.5.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.10",
     "prettier": "^2.0.5"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --config .prettierrc --write",
+      "eslint --fix",
+      "echo siema",
+      "git add ."
+    ]
   }
 }
