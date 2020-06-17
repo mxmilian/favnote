@@ -1,7 +1,6 @@
 import { select, withKnobs } from '@storybook/addon-knobs';
 import React from 'react';
 import Button from 'components/atoms/Button/Button';
-import { theme } from 'theme/theme';
 
 export default {
   component: Button,
@@ -9,7 +8,7 @@ export default {
   decorators: [withKnobs],
 };
 
-const dynamicKnobs = () => {
+const dynamicKnobs = ({ theme }) => {
   const label = 'Colors';
   const options = {
     Primary: theme.primary,
