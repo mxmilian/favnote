@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 import GlobalStyle from 'theme/GlobalStyle';
 import { theme } from 'theme/theme';
 import Button from 'components/atoms/Button/Button';
+import Input from 'components/atoms/Input/Input';
 
 const Root = () => (
   <div>
@@ -10,6 +11,7 @@ const Root = () => (
     <ThemeProvider theme={theme}>
       <>
         <Button>Close/save!</Button>
+        <Input placeholder="siema" />
       </>
     </ThemeProvider>
   </div>
