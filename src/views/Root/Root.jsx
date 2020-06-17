@@ -1,20 +1,15 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
-import GlobalStyle from 'theme/GlobalStyle';
-import { theme } from 'theme/theme';
 import Button from 'components/atoms/Button/Button';
-import Input from 'components/atoms/Input/Input';
+import MainTemplate from 'templates/MainTemplate';
 
 const Root = () => (
-  <div>
-    <GlobalStyle />
-    <ThemeProvider theme={theme}>
-      <>
-        <Button>Close/save!</Button>
-        <Input placeholder="siema" />
-      </>
-    </ThemeProvider>
-  </div>
+  <MainTemplate>
+    <>
+      <h1>Hello Max!</h1>
+      <Button>Close/save!</Button>
+      <Button secondary>Close/save!</Button>
+    </>
+  </MainTemplate>
 );
 
 export default Root;
