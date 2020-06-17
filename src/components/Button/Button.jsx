@@ -2,13 +2,13 @@ import styled, { css } from 'styled-components';
 
 const Button = styled.button`
   // Basic value of our component
-  background-color: #ffd82b;
+  background-color: ${({ color }) => color || 'hsl(49, 100%, 58%)'};
   width: ${({ width }) => width || '22rem'};
   height: 4.7rem;
   border: none;
   border-radius: 5rem;
   font-family: 'Montserrat', sans-serif;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 1.6rem;
   text-transform: uppercase;
 
@@ -16,7 +16,7 @@ const Button = styled.button`
   ${({ secondary }) =>
     secondary &&
     css`
-      background-color: #e6e6e6;
+      background-color: hsl(0, 0%, 90%);
       width: 10.5rem;
       height: 3rem;
       font-size: 1rem;
