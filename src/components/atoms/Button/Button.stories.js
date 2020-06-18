@@ -4,7 +4,7 @@ import Button from 'components/atoms/Button/Button';
 
 export default {
   component: Button,
-  title: 'Button',
+  title: 'atoms/Button',
   decorators: [withKnobs],
 };
 

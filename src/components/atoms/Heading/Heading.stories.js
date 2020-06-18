@@ -3,7 +3,7 @@ import Heading from 'components/atoms/Heading/Heading';
 
 export default {
   component: Heading,
-  title: 'Heading',
+  title: 'atoms/Heading',
 };
 
 export const Normal = () => <Heading>This is heading!</Heading>;

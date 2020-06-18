@@ -3,7 +3,7 @@ import Card from 'components/molecules/Card/Card';
 
 export default {
   component: Card,
-  title: 'Card',
+  title: 'molecules/Card',
 };
 
 export const Note = () => <Card />;
