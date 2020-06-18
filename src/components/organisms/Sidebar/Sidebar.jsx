@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
-import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 import penIcon from 'assets/pen.svg';
 import logoIcon from 'assets/logo.svg';
 import bulbIcon from 'assets/bulb.svg';
 import logoutIcon from 'assets/logout.svg';
 import twitterIcon from 'assets/twitter.svg';
+import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 
 const StyledWrapper = styled.nav`
   position: fixed;
@@ -53,7 +53,7 @@ const Sidebar = ({ pageType }) => (
         <ButtonIcon exact as={NavLink} activeClassName="active" to="/" icon={penIcon} />
       </li>
       <li>
-        <ButtonIcon as={NavLink} activeClassName="active" to="/twitter" icon={twitterIcon} />
+        <ButtonIcon as={NavLink} activeClassName="active" to="/twitters" icon={twitterIcon} />
       </li>
       <li>
         <ButtonIcon as={NavLink} activeClassName="active" to="/articles" icon={bulbIcon} />
