@@ -7,14 +7,17 @@ const StyledWrapper = styled.div`
   padding-left: 15rem;
 `;
 
-const UserPageTemplate = ({ children }) => (
-  <StyledWrapper>
-    <Sidebar />
-    {children}
-  </StyledWrapper>
-);
+const UserPageTemplate = ({ children, pageType }) => {
+  return (
+    <StyledWrapper>
+      <Sidebar pageType={pageType} />
+      {children}
+    </StyledWrapper>
+  );
+};
 
 UserPageTemplate.propTypes = {
+  pageType: PropTypes.oneOf(['note', 'twitter', 'article']).isRequired,
   children: PropTypes.element.isRequired,
 };
 
