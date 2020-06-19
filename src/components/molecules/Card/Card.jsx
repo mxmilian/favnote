@@ -64,21 +64,19 @@ const DateInfo = styled(Paragraph)`
   font-size: ${({ theme }) => theme.fontSize.xs};
 `;
 
-const Card = ({ cardType }) => (
+const Card = ({ cardType, title, created, twitterName, articleUrl, content }) => (
   <StyledWrapper>
     <InnerWrapper activeColor={cardType}>
-      <Heading>Card</Heading>
-      <DateInfo>3 days</DateInfo>
+      <Heading>{title}</Heading>
+      <DateInfo>{created}</DateInfo>
       {cardType === 'twitter' && (
-        <StyledAvatar src="https://secure.img1-ag.wfcdn.com/im/02238154/compr-r85/8470/84707680/pokemon-pikachu-wall-decal.jpg" />
+        <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
       )}
-      {cardType === 'article' && <StyledLink href="https://youtube.com" />}
+
+      {cardType === 'article' && <StyledLink href={articleUrl} />}
     </InnerWrapper>
     <InnerWrapper flex>
-      <Paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad beatae delectus deserunt
-        dolorem dolorum enim error pariatur repellendus saepe, ullam.
-      </Paragraph>
+      <Paragraph>{content}</Paragraph>
       <Button secondary>Remove</Button>
     </InnerWrapper>
   </StyledWrapper>
@@ -86,10 +84,17 @@ const Card = ({ cardType }) => (
 
 Card.propTypes = {
   cardType: PropTypes.oneOf(['note', 'twitter', 'article']),
+  title: PropTypes.string.isRequired,
+  created: PropTypes.string.isRequired,
+  twitterName: PropTypes.string,
+  articleUrl: PropTypes.string,
+  content: PropTypes.string.isRequired,
 };
 
 Card.defaultProps = {
   cardType: 'note',
+  twitterName: null,
+  articleUrl: null,
 };
 
 export default Card;
