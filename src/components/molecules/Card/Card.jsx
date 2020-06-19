@@ -36,13 +36,13 @@ const InnerWrapper = styled.div`
 `;
 
 const StyledAvatar = styled.img`
-  height: 8.6rem;
-  width: 8.6rem;
+  height: 7.6rem;
+  width: 7.6rem;
   border-radius: 5rem;
   border: 0.4rem solid ${({ theme }) => theme.twitter};
   position: absolute;
   right: 25px;
-  top: 15px;
+  top: 25px;
   background-image: url(${({ src }) => src});
 `;
 
