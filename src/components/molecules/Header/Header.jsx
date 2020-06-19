@@ -5,6 +5,12 @@ import Heading from 'components/atoms/Heading/Heading';
 import Input from 'components/atoms/Input/Input';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 
+const StyledHeading = styled(Heading)`
+  ::first-letter {
+    text-transform: uppercase;
+  }
+`;
+
 const StyledParagraph = styled(Paragraph)`
   font-weight: ${({ theme }) => theme.bold};
   color: ${({ theme }) => theme.grey500};
@@ -16,9 +22,9 @@ const StyledInput = styled(Input)`
 
 const Header = ({ pageType }) => (
   <>
-    <Heading big as="h1">
-      {pageType.charAt(0).toUpperCase() + pageType.slice(1)}s
-    </Heading>
+    <StyledHeading big as="h1">
+      {pageType}s
+    </StyledHeading>
     <StyledParagraph>6 {pageType}s</StyledParagraph>
     <StyledInput search />
   </>
