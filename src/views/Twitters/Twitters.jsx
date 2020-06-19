@@ -1,9 +1,16 @@
+import Card from 'components/molecules/Card/Card';
 import React from 'react';
 import UserPageTemplate from 'templates/UserPageTemplate';
 
 const Twitters = () => (
   <UserPageTemplate pageType="twitter">
-    <h1>Twitters view</h1>
+    <>
+      <Card cardType="twitter" />
+      <Card cardType="twitter" />
+      <Card cardType="twitter" />
+      <Card cardType="twitter" />
+      <Card cardType="twitter" />
+    </>
   </UserPageTemplate>
 );
 

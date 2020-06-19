@@ -6,6 +6,7 @@ export const theme = {
   grey100: 'hsl(0, 0%, 96%)',
   grey200: 'hsl(0, 0%, 90%)',
   grey300: 'hsl(0, 0%, 70%)',
+  grey500: 'hsl(0, 0%, 40%)',
   black: 'hsl(0, 0%, 10%)',
 
   // Fonts weights
