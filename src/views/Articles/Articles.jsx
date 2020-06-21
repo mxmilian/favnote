@@ -5,10 +5,11 @@ import { articles } from 'data/dummyData';
 
 const Articles = () => (
   <GridTemplate pageType="articles">
-    {articles.map(({ title, created, content, articleUrl }) => (
+    {articles.map(({ id, title, created, content, articleUrl }) => (
       <Card
         cardType="articles"
-        key={title}
+        id={id}
+        key={id}
         title={title}
         created={created}
         content={content}

@@ -5,10 +5,11 @@ import { twitters } from 'data/dummyData';
 
 const Twitters = () => (
   <GridTemplate pageType="twitters">
-    {twitters.map(({ title, created, content, twitterName }) => (
+    {twitters.map(({ id, title, created, content, twitterName }) => (
       <Card
         cardType="twitters"
-        key={title}
+        id={id}
+        key={id}
         title={title}
         created={created}
         content={content}

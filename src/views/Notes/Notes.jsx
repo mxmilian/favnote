@@ -5,8 +5,8 @@ import { notes } from 'data/dummyData';
 
 const Notes = () => (
   <GridTemplate pageType="notes">
-    {notes.map(({ title, created, content }) => (
-      <Card cardType="notes" key={title} title={title} created={created} content={content} />
+    {notes.map(({ id, title, created, content }) => (
+      <Card cardType="notes" id={id} key={id} title={title} created={created} content={content} />
     ))}
   </GridTemplate>
 );
