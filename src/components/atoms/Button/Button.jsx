@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 
 const Button = styled.button`
   // Basic value of our component
-  background-color: ${({ color, theme }) => color || theme.notes};
+  background-color: ${({ color, theme }) => theme[color] || theme.notes};
   width: 22rem;
   height: 4.7rem;
   border: none;

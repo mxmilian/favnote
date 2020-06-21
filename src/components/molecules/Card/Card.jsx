@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router';
 import styled, { css } from 'styled-components';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import Heading from 'components/atoms/Heading/Heading';
@@ -35,6 +36,12 @@ const InnerWrapper = styled.div`
     `}
 `;
 
+const ButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
 const StyledAvatar = styled.img`
   height: 7.6rem;
   width: 7.6rem;
@@ -64,26 +71,46 @@ const DateInfo = styled(Paragraph)`
   font-size: ${({ theme }) => theme.fontSize.xs};
 `;
 
-const Card = ({ cardType, title, created, twitterName, articleUrl, content }) => (
-  <StyledWrapper>
-    <InnerWrapper activeColor={cardType}>
-      <Heading>{title}</Heading>
-      <DateInfo>{created}</DateInfo>
-      {cardType === 'twitters' && (
-        <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
-      )}
+class Card extends Component {
+  state = {
+    redirect: false,
+  };
 
-      {cardType === 'articles' && <StyledLink href={articleUrl} />}
-    </InnerWrapper>
-    <InnerWrapper flex>
-      <Paragraph>{content}</Paragraph>
-      <Button secondary>Remove</Button>
-    </InnerWrapper>
-  </StyledWrapper>
-);
+  handleClick = () => this.setState({ redirect: true });
+
+  render() {
+    const { redirect } = this.state;
+    const { id, cardType, title, created, twitterName, articleUrl, content } = this.props;
+    if (redirect) return <Redirect push to={`${cardType}/${id}`} />;
+
+    return (
+      <StyledWrapper>
+        <InnerWrapper activeColor={cardType}>
+          <Heading>{title}</Heading>
+          <DateInfo>{created}</DateInfo>
+          {cardType === 'twitters' && (
+            <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
+          )}
+
+          {cardType === 'articles' && <StyledLink href={articleUrl} />}
+        </InnerWrapper>
+        <InnerWrapper flex>
+          <Paragraph>{content}</Paragraph>
+          <ButtonWrapper>
+            <Button secondary>Remove</Button>
+            <Button secondary onClick={this.handleClick}>
+              Details
+            </Button>
+          </ButtonWrapper>
+        </InnerWrapper>
+      </StyledWrapper>
+    );
+  }
+}
 
 Card.propTypes = {
   cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,
   twitterName: PropTypes.string,

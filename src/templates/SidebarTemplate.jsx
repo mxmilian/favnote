@@ -16,7 +16,7 @@ const SidebarTemplate = ({ children, pageType }) => (
 
 SidebarTemplate.propTypes = {
   pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
-  children: PropTypes.arrayOf(PropTypes.object).isRequired,
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.node]).isRequired,
 };
 
 export default SidebarTemplate;
