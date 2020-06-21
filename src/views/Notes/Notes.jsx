@@ -1,16 +1,14 @@
 import React from 'react';
-import UserPageTemplate from 'templates/UserPageTemplate';
+import GridTemplate from 'templates/GridTemplate';
 import Card from 'components/molecules/Card/Card';
 import { notes } from 'data/dummyData';
 
 const Notes = () => (
-  <UserPageTemplate pageType="note">
-    <>
-      {notes.map(({ title, created, content }) => (
-        <Card cardType="note" key={title} title={title} created={created} content={content} />
-      ))}
-    </>
-  </UserPageTemplate>
+  <GridTemplate pageType="notes">
+    {notes.map(({ title, created, content }) => (
+      <Card cardType="notes" key={title} title={title} created={created} content={content} />
+    ))}
+  </GridTemplate>
 );
 
 export default Notes;

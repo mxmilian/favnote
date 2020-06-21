@@ -11,9 +11,9 @@ export default {
 const dynamicKnobs = ({ theme }) => {
   const label = 'Colors';
   const options = {
-    Primary: theme.note,
-    Secondary: theme.twitter,
-    Tertiary: theme.article,
+    Primary: theme.notes,
+    Secondary: theme.twitters,
+    Tertiary: theme.articles,
   };
   const defaultValue = 'hsl(49, 100%, 58%)';
   const groupId = 'GROUP-ID1';

@@ -23,15 +23,15 @@ const StyledInput = styled(Input)`
 const Header = ({ pageType }) => (
   <>
     <StyledHeading big as="h1">
-      {pageType}s
+      {pageType}
     </StyledHeading>
-    <StyledParagraph>6 {pageType}s</StyledParagraph>
+    <StyledParagraph>6 {pageType}</StyledParagraph>
     <StyledInput search />
   </>
 );
 
 Header.propTypes = {
-  pageType: PropTypes.oneOf(['note', 'twitter', 'article']).isRequired,
+  pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
 };
 
 export default Header;

@@ -39,7 +39,7 @@ const StyledAvatar = styled.img`
   height: 7.6rem;
   width: 7.6rem;
   border-radius: 5rem;
-  border: 0.4rem solid ${({ theme }) => theme.twitter};
+  border: 0.4rem solid ${({ theme }) => theme.twitters};
   position: absolute;
   right: 25px;
   top: 25px;
@@ -50,7 +50,7 @@ const StyledLink = styled.a`
   height: 5.6rem;
   width: 5.6rem;
   border-radius: 5rem;
-  border: 0.4rem solid ${({ theme }) => theme.article};
+  border: 0.4rem solid ${({ theme }) => theme.articles};
   position: absolute;
   right: 25px;
   top: 50%;
@@ -69,11 +69,11 @@ const Card = ({ cardType, title, created, twitterName, articleUrl, content }) =>
     <InnerWrapper activeColor={cardType}>
       <Heading>{title}</Heading>
       <DateInfo>{created}</DateInfo>
-      {cardType === 'twitter' && (
+      {cardType === 'twitters' && (
         <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
       )}
 
-      {cardType === 'article' && <StyledLink href={articleUrl} />}
+      {cardType === 'articles' && <StyledLink href={articleUrl} />}
     </InnerWrapper>
     <InnerWrapper flex>
       <Paragraph>{content}</Paragraph>
@@ -83,7 +83,7 @@ const Card = ({ cardType, title, created, twitterName, articleUrl, content }) =>
 );
 
 Card.propTypes = {
-  cardType: PropTypes.oneOf(['note', 'twitter', 'article']),
+  cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
   title: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,
   twitterName: PropTypes.string,
@@ -92,7 +92,7 @@ Card.propTypes = {
 };
 
 Card.defaultProps = {
-  cardType: 'note',
+  cardType: 'notes',
   twitterName: null,
   articleUrl: null,
 };

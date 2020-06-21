@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router';
+import SidebarTemplate from 'templates/SidebarTemplate';
+import { Link } from 'react-router-dom';
 
 const DetailsTemplate = () => (
-  <div>
+  <SidebarTemplate pageType="notes">
     <h1>Note</h1>
     <p>
       Lorem ipsum dolor sit amet, consectetur adipisicing elit. Commodi consequatur cumque
@@ -11,7 +12,7 @@ const DetailsTemplate = () => (
       repellat repellendus reprehenderit tempora temporibus totam.
     </p>
     <Link to="/">go back</Link>
-  </div>
+  </SidebarTemplate>
 );
 
 export default DetailsTemplate;
