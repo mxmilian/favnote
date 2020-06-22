@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Card from 'components/molecules/Card/Card';
+import getVisibleNotes from 'selector';
 import GridTemplate from 'templates/GridTemplate';
 
 const Twitters = ({ twitters }) => (
@@ -36,8 +37,8 @@ Twitters.defaultProps = {
   twitters: [],
 };
 
-const mapStateToProps = ({ notes }) => ({
-  twitters: notes.twitters,
+const mapStateToProps = ({ notes, filters }) => ({
+  twitters: getVisibleNotes(notes.twitters, filters),
 });
 
 export default connect(mapStateToProps)(Twitters);

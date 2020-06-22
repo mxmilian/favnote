@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import getVisibleNotes from 'selector';
 import GridTemplate from 'templates/GridTemplate';
 import Card from 'components/molecules/Card/Card';
 
@@ -27,8 +28,8 @@ Notes.defaultProps = {
   notes: [],
 };
 
-const mapStateToProps = ({ notes }) => ({
-  notes: notes.notes,
+const mapStateToProps = ({ notes, filters }) => ({
+  notes: getVisibleNotes(notes.notes, filters),
 });
 
 export default connect(mapStateToProps)(Notes);
