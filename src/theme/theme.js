@@ -11,12 +11,13 @@ export const theme = {
 
   // Fonts weights
   light: 300,
+  normal: 500,
   bold: 600,
 
   // Fonts
   fontSize: {
-    xxs: '1rem',
-    xs: '1.2rem',
+    xxs: '1.2rem',
+    xs: '1.4rem',
     s: '1.6rem',
     m: '2.1rem',
     l: '2.4rem',

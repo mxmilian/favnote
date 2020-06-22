@@ -1,8 +1,8 @@
-import Button from 'components/atoms/Button/Button';
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import DetailsTemplate from 'templates/DetailsTemplate';
 import { routes } from 'routes';
+import { articles } from 'data/dummyData';
 
 class Details extends Component {
   state = {
@@ -30,15 +30,14 @@ class Details extends Component {
   render() {
     const { pageType } = this.state;
     return (
-      <DetailsTemplate pageType={pageType}>
-        <h1>Notes</h1>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequatur doloremque
-          exercitationem illum labore maxime minima perferendis reprehenderit saepe, ullam vel.
-          Consectetur debitis distinctio et exercitationem magnam quibusdam quo recusandae veniam.
-        </p>
-        <Button color={pageType}>close</Button>
-      </DetailsTemplate>
+      <DetailsTemplate
+        pageType={pageType}
+        title={articles[0].title}
+        created={articles[0].created}
+        content={articles[0].content}
+        articleUrl={articles[0].articleUrl}
+        twitterName="https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg"
+      />
     );
   }
 }
