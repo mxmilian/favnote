@@ -21,6 +21,21 @@ const StyledWrapper = styled.nav`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 840px) {
+    width: 100vw;
+    height: 10rem;
+    position: fixed;
+    left: 0;
+    top: calc(100vh - 10rem);
+    padding: 2.5rem 0;
+    background-color: ${({ theme, activeColor }) => theme[activeColor]};
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 999;
+  }
 `;
 
 const StyledLogoLink = styled(NavLink)`
@@ -33,16 +48,31 @@ const StyledLogoLink = styled(NavLink)`
   background-size: 80%;
   border: none;
   margin-bottom: 10vh;
+
+  @media (max-width: 840px) {
+    margin-left: 2rem;
+    margin-bottom: 0;
+  }
 `;
 
 const StyledLogoutButton = styled(ButtonIcon)`
   margin-top: auto;
+  @media (max-width: 840px) {
+    margin-top: 0;
+  }
 `;
 
 const StyledLinksList = styled.ul`
   margin: 0;
   padding: 0;
   list-style: none;
+
+  @media (max-width: 840px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;
 
 const Sidebar = ({ pageType }) => (
