@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import getVisibleNotes from 'selector';
 import styled from 'styled-components';
 import Heading from 'components/atoms/Heading/Heading';
 import Input from 'components/atoms/Input/Input';
@@ -22,12 +23,14 @@ const StyledInput = styled(Input)`
   margin: 2rem 0;
 `;
 
-const Header = ({ pageType, text, setFilterText }) => (
+const Header = ({ pageType, notes, text, setFilterText }) => (
   <>
     <StyledHeading big as="h1">
       {pageType}
     </StyledHeading>
-    <StyledParagraph>6 {pageType}</StyledParagraph>
+    <StyledParagraph>
+      {notes.length} {pageType}
+    </StyledParagraph>
     <StyledInput search value={text} onChange={(e) => setFilterText(e.target.value)} />
   </>
 );
@@ -36,9 +39,18 @@ Header.propTypes = {
   pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
   text: PropTypes.string.isRequired,
   setFilterText: PropTypes.func.isRequired,
+  notes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+      created: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };
 
-const mapStateToProps = ({ filters }) => ({
+const mapStateToProps = ({ filters, notes }, { pageType }) => ({
+  notes: getVisibleNotes(notes[pageType], filters),
   text: filters.text,
 });
 
