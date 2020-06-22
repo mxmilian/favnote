@@ -1,13 +1,12 @@
 import { createStore, combineReducers } from 'redux';
 import notesReducer from 'reducers/notes';
+import filterReducer from 'reducers/filters';
 
-const store = () =>
-  createStore(
-    combineReducers({
-      notes: notesReducer,
-    }),
-    // eslint-disable-next-line no-underscore-dangle
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-  );
+const store = createStore(
+  combineReducers({
+    notes: notesReducer,
+    filters: filterReducer,
+  }),
+);
 
 export default store;
