@@ -52,7 +52,7 @@ const DetailsTemplate = ({ pageType, title, created, content, articleUrl, twitte
       {pageType === 'articles' || pageType === 'twitters' ? (
         <StyledLink href={articleUrl}>Open {pageType}</StyledLink>
       ) : null}
-      <Button big activeColor={pageType} as={Link} to={`/${pageType}`}>
+      <Button big activecolor={pageType} as={Link} to={`/${pageType}`}>
         close
       </Button>
     </StyledWrapper>
