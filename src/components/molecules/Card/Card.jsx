@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import Heading from 'components/atoms/Heading/Heading';
 import Button from 'components/atoms/Button/Button';
+import Modal from 'components/organisms/Modal/Modal';
 import linkIcon from 'assets/link.svg';
 
 const StyledWrapper = styled.div`
@@ -74,36 +75,44 @@ const DateInfo = styled(Paragraph)`
 class Card extends Component {
   state = {
     redirect: false,
+    show: false,
   };
 
   handleClick = () => this.setState({ redirect: true });
 
+  handleModalClick = () => this.setState((prevState) => ({ show: !prevState.show }));
+
   render() {
-    const { redirect } = this.state;
+    const { redirect, show } = this.state;
     const { id, cardType, title, created, twitterName, articleUrl, content } = this.props;
     if (redirect) return <Redirect push to={`${cardType}/${id}`} />;
 
     return (
-      <StyledWrapper>
-        <InnerWrapper activeColor={cardType}>
-          <Heading>{title}</Heading>
-          <DateInfo>{created}</DateInfo>
-          {cardType === 'twitters' && (
-            <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
-          )}
+      <>
+        <StyledWrapper>
+          <InnerWrapper activeColor={cardType}>
+            <Heading>{title}</Heading>
+            <DateInfo>{created}</DateInfo>
+            {cardType === 'twitters' && (
+              <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
+            )}
 
-          {cardType === 'articles' && <StyledLink href={articleUrl} />}
-        </InnerWrapper>
-        <InnerWrapper flex>
-          <Paragraph>{content}</Paragraph>
-          <ButtonWrapper>
-            <Button secondary>Remove</Button>
-            <Button secondary onClick={this.handleClick}>
-              Details
-            </Button>
-          </ButtonWrapper>
-        </InnerWrapper>
-      </StyledWrapper>
+            {cardType === 'articles' && <StyledLink href={articleUrl} />}
+          </InnerWrapper>
+          <InnerWrapper flex>
+            <Paragraph>{content}</Paragraph>
+            <ButtonWrapper>
+              <Button secondary onClick={this.handleModalClick}>
+                Remove
+              </Button>
+              <Button secondary onClick={this.handleClick}>
+                Details
+              </Button>
+            </ButtonWrapper>
+          </InnerWrapper>
+        </StyledWrapper>
+        <Modal showModal={show} />
+      </>
     );
   }
 }
