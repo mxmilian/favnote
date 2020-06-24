@@ -11,8 +11,8 @@ import { routes } from 'routes';
 
 const Root = () => (
   <Provider store={store}>
-    <MainTemplate>
-      <BrowserRouter>
+    <BrowserRouter>
+      <MainTemplate>
         <Switch>
           <Route exact path={routes.home} render={() => <Redirect to="/notes" />} />
           <Route exact path={routes.notes} component={Notes} />
@@ -22,8 +22,8 @@ const Root = () => (
           <Route exact path={routes.twitters} component={Twitters} />
           <Route path={routes.twittersDetails} component={Details} />
         </Switch>
-      </BrowserRouter>
-    </MainTemplate>
+      </MainTemplate>
+    </BrowserRouter>
   </Provider>
 );
 
