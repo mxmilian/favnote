@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router';
 import styled, { css } from 'styled-components';
+import { connect } from 'react-redux';
+import { removeNote as removeNoteAction } from 'actions/notes';
+import { Redirect } from 'react-router';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import Heading from 'components/atoms/Heading/Heading';
 import Button from 'components/atoms/Button/Button';
@@ -82,6 +84,12 @@ class Card extends Component {
 
   handleModalClick = () => this.setState((prevState) => ({ show: !prevState.show }));
 
+  handleRemove = () => {
+    const { id, cardType, removeNote } = this.props;
+    removeNote(id, cardType);
+    this.setState((prevState) => ({ show: !prevState.show }));
+  };
+
   render() {
     const { redirect, show } = this.state;
     const { id, cardType, title, created, twitterName, articleUrl, content } = this.props;
@@ -111,7 +119,12 @@ class Card extends Component {
             </ButtonWrapper>
           </InnerWrapper>
         </StyledWrapper>
-        <Modal cardType={cardType} showModal={show} handleClose={this.handleModalClick} />
+        <Modal
+          cardType={cardType}
+          showModal={show}
+          handleClose={this.handleModalClick}
+          handleRemove={this.handleRemove}
+        />
       </>
     );
   }
@@ -125,6 +138,7 @@ Card.propTypes = {
   twitterName: PropTypes.string,
   articleUrl: PropTypes.string,
   content: PropTypes.string.isRequired,
+  removeNote: PropTypes.func.isRequired,
 };
 
 Card.defaultProps = {
@@ -133,4 +147,8 @@ Card.defaultProps = {
   articleUrl: null,
 };
 
-export default Card;
+const mapDispatchToProps = (dispatch) => ({
+  removeNote: (id, cardType) => dispatch(removeNoteAction(id, cardType)),
+});
+
+export default connect(null, mapDispatchToProps)(Card);

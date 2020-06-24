@@ -55,7 +55,7 @@ const StyledLink = styled.a`
   text-decoration: underline;
   cursor: pointer;
 `;
-const Modal = ({ cardType, showModal, handleClose }) => {
+const Modal = ({ cardType, showModal, handleClose, handleRemove }) => {
   if (!showModal) return null;
   return (
     <StyledWrapper>
@@ -65,7 +65,7 @@ const Modal = ({ cardType, showModal, handleClose }) => {
         </HeadingWrapper>
         <ContentWrapper>
           <Paragraph>This action cannot be undone!</Paragraph>
-          <StyledButton tertiary activecolor={cardType}>
+          <StyledButton tertiary activecolor={cardType} onClick={handleRemove}>
             remove
           </StyledButton>
           <StyledLink onClick={handleClose}>no, wait</StyledLink>
@@ -79,6 +79,7 @@ Modal.propTypes = {
   cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
   showModal: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
+  handleRemove: PropTypes.func.isRequired,
 };
 
 Modal.defaultProps = {
