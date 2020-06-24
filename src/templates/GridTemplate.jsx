@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Header from 'components/molecules/Header/Header';
 import SidebarTemplate from 'templates/SidebarTemplate';
+import withContext from 'hoc/withContext';
 
 const StyledGridWrapper = styled.div`
   display: grid;
@@ -34,4 +35,4 @@ GridTemplate.propTypes = {
   children: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
-export default GridTemplate;
+export default withContext(GridTemplate);
