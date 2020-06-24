@@ -8,6 +8,9 @@ const StyledWrapper = styled.div`
   @media (max-width: 840px) {
     padding: 2.5rem 5rem 12.5rem 5rem;
   }
+  @media (max-width: 375px) {
+    padding: 2.5rem 2.5rem 12.5rem 2.5rem;
+  }
 `;
 
 const SidebarTemplate = ({ children, pageType }) => (

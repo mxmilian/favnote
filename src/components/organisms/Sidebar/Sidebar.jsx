@@ -36,6 +36,11 @@ const StyledWrapper = styled.nav`
     align-items: center;
     z-index: 999;
   }
+
+  @media (max-width: 375px) {
+    height: 8rem;
+    top: calc(100vh - 8rem);
+  }
 `;
 
 const StyledLogoLink = styled(NavLink)`

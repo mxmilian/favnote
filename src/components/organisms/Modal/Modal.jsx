@@ -24,6 +24,8 @@ const ModalWrapper = styled.div`
   display: grid;
   grid-template-rows: 25% 75%;
   border: 0.2rem solid ${({ theme, activeColor }) => theme[activeColor]};
+  border-radius: 1rem;
+  overflow: hidden;
 `;
 
 const HeadingWrapper = styled.div`
@@ -47,10 +49,9 @@ const StyledButton = styled(Button)`
 
 const StyledLink = styled.a`
   display: block;
-  font-size: ${({ theme }) => theme.fontSize.xxs};
+  font-size: ${({ theme }) => theme.fontSize.xs};
   color: ${({ theme }) => theme.black};
   font-weight: ${({ theme }) => theme.bold};
-  text-transform: uppercase;
   text-decoration: underline;
   cursor: pointer;
 `;
