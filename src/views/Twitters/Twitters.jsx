@@ -9,7 +9,6 @@ const Twitters = ({ twitters }) => (
   <GridTemplate>
     {twitters.map(({ id, title, created, content, twitterName }) => (
       <Card
-        cardType="twitters"
         id={id}
         key={id}
         title={title}

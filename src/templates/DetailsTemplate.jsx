@@ -46,14 +46,16 @@ const StyledLink = styled.a`
 const DetailsTemplate = ({ pageContext, title, created, content, articleUrl, twitterName }) => (
   <SidebarTemplate>
     <StyledWrapper>
-      <Heading big>{title}</Heading>
+      <Heading big as="h1">
+        {title}
+      </Heading>
       <StyledDateParagraph>CREATED: {created}</StyledDateParagraph>
       {pageContext === 'twitters' ? <StyledAvatar src={twitterName} /> : null}
       <StyledContentParagraph>{content}</StyledContentParagraph>
       {pageContext === 'articles' || pageContext === 'twitters' ? (
         <StyledLink href={articleUrl}>Open {pageContext}</StyledLink>
       ) : null}
-      <Button big activecolor={pageContext} as={Link} to={`/${pageContext}`}>
+      <Button activecolor={pageContext} as={Link} to={`/${pageContext}`}>
         close
       </Button>
     </StyledWrapper>

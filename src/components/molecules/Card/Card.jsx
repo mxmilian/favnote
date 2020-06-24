@@ -1,3 +1,4 @@
+import withContext from 'hoc/withContext';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -85,27 +86,27 @@ class Card extends Component {
   handleModalClick = () => this.setState((prevState) => ({ show: !prevState.show }));
 
   handleRemove = () => {
-    const { id, cardType, removeNote } = this.props;
-    removeNote(id, cardType);
+    const { id, pageContext, removeNote } = this.props;
+    removeNote(id, pageContext);
     this.setState((prevState) => ({ show: !prevState.show }));
   };
 
   render() {
     const { redirect, show } = this.state;
-    const { id, cardType, title, created, twitterName, articleUrl, content } = this.props;
-    if (redirect) return <Redirect push to={`${cardType}/${id}`} />;
+    const { id, pageContext, title, created, twitterName, articleUrl, content } = this.props;
+    if (redirect) return <Redirect push to={`${pageContext}/${id}`} />;
 
     return (
       <>
         <StyledWrapper>
-          <InnerWrapper activeColor={cardType}>
+          <InnerWrapper activeColor={pageContext}>
             <Heading>{title}</Heading>
             <DateInfo>{created}</DateInfo>
-            {cardType === 'twitters' && (
+            {pageContext === 'twitters' && (
               <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
             )}
 
-            {cardType === 'articles' && <StyledLink href={articleUrl} />}
+            {pageContext === 'articles' && <StyledLink href={articleUrl} />}
           </InnerWrapper>
           <InnerWrapper flex>
             <Paragraph>{content}</Paragraph>
@@ -120,7 +121,7 @@ class Card extends Component {
           </InnerWrapper>
         </StyledWrapper>
         <Modal
-          cardType={cardType}
+          cardType={pageContext}
           showModal={show}
           handleClose={this.handleModalClick}
           handleRemove={this.handleRemove}
@@ -131,7 +132,7 @@ class Card extends Component {
 }
 
 Card.propTypes = {
-  cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,
@@ -142,7 +143,6 @@ Card.propTypes = {
 };
 
 Card.defaultProps = {
-  cardType: 'notes',
   twitterName: null,
   articleUrl: null,
 };
@@ -151,4 +151,4 @@ const mapDispatchToProps = (dispatch) => ({
   removeNote: (id, cardType) => dispatch(removeNoteAction(id, cardType)),
 });
 
-export default connect(null, mapDispatchToProps)(Card);
+export default connect(null, mapDispatchToProps)(withContext(Card));
