@@ -111,7 +111,7 @@ class Card extends Component {
             </ButtonWrapper>
           </InnerWrapper>
         </StyledWrapper>
-        <Modal showModal={show} />
+        <Modal cardType={cardType} showModal={show} handleClose={this.handleModalClick} />
       </>
     );
   }

@@ -9,13 +9,13 @@ const Button = styled.button`
   text-decoration: none;
   padding: 0;
   background-color: ${({ theme, activecolor }) => theme[activecolor]};
-  width: 220px;
-  height: 47px;
+  width: 22rem;
+  height: 4.7rem;
   border: none;
-  border-radius: 50px;
+  border-radius: 5rem;
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 1.6rem;
   text-transform: uppercase;
   cursor: pointer;
 
@@ -26,6 +26,14 @@ const Button = styled.button`
       background-color: ${({ theme }) => theme.grey200};
       width: 10.5rem;
       height: 3rem;
+      font-size: 1rem;
+    `}
+  ${({ tertiary }) =>
+    tertiary &&
+    css`
+      background-color: ${({ theme, activecolor }) => theme[activecolor]};
+      width: 14.5rem;
+      height: 3.5rem;
       font-size: 1rem;
     `}
 `;

@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import Heading from 'components/atoms/Heading/Heading';
 import Button from 'components/atoms/Button/Button';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 
@@ -13,7 +15,7 @@ const StyledWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(161, 161, 161, 0.4);
 `;
 
 const ModalWrapper = styled.div`
@@ -21,11 +23,11 @@ const ModalWrapper = styled.div`
   height: 30rem;
   display: grid;
   grid-template-rows: 25% 75%;
-  border: 0.2rem solid ${({ theme }) => theme.notes};
+  border: 0.2rem solid ${({ theme, activeColor }) => theme[activeColor]};
 `;
 
 const HeadingWrapper = styled.div`
-  background: ${({ theme }) => theme.notes};
+  background: ${({ theme, activeColor }) => theme[activeColor]};
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,30 +54,34 @@ const StyledLink = styled.a`
   text-decoration: underline;
   cursor: pointer;
 `;
+const Modal = ({ cardType, showModal, handleClose }) => {
+  if (!showModal) return null;
+  return (
+    <StyledWrapper>
+      <ModalWrapper activeColor={cardType}>
+        <HeadingWrapper activeColor={cardType}>
+          <Heading>Are you sure?</Heading>
+        </HeadingWrapper>
+        <ContentWrapper>
+          <Paragraph>This action cannot be undone!</Paragraph>
+          <StyledButton tertiary activecolor={cardType}>
+            remove
+          </StyledButton>
+          <StyledLink onClick={handleClose}>no, wait</StyledLink>
+        </ContentWrapper>
+      </ModalWrapper>
+    </StyledWrapper>
+  );
+};
 
-class Modal extends Component {
-  state = {
-    // show: false,
-  };
+Modal.propTypes = {
+  cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  showModal: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+};
 
-  render() {
-    const showModal = true;
-    if (!showModal) return null;
-    return (
-      <StyledWrapper>
-        <ModalWrapper>
-          <HeadingWrapper>
-            <h1>Hello modal!</h1>
-          </HeadingWrapper>
-          <ContentWrapper>
-            <Paragraph>This action cannot be undone</Paragraph>
-            <StyledButton secondary>remove</StyledButton>
-            <StyledLink>no, wait</StyledLink>
-          </ContentWrapper>
-        </ModalWrapper>
-      </StyledWrapper>
-    );
-  }
-}
+Modal.defaultProps = {
+  cardType: 'notes',
+};
 
 export default Modal;
