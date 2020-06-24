@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import withContext from 'hoc/withContext';
 import Heading from 'components/atoms/Heading/Heading';
 import Button from 'components/atoms/Button/Button';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
@@ -55,17 +56,17 @@ const StyledLink = styled.a`
   text-decoration: underline;
   cursor: pointer;
 `;
-const Modal = ({ cardType, showModal, handleClose, handleRemove }) => {
+const Modal = ({ pageContext, showModal, handleClose, handleRemove }) => {
   if (!showModal) return null;
   return (
     <StyledWrapper>
-      <ModalWrapper activeColor={cardType}>
-        <HeadingWrapper activeColor={cardType}>
+      <ModalWrapper activeColor={pageContext}>
+        <HeadingWrapper activeColor={pageContext}>
           <Heading>Are you sure?</Heading>
         </HeadingWrapper>
         <ContentWrapper>
           <Paragraph>This action cannot be undone!</Paragraph>
-          <StyledButton tertiary activecolor={cardType} onClick={handleRemove}>
+          <StyledButton tertiary activecolor={pageContext} onClick={handleRemove}>
             remove
           </StyledButton>
           <StyledLink onClick={handleClose}>no, wait</StyledLink>
@@ -76,14 +77,10 @@ const Modal = ({ cardType, showModal, handleClose, handleRemove }) => {
 };
 
 Modal.propTypes = {
-  cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
   showModal: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleRemove: PropTypes.func.isRequired,
 };
 
-Modal.defaultProps = {
-  cardType: 'notes',
-};
-
-export default Modal;
+export default withContext(Modal);

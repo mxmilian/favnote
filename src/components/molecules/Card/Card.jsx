@@ -121,7 +121,6 @@ class Card extends Component {
           </InnerWrapper>
         </StyledWrapper>
         <Modal
-          cardType={pageContext}
           showModal={show}
           handleClose={this.handleModalClick}
           handleRemove={this.handleRemove}
