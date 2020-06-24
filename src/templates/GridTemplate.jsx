@@ -21,17 +21,17 @@ const StyledGridWrapper = styled.div`
 
 const StyledPageHeader = styled.div``;
 
-const GridTemplate = ({ children, pageType }) => (
-  <SidebarTemplate pageType={pageType}>
+const GridTemplate = ({ children, pageContext }) => (
+  <SidebarTemplate>
     <StyledPageHeader>
-      <Header pageType={pageType} />
+      <Header pageContext={pageContext} />
     </StyledPageHeader>
     <StyledGridWrapper>{children}</StyledGridWrapper>
   </SidebarTemplate>
 );
 
 GridTemplate.propTypes = {
-  pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
   children: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 

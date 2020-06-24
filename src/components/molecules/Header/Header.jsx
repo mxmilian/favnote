@@ -1,3 +1,4 @@
+import withContext from 'hoc/withContext';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -23,20 +24,20 @@ const StyledInput = styled(Input)`
   margin: 2rem 0;
 `;
 
-const Header = ({ pageType, notes, text, setFilterText }) => (
+const Header = ({ pageContext, notes, text, setFilterText }) => (
   <>
     <StyledHeading big as="h1">
-      {pageType}
+      {pageContext}
     </StyledHeading>
     <StyledParagraph>
-      {notes.length} {pageType}
+      {notes.length} {pageContext}
     </StyledParagraph>
     <StyledInput search value={text} onChange={(e) => setFilterText(e.target.value)} />
   </>
 );
 
 Header.propTypes = {
-  pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
   text: PropTypes.string.isRequired,
   setFilterText: PropTypes.func.isRequired,
   notes: PropTypes.arrayOf(
@@ -49,8 +50,8 @@ Header.propTypes = {
   ).isRequired,
 };
 
-const mapStateToProps = ({ filters, notes }, { pageType }) => ({
-  notes: getVisibleNotes(notes[pageType], filters),
+const mapStateToProps = ({ filters, notes }, { pageContext }) => ({
+  notes: getVisibleNotes(notes[pageContext], filters),
   text: filters.text,
 });
 
@@ -58,4 +59,4 @@ const mapDispatchToProps = (dispatch) => ({
   setFilterText: (text) => dispatch(setTextFilterAction(text)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(withContext(Header));

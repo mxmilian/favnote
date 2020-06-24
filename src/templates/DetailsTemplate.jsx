@@ -1,9 +1,10 @@
+import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+import withContext from 'hoc/withContext';
+import { Link } from 'react-router-dom';
 import Button from 'components/atoms/Button/Button';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import SidebarTemplate from 'templates/SidebarTemplate';
 import Heading from 'components/atoms/Heading/Heading';
 
@@ -42,17 +43,17 @@ const StyledLink = styled.a`
   margin-bottom: 5.5rem;
 `;
 
-const DetailsTemplate = ({ pageType, title, created, content, articleUrl, twitterName }) => (
-  <SidebarTemplate pageType={pageType}>
+const DetailsTemplate = ({ pageContext, title, created, content, articleUrl, twitterName }) => (
+  <SidebarTemplate>
     <StyledWrapper>
       <Heading big>{title}</Heading>
       <StyledDateParagraph>CREATED: {created}</StyledDateParagraph>
-      {pageType === 'twitters' ? <StyledAvatar src={twitterName} /> : null}
+      {pageContext === 'twitters' ? <StyledAvatar src={twitterName} /> : null}
       <StyledContentParagraph>{content}</StyledContentParagraph>
-      {pageType === 'articles' || pageType === 'twitters' ? (
-        <StyledLink href={articleUrl}>Open {pageType}</StyledLink>
+      {pageContext === 'articles' || pageContext === 'twitters' ? (
+        <StyledLink href={articleUrl}>Open {pageContext}</StyledLink>
       ) : null}
-      <Button big activecolor={pageType} as={Link} to={`/${pageType}`}>
+      <Button big activecolor={pageContext} as={Link} to={`/${pageContext}`}>
         close
       </Button>
     </StyledWrapper>
@@ -60,7 +61,7 @@ const DetailsTemplate = ({ pageType, title, created, content, articleUrl, twitte
 );
 
 DetailsTemplate.propTypes = {
-  pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
   title: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,
   twitterName: PropTypes.string,
@@ -69,9 +70,8 @@ DetailsTemplate.propTypes = {
 };
 
 DetailsTemplate.defaultProps = {
-  pageType: 'notes',
   twitterName: null,
   articleUrl: null,
 };
 
-export default DetailsTemplate;
+export default withContext(DetailsTemplate);

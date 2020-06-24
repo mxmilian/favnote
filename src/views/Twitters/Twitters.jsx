@@ -6,7 +6,7 @@ import getVisibleNotes from 'selector';
 import GridTemplate from 'templates/GridTemplate';
 
 const Twitters = ({ twitters }) => (
-  <GridTemplate pageType="twitters">
+  <GridTemplate>
     {twitters.map(({ id, title, created, content, twitterName }) => (
       <Card
         cardType="twitters"

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import withContext from 'hoc/withContext';
 import styled from 'styled-components';
 import Sidebar from 'components/organisms/Sidebar/Sidebar';
 
@@ -13,16 +14,15 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const SidebarTemplate = ({ children, pageType }) => (
+const SidebarTemplate = ({ children }) => (
   <StyledWrapper>
-    <Sidebar pageType={pageType} />
+    <Sidebar />
     {children}
   </StyledWrapper>
 );
 
 SidebarTemplate.propTypes = {
-  pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
   children: PropTypes.oneOfType([PropTypes.node, PropTypes.object]).isRequired,
 };
 
-export default SidebarTemplate;
+export default withContext(SidebarTemplate);
