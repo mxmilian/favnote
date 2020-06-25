@@ -19,6 +19,8 @@ const StyledWrapper = styled.div`
   padding: 10rem 9rem;
   display: flex;
   flex-direction: column;
+  transform: translate(${({ isVisible }) => (isVisible ? '0' : '100%')});
+  transition: transform 0.25s ease-in-out;
 
   @media (max-width: 1380px) {
     padding: 10rem 5rem;
@@ -43,23 +45,21 @@ const StyledTextArea = styled(Input)`
   height: 30vh;
 `;
 
-const FormBar = ({ pageContext }) => {
-  return (
-    <StyledWrapper activeColor={pageContext}>
-      <Heading big>Add new {pageContext.slice(0, -1)}</Heading>
-      {pageContext === 'notes' || pageContext === 'articles' ? (
-        <StyledInput placeholder="title" />
-      ) : null}
-      {pageContext === 'twitters' ? <StyledInput placeholder="account name" /> : null}
-      {pageContext === 'articles' ? <StyledInput placeholder="article url" /> : null}
-      <StyledTextArea as="textarea" placeholder="description" />
-      <Button activecolor={pageContext}>Add {pageContext.slice(0, -1)}</Button>
-    </StyledWrapper>
-  );
-};
+const FormBar = ({ pageContext, isVisible }) => (
+  <StyledWrapper activeColor={pageContext} isVisible={isVisible}>
+    <Heading big>Add new {pageContext.slice(0, -1)}</Heading>
+    <StyledInput
+      placeholder={pageContext === 'twitters' ? 'Account name eg. dan_abramov' : 'title'}
+    />
+    {pageContext === 'articles' ? <StyledInput placeholder="article url" /> : null}
+    <StyledTextArea as="textarea" placeholder="description" />
+    <Button activecolor={pageContext}>Add {pageContext.slice(0, -1)}</Button>
+  </StyledWrapper>
+);
 
 FormBar.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
+  isVisible: PropTypes.bool.isRequired,
 };
 
 export default withContext(FormBar);
