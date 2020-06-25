@@ -8,6 +8,7 @@ const ButtonIcon = styled.button`
   border: none;
   background: url(${({ icon }) => icon}) no-repeat 50% 50%;
   background-size: 50% 50%;
+  cursor: pointer;
 
   &.active {
     background-color: white;

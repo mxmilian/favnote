@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import withContext from 'hoc/withContext';
 import Header from 'components/molecules/Header/Header';
 import SidebarTemplate from 'templates/SidebarTemplate';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
+import FormBar from 'components/organisms/FormBar/FormBar';
 import plusIcon from 'assets/plus.svg';
+import minusIcon from 'assets/minus.svg';
 
 const StyledGridWrapper = styled.div`
   display: grid;
@@ -30,22 +32,40 @@ const StyledButtonIcon = styled(ButtonIcon)`
   position: fixed;
   bottom: 4rem;
   right: 4rem;
+  z-index: 2;
 
   @media (max-width: 840px) {
     top: 4rem;
-    z-index: 9999;
   }
 `;
 
-const GridTemplate = ({ children, pageContext }) => (
-  <SidebarTemplate>
-    <StyledPageHeader>
-      <Header pageContext={pageContext} />
-    </StyledPageHeader>
-    <StyledGridWrapper>{children}</StyledGridWrapper>
-    <StyledButtonIcon activeColor={pageContext} icon={plusIcon} />
-  </SidebarTemplate>
-);
+class GridTemplate extends Component {
+  state = {
+    showForm: false,
+  };
+
+  toggleForm = () => this.setState((prevState) => ({ showForm: !prevState.showForm }));
+
+  render() {
+    const { showForm } = this.state;
+    const { children, pageContext } = this.props;
+    const { toggleForm } = this;
+    return (
+      <SidebarTemplate>
+        <StyledPageHeader>
+          <Header pageContext={pageContext} />
+        </StyledPageHeader>
+        <StyledGridWrapper>{children}</StyledGridWrapper>
+        <StyledButtonIcon
+          activeColor={pageContext}
+          icon={showForm ? minusIcon : plusIcon}
+          onClick={toggleForm}
+        />
+        {showForm ? <FormBar /> : null}
+      </SidebarTemplate>
+    );
+  }
+}
 
 GridTemplate.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
