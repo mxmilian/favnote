@@ -11,7 +11,7 @@ const StyledWrapper = styled.div`
   top: 0;
   right: 0;
   height: 100vh;
-  width: 35vw;
+  width: 40vw;
   z-index: 1;
   background-color: white;
   box-shadow: -0.5rem 0 -1.5rem hsla(0, 0%, 0%, 0.1);
@@ -19,6 +19,18 @@ const StyledWrapper = styled.div`
   padding: 10rem 9rem;
   display: flex;
   flex-direction: column;
+
+  @media (max-width: 1380px) {
+    padding: 10rem 5rem;
+  }
+
+  @media (max-width: 1120px) {
+    width: 55vw;
+  }
+
+  @media (max-width: 560px) {
+    width: 100vw;
+  }
 `;
 
 const StyledInput = styled(Input)`
