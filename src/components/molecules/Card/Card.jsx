@@ -1,8 +1,8 @@
-import withContext from 'hoc/withContext';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { connect } from 'react-redux';
+import withContext from 'hoc/withContext';
 import { removeNote as removeNoteAction } from 'actions/notes';
 import { Redirect } from 'react-router';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
