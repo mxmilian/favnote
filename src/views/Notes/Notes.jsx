@@ -19,7 +19,7 @@ Notes.propTypes = {
       id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
-      created: PropTypes.string.isRequired,
+      created: PropTypes.number.isRequired,
     }),
   ),
 };

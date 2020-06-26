@@ -4,28 +4,32 @@ export const notes = [
     title: 'Wake me up when Vue ends',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
-    created: '1 day',
+    // eslint-disable-next-line radix
+    created: parseInt(`15931${parseInt(Math.random() * 10)}4221569`),
   },
   {
     id: '2',
     title: 'Como es An Gular?',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
-    created: '1 day',
+    // eslint-disable-next-line radix
+    created: parseInt(`15931${parseInt(Math.random() * 10)}4221569`),
   },
   {
     id: '3',
     title: 'Du bist Reactish',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
-    created: '5 days',
+    // eslint-disable-next-line radix
+    created: parseInt(`15931${parseInt(Math.random() * 10)}4221569`),
   },
   {
     id: '4',
     title: 'Reactuj się kto moze!',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
-    created: '10 days',
+    // eslint-disable-next-line radix
+    created: parseInt(`15931${parseInt(Math.random() * 10)}4221569`),
   },
 ];
 
@@ -36,7 +40,8 @@ export const articles = [
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
     articleUrl: 'https://youtube.com/helloroman',
-    created: '1 day',
+    // eslint-disable-next-line radix
+    created: parseInt(`15931${parseInt(Math.random() * 10)}4221569`),
   },
   {
     id: '6',
@@ -44,7 +49,8 @@ export const articles = [
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
     articleUrl: 'https://youtube.com/helloroman',
-    created: '1 day',
+    // eslint-disable-next-line radix
+    created: parseInt(`15931${parseInt(Math.random() * 10)}4221569`),
   },
   {
     id: '7',
@@ -52,7 +58,8 @@ export const articles = [
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
     articleUrl: 'https://youtube.com/helloroman',
-    created: '5 days',
+    // eslint-disable-next-line radix
+    created: parseInt(`15931${parseInt(Math.random() * 10)}4221569`),
   },
   {
     id: '8',
@@ -60,7 +67,8 @@ export const articles = [
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
     articleUrl: 'https://youtube.com/helloroman',
-    created: '10 days',
+    // eslint-disable-next-line radix
+    created: parseInt(`15931${parseInt(Math.random() * 10)}4221569`),
   },
 ];
 
@@ -70,7 +78,8 @@ export const twitters = [
     title: 'Hello Roman',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
-    created: '1 day',
+    // eslint-disable-next-line radix
+    created: parseInt(`15931${parseInt(Math.random() * 10)}4221569`),
     twitterName: 'hello_roman',
   },
   {
@@ -78,7 +87,8 @@ export const twitters = [
     title: 'Redux guy',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
-    created: '1 day',
+    // eslint-disable-next-line radix
+    created: parseInt(`15931872${parseInt(Math.random() * 10)}1569`),
     twitterName: 'dan_abramov',
   },
   {
@@ -86,7 +96,8 @@ export const twitters = [
     title: 'React router stuff',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
-    created: '5 days',
+    // eslint-disable-next-line radix
+    created: parseInt(`15931872${parseInt(Math.random() * 10)}1569`),
     twitterName: 'mjackson',
   },
   {
@@ -94,7 +105,8 @@ export const twitters = [
     title: 'Super animacje!',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
-    created: '10 days',
+    // eslint-disable-next-line radix
+    created: parseInt(`15931${parseInt(Math.random() * 10)}4221569`),
     twitterName: 'sarah_edo',
   },
 ];
