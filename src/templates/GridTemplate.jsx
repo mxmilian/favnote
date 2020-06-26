@@ -51,6 +51,7 @@ class GridTemplate extends Component {
   handleSubmit = (itemType, itemContent) => {
     const { createNote } = this.props;
     createNote(itemType, itemContent);
+    this.toggleForm();
   };
 
   render() {

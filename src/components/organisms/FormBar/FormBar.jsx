@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Heading from 'components/atoms/Heading/Heading';
 import Input from 'components/atoms/Input/Input';
 import Button from 'components/atoms/Button/Button';
+import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import withContext from 'hoc/withContext';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
@@ -46,10 +47,23 @@ const StyledInput = styled(Input)`
 `;
 
 const StyledTextArea = styled(Input)`
-  margin: 3rem 0 5rem;
+  margin: 3rem 0 0;
   font-family: inherit;
   border-radius: 2rem;
   height: 30vh;
+`;
+
+const StyledButton = styled(Button)`
+  margin-top: 5rem;
+`;
+
+const StyledError = styled.div`
+  padding: 0.2rem 0 0 2rem;
+`;
+
+const StyledParagraph = styled(Paragraph)`
+  color: ${({ theme }) => theme.error};
+  font-weight: ${({ theme }) => theme.bold};
 `;
 
 const FormBar = ({ pageContext, isVisible, handleSubmit }) => {
@@ -71,7 +85,7 @@ const FormBar = ({ pageContext, isVisible, handleSubmit }) => {
           pageContext === 'articles'
             ? Yup.string().url('This field must be a valid URL').required('Required')
             : '',
-        content: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
+        content: Yup.string().max(250, 'Must be 15 characters or less').required('Required'),
       })}
       onSubmit={(values, { setSubmitting }) => {
         handleSubmit(pageContext, values);
@@ -84,7 +98,11 @@ const FormBar = ({ pageContext, isVisible, handleSubmit }) => {
             <Heading big>Add new {pageContext.slice(0, -1)}</Heading>
 
             <StyledInput placeholder="title" {...formik.getFieldProps('title')} />
-            {formik.touched.title && formik.errors.title ? <div>{formik.errors.title}</div> : null}
+            {formik.touched.title && formik.errors.title ? (
+              <StyledError>
+                <StyledParagraph>{formik.errors.title}!</StyledParagraph>
+              </StyledError>
+            ) : null}
 
             {pageContext === 'twitters' ? (
               <>
@@ -93,7 +111,9 @@ const FormBar = ({ pageContext, isVisible, handleSubmit }) => {
                   {...formik.getFieldProps('twitterName')}
                 />
                 {formik.touched.twitterName && formik.errors.twitterName ? (
-                  <div>{formik.errors.twitterName}</div>
+                  <StyledError>
+                    <StyledParagraph>{formik.errors.title}!</StyledParagraph>
+                  </StyledError>
                 ) : null}
               </>
             ) : null}
@@ -102,19 +122,23 @@ const FormBar = ({ pageContext, isVisible, handleSubmit }) => {
               <>
                 <StyledInput placeholder="article url" {...formik.getFieldProps('articleUrl')} />
                 {formik.touched.articleUrl && formik.errors.articleUrl ? (
-                  <div>{formik.errors.articleUrl}</div>
+                  <StyledError>
+                    <StyledParagraph>{formik.errors.title}!</StyledParagraph>
+                  </StyledError>
                 ) : null}
               </>
             ) : null}
 
             <StyledTextArea as="textarea" {...formik.getFieldProps('content')} />
             {formik.touched.content && formik.errors.content ? (
-              <div>{formik.errors.content}</div>
+              <StyledError>
+                <StyledParagraph>{formik.errors.title}!</StyledParagraph>
+              </StyledError>
             ) : null}
 
-            <Button activecolor={pageContext} type="submit">
+            <StyledButton activecolor={pageContext} type="submit">
               Add {pageContext.slice(0, -1)}
-            </Button>
+            </StyledButton>
           </StyledForm>
         </StyledWrapper>
       )}
