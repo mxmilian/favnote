@@ -50,9 +50,8 @@ const StyledTextArea = styled(Input)`
 const FormBar = ({ pageContext, isVisible, handleSubmit }) => (
   <StyledWrapper activeColor={pageContext} isVisible={isVisible}>
     <Heading big>Add new {pageContext.slice(0, -1)}</Heading>
-    <StyledInput
-      placeholder={pageContext === 'twitters' ? 'Account name eg. dan_abramov' : 'title'}
-    />
+    <StyledInput placeholder="title" />
+    {pageContext === 'twitters' ? <StyledInput placeholder="Account name eg. dan_abramov" /> : null}
     {pageContext === 'articles' ? <StyledInput placeholder="article url" /> : null}
     <StyledTextArea as="textarea" placeholder="description" />
     <Button
