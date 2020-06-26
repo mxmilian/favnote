@@ -1,6 +1,20 @@
-export const REMOVE_NOTE = 'REMOVE_NOTE';
+import { v4 as uuid } from 'uuid';
 
-export const removeNote = (id, cardType) => ({
+export const REMOVE_NOTE = 'REMOVE_NOTE';
+export const CREATE_NOTE = 'CREATE_NOTE';
+
+export const removeNote = (id, itemType) => ({
   type: REMOVE_NOTE,
-  payload: { id, cardType },
+  payload: { id, itemType },
+});
+
+export const createNote = (itemType, itemContent) => ({
+  type: CREATE_NOTE,
+  payload: {
+    itemType,
+    item: {
+      id: uuid(),
+      ...itemContent,
+    },
+  },
 });

@@ -1,9 +1,10 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import styled from 'styled-components';
+import PropTypes from 'prop-types';
+
 import Heading from 'components/atoms/Heading/Heading';
 import Input from 'components/atoms/Input/Input';
 import Button from 'components/atoms/Button/Button';
-import styled from 'styled-components';
 import withContext from 'hoc/withContext';
 
 const StyledWrapper = styled.div`
@@ -31,6 +32,7 @@ const StyledWrapper = styled.div`
   }
 
   @media (max-width: 560px) {
+    padding: 2.5rem 5rem;
     width: 100vw;
   }
 `;
@@ -45,7 +47,7 @@ const StyledTextArea = styled(Input)`
   height: 30vh;
 `;
 
-const FormBar = ({ pageContext, isVisible }) => (
+const FormBar = ({ pageContext, isVisible, handleSubmit }) => (
   <StyledWrapper activeColor={pageContext} isVisible={isVisible}>
     <Heading big>Add new {pageContext.slice(0, -1)}</Heading>
     <StyledInput
@@ -53,13 +55,19 @@ const FormBar = ({ pageContext, isVisible }) => (
     />
     {pageContext === 'articles' ? <StyledInput placeholder="article url" /> : null}
     <StyledTextArea as="textarea" placeholder="description" />
-    <Button activecolor={pageContext}>Add {pageContext.slice(0, -1)}</Button>
+    <Button
+      activecolor={pageContext}
+      onClick={() => handleSubmit(pageContext, { title: 'Siemanko', content: 'Siemanko' })}
+    >
+      Add {pageContext.slice(0, -1)}
+    </Button>
   </StyledWrapper>
 );
 
 FormBar.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
   isVisible: PropTypes.bool.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };
 
 export default withContext(FormBar);

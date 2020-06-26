@@ -147,7 +147,7 @@ Card.defaultProps = {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  removeNote: (id, cardType) => dispatch(removeNoteAction(id, cardType)),
+  removeNote: (id, itemType) => dispatch(removeNoteAction(id, itemType)),
 });
 
 export default connect(null, mapDispatchToProps)(withContext(Card));

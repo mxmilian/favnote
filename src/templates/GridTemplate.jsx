@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createNote as createNoteAction } from 'actions/notes';
 import styled from 'styled-components';
 import withContext from 'hoc/withContext';
 import Header from 'components/molecules/Header/Header';
@@ -46,10 +48,15 @@ class GridTemplate extends Component {
 
   toggleForm = () => this.setState((prevState) => ({ showForm: !prevState.showForm }));
 
+  handleSubmit = (itemType, itemContent) => {
+    const { createNote } = this.props;
+    createNote(itemType, itemContent);
+  };
+
   render() {
     const { showForm } = this.state;
     const { children, pageContext } = this.props;
-    const { toggleForm } = this;
+    const { toggleForm, handleSubmit } = this;
     return (
       <SidebarTemplate>
         <StyledPageHeader>
@@ -61,7 +68,7 @@ class GridTemplate extends Component {
           icon={showForm ? minusIcon : plusIcon}
           onClick={toggleForm}
         />
-        <FormBar isVisible={showForm} />
+        <FormBar isVisible={showForm} handleSubmit={handleSubmit} />
       </SidebarTemplate>
     );
   }
@@ -70,6 +77,11 @@ class GridTemplate extends Component {
 GridTemplate.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
   children: PropTypes.arrayOf(PropTypes.object).isRequired,
+  createNote: PropTypes.func.isRequired,
 };
 
-export default withContext(GridTemplate);
+const mapDispatchToProps = (dispatch) => ({
+  createNote: (itemType, itemContent) => dispatch(createNoteAction(itemType, itemContent)),
+});
+
+export default connect(null, mapDispatchToProps)(withContext(GridTemplate));

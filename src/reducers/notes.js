@@ -1,5 +1,5 @@
 import { notes, articles, twitters } from 'data/dummyData';
-import { REMOVE_NOTE } from 'actions/notes';
+import { REMOVE_NOTE, CREATE_NOTE } from 'actions/notes';
 
 const notesInitialState = {
   notes,
@@ -13,9 +13,14 @@ const notesReducer = (state = notesInitialState, action) => {
     case REMOVE_NOTE:
       return {
         ...state,
-        [action.payload.cardType]: [
-          ...state[action.payload.cardType].filter((item) => item.id !== action.payload.id),
+        [action.payload.itemType]: [
+          ...state[action.payload.itemType].filter((item) => item.id !== action.payload.id),
         ],
+      };
+    case CREATE_NOTE:
+      return {
+        ...state,
+        [action.payload.itemType]: [...state[action.payload.itemType], action.payload.item],
       };
     default:
       return state;
