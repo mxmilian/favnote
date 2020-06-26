@@ -7,6 +7,7 @@ import Button from 'components/atoms/Button/Button';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import SidebarTemplate from 'templates/SidebarTemplate';
 import Heading from 'components/atoms/Heading/Heading';
+import Moment from 'react-moment';
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -14,10 +15,19 @@ const StyledWrapper = styled.div`
   max-width: 70rem;
 `;
 
-const StyledDateParagraph = styled(Paragraph)`
+const StyledDate = styled.div`
+  display: flex;
+  margin-bottom: 3.5rem;
+`;
+
+const StyledDateCreated = styled(Paragraph)`
   font-size: ${({ theme }) => theme.fontSize.xs};
   font-weight: ${({ theme }) => theme.bold};
-  margin-bottom: 3.5rem;
+  margin-right: 0.8rem;
+`;
+const StyledDateParagraph = styled(Moment)`
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  font-weight: ${({ theme }) => theme.bold};
 `;
 
 const StyledAvatar = styled.img`
@@ -49,7 +59,10 @@ const DetailsTemplate = ({ pageContext, title, created, content, articleUrl, twi
       <Heading big as="h1">
         {title}
       </Heading>
-      <StyledDateParagraph>CREATED: {created}</StyledDateParagraph>
+      <StyledDate>
+        <StyledDateCreated>Created:</StyledDateCreated>
+        <StyledDateParagraph fromNow>{created}</StyledDateParagraph>
+      </StyledDate>
       {pageContext === 'twitters' ? <StyledAvatar src={twitterName} /> : null}
       <StyledContentParagraph>{content}</StyledContentParagraph>
       {pageContext === 'articles' || pageContext === 'twitters' ? (

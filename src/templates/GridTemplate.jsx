@@ -32,12 +32,12 @@ const StyledButtonIcon = styled(ButtonIcon)`
   background-size: 35%;
   border-radius: 5rem;
   position: fixed;
-  bottom: 4rem;
-  right: 4rem;
+  bottom: 2rem;
+  right: 2rem;
   z-index: 2;
 
   @media (max-width: 840px) {
-    top: 4rem;
+    top: 2rem;
   }
 `;
 
