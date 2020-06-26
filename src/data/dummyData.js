@@ -1,27 +1,27 @@
 export const notes = [
   {
-    id: 1,
+    id: '1',
     title: 'Wake me up when Vue ends',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
     created: '1 day',
   },
   {
-    id: 2,
+    id: '2',
     title: 'Como es An Gular?',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
     created: '1 day',
   },
   {
-    id: 3,
+    id: '3',
     title: 'Du bist Reactish',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
     created: '5 days',
   },
   {
-    id: 4,
+    id: '4',
     title: 'Reactuj się kto moze!',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
@@ -31,7 +31,7 @@ export const notes = [
 
 export const articles = [
   {
-    id: 5,
+    id: '5',
     title: 'React on my mind',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
@@ -39,7 +39,7 @@ export const articles = [
     created: '1 day',
   },
   {
-    id: 6,
+    id: '6',
     title: 'Wish you React',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
@@ -47,7 +47,7 @@ export const articles = [
     created: '1 day',
   },
   {
-    id: 7,
+    id: '7',
     title: 'You gave React a bad name',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
@@ -55,7 +55,7 @@ export const articles = [
     created: '5 days',
   },
   {
-    id: 8,
+    id: '8',
     title: 'Is it React you looking for?',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
@@ -66,7 +66,7 @@ export const articles = [
 
 export const twitters = [
   {
-    id: 9,
+    id: '9',
     title: 'Hello Roman',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
@@ -74,7 +74,7 @@ export const twitters = [
     twitterName: 'hello_roman',
   },
   {
-    id: 10,
+    id: '10',
     title: 'Redux guy',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
@@ -82,7 +82,7 @@ export const twitters = [
     twitterName: 'dan_abramov',
   },
   {
-    id: 11,
+    id: '11',
     title: 'React router stuff',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
@@ -90,7 +90,7 @@ export const twitters = [
     twitterName: 'mjackson',
   },
   {
-    id: 12,
+    id: '12',
     title: 'Super animacje!',
     content:
       'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',

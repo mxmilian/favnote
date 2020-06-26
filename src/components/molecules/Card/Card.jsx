@@ -10,6 +10,7 @@ import Heading from 'components/atoms/Heading/Heading';
 import Button from 'components/atoms/Button/Button';
 import Modal from 'components/organisms/Modal/Modal';
 import linkIcon from 'assets/link.svg';
+import Moment from 'react-moment';
 
 const StyledWrapper = styled.div`
   min-height: 38rem;
@@ -70,7 +71,7 @@ const StyledLink = styled.a`
   background-size: 50%;
 `;
 
-const DateInfo = styled(Paragraph)`
+const DateInfo = styled(Moment)`
   font-weight: ${({ theme }) => theme.bold};
   font-size: ${({ theme }) => theme.fontSize.xs};
 `;
@@ -101,7 +102,7 @@ class Card extends Component {
         <StyledWrapper>
           <InnerWrapper activeColor={pageContext}>
             <Heading>{title}</Heading>
-            <DateInfo>{created}</DateInfo>
+            <DateInfo fromNow>{created}</DateInfo>
             {pageContext === 'twitters' && (
               <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
             )}
@@ -132,7 +133,7 @@ class Card extends Component {
 
 Card.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,
   twitterName: PropTypes.string,

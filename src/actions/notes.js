@@ -14,6 +14,7 @@ export const createNote = (itemType, itemContent) => ({
     itemType,
     item: {
       id: uuid(),
+      created: Date.now(),
       ...itemContent,
     },
   },
