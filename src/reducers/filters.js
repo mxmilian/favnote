@@ -1,7 +1,8 @@
-import { SET_TEXT_FILTER } from 'actions/filters';
+import { SET_TEXT_FILTER, SET_SORT_BY } from 'actions/filters';
 
 const filtersInitialState = {
   text: '',
+  sortBy: 'asc',
 };
 
 const filtersReducer = (state = filtersInitialState, action) => {
@@ -11,6 +12,11 @@ const filtersReducer = (state = filtersInitialState, action) => {
       return {
         ...state,
         text: action.text,
+      };
+    case SET_SORT_BY:
+      return {
+        ...state,
+        sortBy: action.sortBy,
       };
     default:
       return state;
