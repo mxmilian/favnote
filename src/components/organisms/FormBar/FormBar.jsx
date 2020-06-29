@@ -76,16 +76,16 @@ const FormBar = ({ pageContext, isVisible, handleSubmit }) => {
         content: '',
       }}
       validationSchema={Yup.object({
-        title: Yup.string().max(15, 'Must be 15 characters or less').required('Required'),
+        title: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
         twitterName:
           pageContext === 'twitters'
-            ? Yup.string().max(15, 'Must be 15 characters or less').required('Required')
+            ? Yup.string().max(20, 'Must be 20 characters or less').required('Required')
             : '',
         articleUrl:
           pageContext === 'articles'
             ? Yup.string().url('This field must be a valid URL').required('Required')
             : '',
-        content: Yup.string().max(250, 'Must be 15 characters or less').required('Required'),
+        content: Yup.string().max(250, 'Must be 250 characters or less').required('Required'),
       })}
       onSubmit={(values, { setSubmitting }) => {
         handleSubmit(pageContext, values);
