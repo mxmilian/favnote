@@ -79,7 +79,14 @@ class FormBar extends Component {
 
   handleClickOutside = (e) => {
     const { isVisible, toggleForm } = this.props;
-    if (this.wrapperRef && !this.wrapperRef.current.contains(e.target) && isVisible) toggleForm();
+
+    if (
+      this.wrapperRef &&
+      !this.wrapperRef.current.contains(e.target) &&
+      isVisible &&
+      e.target.id !== 'toggleFormButton'
+    )
+      toggleForm();
   };
 
   render() {

@@ -46,7 +46,9 @@ class GridTemplate extends Component {
     showForm: false,
   };
 
-  toggleForm = () => this.setState((prevState) => ({ showForm: !prevState.showForm }));
+  toggleForm = () => {
+    this.setState((prevState) => ({ showForm: !prevState.showForm }));
+  };
 
   handleSubmit = (itemType, itemContent) => {
     const { createNote } = this.props;
@@ -65,6 +67,7 @@ class GridTemplate extends Component {
         </StyledPageHeader>
         <StyledGridWrapper>{children}</StyledGridWrapper>
         <StyledButtonIcon
+          id="toggleFormButton"
           activeColor={pageContext}
           icon={showForm ? minusIcon : plusIcon}
           onClick={toggleForm}
