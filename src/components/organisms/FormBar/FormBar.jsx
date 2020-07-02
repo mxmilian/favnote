@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Heading from 'components/atoms/Heading/Heading';
@@ -66,90 +66,109 @@ const StyledParagraph = styled(Paragraph)`
   font-weight: ${({ theme }) => theme.bold};
 `;
 
-const FormBar = ({ pageContext, isVisible, handleSubmit }) => {
-  return (
-    <Formik
-      initialValues={{
-        title: '',
-        twitterName: '',
-        articleUrl: '',
-        content: '',
-      }}
-      validationSchema={Yup.object({
-        title: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
-        twitterName:
-          pageContext === 'twitters'
-            ? Yup.string().max(20, 'Must be 20 characters or less').required('Required')
-            : '',
-        articleUrl:
-          pageContext === 'articles'
-            ? Yup.string().url('This field must be a valid URL').required('Required')
-            : '',
-        content: Yup.string().max(250, 'Must be 250 characters or less').required('Required'),
-      })}
-      onSubmit={(values, { setSubmitting }) => {
-        handleSubmit(pageContext, values);
-        setSubmitting(false);
-      }}
-    >
-      {(formik) => (
-        <StyledWrapper activeColor={pageContext} isVisible={isVisible}>
-          <StyledForm>
-            <Heading big>Add new {pageContext.slice(0, -1)}</Heading>
+class FormBar extends Component {
+  wrapperRef = React.createRef();
 
-            <StyledInput placeholder="title" {...formik.getFieldProps('title')} />
-            {formik.touched.title && formik.errors.title ? (
-              <StyledError>
-                <StyledParagraph>{formik.errors.title}!</StyledParagraph>
-              </StyledError>
-            ) : null}
+  componentDidMount() {
+    document.addEventListener('mousedown', this.handleClickOutside);
+  }
 
-            {pageContext === 'twitters' ? (
-              <>
-                <StyledInput
-                  placeholder="Account name eg. dan_abramov"
-                  {...formik.getFieldProps('twitterName')}
-                />
-                {formik.touched.twitterName && formik.errors.twitterName ? (
-                  <StyledError>
-                    <StyledParagraph>{formik.errors.title}!</StyledParagraph>
-                  </StyledError>
-                ) : null}
-              </>
-            ) : null}
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
+  }
 
-            {pageContext === 'articles' ? (
-              <>
-                <StyledInput placeholder="article url" {...formik.getFieldProps('articleUrl')} />
-                {formik.touched.articleUrl && formik.errors.articleUrl ? (
-                  <StyledError>
-                    <StyledParagraph>{formik.errors.title}!</StyledParagraph>
-                  </StyledError>
-                ) : null}
-              </>
-            ) : null}
+  handleClickOutside = (e) => {
+    const { isVisible, toggleForm } = this.props;
+    if (this.wrapperRef && !this.wrapperRef.current.contains(e.target) && isVisible) toggleForm();
+  };
 
-            <StyledTextArea as="textarea" {...formik.getFieldProps('content')} />
-            {formik.touched.content && formik.errors.content ? (
-              <StyledError>
-                <StyledParagraph>{formik.errors.title}!</StyledParagraph>
-              </StyledError>
-            ) : null}
+  render() {
+    const { pageContext, isVisible, handleSubmit } = this.props;
+    return (
+      <Formik
+        initialValues={{
+          title: '',
+          twitterName: '',
+          articleUrl: '',
+          content: '',
+        }}
+        validationSchema={Yup.object({
+          title: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
+          twitterName:
+            pageContext === 'twitters'
+              ? Yup.string().max(20, 'Must be 20 characters or less').required('Required')
+              : '',
+          articleUrl:
+            pageContext === 'articles'
+              ? Yup.string().url('This field must be a valid URL').required('Required')
+              : '',
+          content: Yup.string().max(250, 'Must be 250 characters or less').required('Required'),
+        })}
+        onSubmit={(values, { setSubmitting }) => {
+          handleSubmit(pageContext, values);
+          setSubmitting(false);
+        }}
+      >
+        {(formik) => (
+          <StyledWrapper activeColor={pageContext} isVisible={isVisible} ref={this.wrapperRef}>
+            <StyledForm>
+              <Heading big>Add new {pageContext.slice(0, -1)}</Heading>
 
-            <StyledButton activecolor={pageContext} type="submit">
-              Add {pageContext.slice(0, -1)}
-            </StyledButton>
-          </StyledForm>
-        </StyledWrapper>
-      )}
-    </Formik>
-  );
-};
+              <StyledInput placeholder="title" {...formik.getFieldProps('title')} />
+              {formik.touched.title && formik.errors.title ? (
+                <StyledError>
+                  <StyledParagraph>{formik.errors.title}!</StyledParagraph>
+                </StyledError>
+              ) : null}
+
+              {pageContext === 'twitters' ? (
+                <>
+                  <StyledInput
+                    placeholder="Account name eg. dan_abramov"
+                    {...formik.getFieldProps('twitterName')}
+                  />
+                  {formik.touched.twitterName && formik.errors.twitterName ? (
+                    <StyledError>
+                      <StyledParagraph>{formik.errors.title}!</StyledParagraph>
+                    </StyledError>
+                  ) : null}
+                </>
+              ) : null}
+
+              {pageContext === 'articles' ? (
+                <>
+                  <StyledInput placeholder="article url" {...formik.getFieldProps('articleUrl')} />
+                  {formik.touched.articleUrl && formik.errors.articleUrl ? (
+                    <StyledError>
+                      <StyledParagraph>{formik.errors.title}!</StyledParagraph>
+                    </StyledError>
+                  ) : null}
+                </>
+              ) : null}
+
+              <StyledTextArea as="textarea" {...formik.getFieldProps('content')} />
+              {formik.touched.content && formik.errors.content ? (
+                <StyledError>
+                  <StyledParagraph>{formik.errors.title}!</StyledParagraph>
+                </StyledError>
+              ) : null}
+
+              <StyledButton activecolor={pageContext} type="submit">
+                Add {pageContext.slice(0, -1)}
+              </StyledButton>
+            </StyledForm>
+          </StyledWrapper>
+        )}
+      </Formik>
+    );
+  }
+}
 
 FormBar.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
   isVisible: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  toggleForm: PropTypes.func.isRequired,
 };
 
 export default withContext(FormBar);

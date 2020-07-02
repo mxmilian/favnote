@@ -69,7 +69,7 @@ class GridTemplate extends Component {
           icon={showForm ? minusIcon : plusIcon}
           onClick={toggleForm}
         />
-        <FormBar isVisible={showForm} handleSubmit={handleSubmit} />
+        <FormBar isVisible={showForm} toggleForm={toggleForm} handleSubmit={handleSubmit} />
       </SidebarTemplate>
     );
   }
