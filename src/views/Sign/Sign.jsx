@@ -52,15 +52,20 @@ const StyledLink = styled.a`
 class Sign extends Component {
   state = {
     signUp: false,
+    isEmail: false,
   };
 
   toggleSign = () => {
     this.setState((prevState) => ({ signUp: !prevState.signUp }));
   };
 
+  toggleEmail = () => {
+    this.setState((prevState) => ({ isEmail: !prevState.isEmail }));
+  };
+
   render() {
-    const { signUp } = this.state;
-    const { toggleSign } = this;
+    const { signUp, isEmail } = this.state;
+    const { toggleSign, toggleEmail } = this;
     return (
       <AuthTemplate>
         <Formik
@@ -71,28 +76,38 @@ class Sign extends Component {
             confirmPassword: '',
           }}
           validationSchema={Yup.object({
-            name: Yup.string()
-              .max(20, 'Must be 20 characters or less')
-              .min(5, 'Must be 5 characters or more')
-              .required('Required'),
-            email: signUp
-              ? Yup.string()
-                  .email('Must be email')
-                  .max(20, 'Must be 20 characters or less')
-                  .required('Required')
-              : '',
+            name: isEmail
+              ? ''
+              : Yup.string()
+                  .max(30, 'Must be 30 characters or less')
+                  .min(5, 'Must be 5 characters or more')
+                  .required('Required'),
+            email:
+              signUp || isEmail
+                ? Yup.string()
+                    .email('Must be email')
+                    .max(30, 'Must be XD characters or less')
+                    .required('Required')
+                : '',
             password: Yup.string()
-              .max(20, 'Must be 20 characters or less')
+              .max(30, 'Must be 30 characters or less')
               .min(5, 'Must be 5 characters or more')
               .required('Required'),
             confirmPassword: signUp
               ? Yup.string()
-                  .max(20, 'Must be 20 characters or less')
+                  .max(30, 'Must be 30 characters or less')
                   .min(5, 'Must be 5 characters or more')
                   .required('Required')
               : '',
           })}
           onSubmit={(values, { setSubmitting }) => {
+            if (!signUp) {
+              if (isEmail) {
+                console.log(values.email, values.password);
+              } else if (!isEmail) {
+                console.log(values.name, values.password);
+              }
+            }
             console.log(values);
             setSubmitting(false);
           }}
@@ -101,12 +116,54 @@ class Sign extends Component {
             <>
               <StyledHeading>{signUp ? 'Sign up' : 'Sign in'}</StyledHeading>
               <StyledForm>
-                <StyledInput placeholder="name" {...formik.getFieldProps('name')} />
-                {formik.touched.name && formik.errors.name ? (
-                  <StyledError>
-                    <StyledParagraph>{formik.errors.name}!</StyledParagraph>
-                  </StyledError>
+                {signUp ? null : (
+                  <>
+                    <StyledInput
+                      id={isEmail ? 'email' : 'name'}
+                      name={isEmail ? 'email' : 'name'}
+                      type="text"
+                      onChange={(e) => {
+                        if (formik.values.name && formik.values.name.includes('@') && !isEmail) {
+                          toggleEmail();
+                          // eslint-disable-next-line no-param-reassign
+                          formik.values.email = e.target.value;
+                        }
+                        if (formik.values.email && !formik.values.email.includes('@') && isEmail) {
+                          toggleEmail();
+                          // eslint-disable-next-line no-param-reassign
+                          formik.values.name = e.target.value;
+                        }
+                        formik.handleChange(e);
+                      }}
+                      onBlur={formik.handleBlur}
+                      value={isEmail ? formik.values.email : formik.values.name}
+                      placeholder="email or name"
+                    />
+                    {/* eslint-disable-next-line no-nested-ternary */}
+                    {isEmail ? (
+                      formik.values.email && formik.errors.email ? (
+                        <StyledError>
+                          <StyledParagraph>{formik.errors.email}!</StyledParagraph>
+                        </StyledError>
+                      ) : null
+                    ) : formik.values.name && formik.errors.name ? (
+                      <StyledError>
+                        <StyledParagraph>{formik.errors.name}!</StyledParagraph>
+                      </StyledError>
+                    ) : null}
+                  </>
+                )}
+                {signUp ? (
+                  <>
+                    <StyledInput placeholder="name" {...formik.getFieldProps('name')} />
+                    {formik.touched.name && formik.errors.name ? (
+                      <StyledError>
+                        <StyledParagraph>{formik.errors.name}!</StyledParagraph>
+                      </StyledError>
+                    ) : null}
+                  </>
                 ) : null}
+
                 {signUp ? (
                   <>
                     <StyledInput placeholder="email" {...formik.getFieldProps('email')} />
@@ -146,7 +203,7 @@ class Sign extends Component {
               </StyledForm>
 
               <StyledLink onClick={toggleSign}>
-                {signUp ? 'I want to sign up' : 'I want to sign in'}
+                {signUp ? 'I want to sign in' : 'I want to sign up'}
               </StyledLink>
             </>
           )}
