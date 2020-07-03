@@ -6,6 +6,6 @@ export const routes = {
   twittersDetails: '/twitters/:id',
   articles: '/articles',
   articlesDetails: '/articles/:id',
-  login: '/login',
+  sign: '/sign',
   register: '/register',
 };

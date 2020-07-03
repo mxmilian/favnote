@@ -5,6 +5,7 @@ import store from 'store';
 import MainTemplate from 'templates/MainTemplate';
 import Details from 'views/Details/Details';
 import Notes from 'views/Notes/Notes';
+import Sign from 'views/Sign/Sign';
 import Twitters from 'views/Twitters/Twitters';
 import Articles from 'views/Articles/Articles';
 import { routes } from 'routes';
@@ -21,6 +22,7 @@ const Root = () => (
           <Route path={routes.articlesDetails} component={Details} />
           <Route exact path={routes.twitters} component={Twitters} />
           <Route path={routes.twittersDetails} component={Details} />
+          <Route path={routes.sign} component={Sign} />
         </Switch>
       </MainTemplate>
     </BrowserRouter>
