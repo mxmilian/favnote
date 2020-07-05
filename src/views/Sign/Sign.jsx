@@ -1,5 +1,6 @@
 import Input from 'components/atoms/Input/Input';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Button from 'components/atoms/Button/Button';
@@ -7,6 +8,9 @@ import Heading from 'components/atoms/Heading/Heading';
 import AuthTemplate from 'templates/AuthTemplate';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
+import axios from 'axios';
+import { connect } from 'react-redux';
+import { authenticateWithUsername as authenticateWithUsernameAction } from 'actions/user';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -66,6 +70,7 @@ class Sign extends Component {
   render() {
     const { signUp, isEmail } = this.state;
     const { toggleSign, toggleEmail } = this;
+    const { authenticateWithUsername } = this.props;
     return (
       <AuthTemplate>
         <Formik
@@ -100,16 +105,24 @@ class Sign extends Component {
                   .required('Required')
               : '',
           })}
-          onSubmit={(values, { setSubmitting }) => {
-            if (!signUp) {
-              if (isEmail) {
-                console.log(values.email, values.password);
-              } else if (!isEmail) {
-                console.log(values.name, values.password);
-              }
-            }
-            console.log(values);
+          onSubmit={async (values, { setSubmitting }) => {
             setSubmitting(false);
+            try {
+              if (!signUp) {
+                if (isEmail) {
+                  await axios.post('http://localhost:1337/api/v1/users/signin', {
+                    email: values.email,
+                    password: values.password,
+                  });
+                  console.log('Logged');
+                } else if (!isEmail) {
+                  authenticateWithUsername(values.name, values.password);
+                }
+              }
+            } catch (e) {
+              console.log('Not logged');
+              console.log(e);
+            }
           }}
         >
           {(formik) => (
@@ -212,5 +225,12 @@ class Sign extends Component {
     );
   }
 }
+Sign.propTypes = {
+  authenticateWithUsername: PropTypes.func.isRequired,
+};
+const mapDispatchToProps = (dispatch) => ({
+  authenticateWithUsername: (name, password) =>
+    dispatch(authenticateWithUsernameAction(name, password)),
+});
 
-export default Sign;
+export default connect(null, mapDispatchToProps)(Sign);
