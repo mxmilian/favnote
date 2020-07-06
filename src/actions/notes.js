@@ -4,8 +4,11 @@ export const FETCH_REQUEST = 'FETCH_REQUEST';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
 export const FETCH_FAILURE = 'FETCH_FAILURE';
 
+export const CREATE_REQUEST = 'CREATE_REQUEST';
+export const CREATE_SUCCESS = 'CREATE_SUCCESS';
+export const CREATE_FAILURE = 'CREATE_FAILURE';
+
 export const REMOVE_NOTE = 'REMOVE_NOTE';
-export const CREATE_NOTE = 'CREATE_NOTE';
 
 export const fetchNotes = (itemType) => (dispatch) => {
   dispatch({ type: FETCH_REQUEST });
@@ -15,20 +18,16 @@ export const fetchNotes = (itemType) => (dispatch) => {
         type: itemType,
       },
     })
-    .then(({ data }) => {
-      console.log(data.data.readDoc);
+    .then(({ data }) =>
       dispatch({
         type: FETCH_SUCCESS,
         payload: {
           data: data.data.readDoc,
           itemType,
         },
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-      dispatch({ FETCH_FAILURE }, err);
-    });
+      }),
+    )
+    .catch((err) => dispatch({ FETCH_FAILURE }, err));
 };
 
 export const removeNote = (id, itemType) => ({
@@ -36,12 +35,28 @@ export const removeNote = (id, itemType) => ({
   payload: { id, itemType },
 });
 
-export const createNote = (itemType, itemContent) => ({
-  type: CREATE_NOTE,
-  payload: {
-    itemType,
-    item: {
+export const createNote = (itemType, itemContent) => (dispatch) => {
+  dispatch({ type: CREATE_REQUEST });
+  console.log(itemType, itemContent);
+  return axios
+    .post('/api/v1/notes/', {
+      type: itemType,
       ...itemContent,
-    },
-  },
-});
+    })
+    .then(({ data }) => {
+      console.log(data);
+      return dispatch({
+        type: CREATE_SUCCESS,
+        payload: {
+          itemType,
+          item: {
+            ...data.data.createdDoc,
+          },
+        },
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      return dispatch({ type: CREATE_FAILURE });
+    });
+};

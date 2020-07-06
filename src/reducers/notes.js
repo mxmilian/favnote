@@ -1,9 +1,11 @@
 import {
   REMOVE_NOTE,
-  CREATE_NOTE,
   // FETCH_REQUEST,
   FETCH_SUCCESS,
   // FETCH_FAILURE,
+  // CREATE_REQUEST,
+  CREATE_SUCCESS,
+  // CREATE_FAILURE,
 } from 'actions/notes';
 
 const notesInitialState = {};
@@ -12,7 +14,6 @@ const notesReducer = (state = notesInitialState, action) => {
   const { type } = action;
   switch (type) {
     case FETCH_SUCCESS:
-      console.log(action);
       return {
         ...state,
         [action.payload.itemType]: [...action.payload.data],
@@ -24,7 +25,7 @@ const notesReducer = (state = notesInitialState, action) => {
           ...state[action.payload.itemType].filter((item) => item.id !== action.payload.id),
         ],
       };
-    case CREATE_NOTE:
+    case CREATE_SUCCESS:
       return {
         ...state,
         [action.payload.itemType]: [...state[action.payload.itemType], action.payload.item],

@@ -11,7 +11,7 @@ class Articles extends Component {
     const {
       props: { fetchNotes },
     } = this;
-    fetchNotes('notes');
+    fetchNotes('articles');
   }
 
   render() {

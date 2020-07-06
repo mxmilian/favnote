@@ -12,26 +12,14 @@ export const authenticate = (name, email, password) => (dispatch) => {
         email,
         password,
       })
-      .then((payload) => {
-        console.log(payload);
-        dispatch({ type: AUTHENTICATE_SUCCESS, payload });
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch({ type: AUTHENTICATE_FAILURE });
-      });
+      .then((payload) => dispatch({ type: AUTHENTICATE_SUCCESS, payload }))
+      .catch((err) => dispatch({ type: AUTHENTICATE_FAILURE, err }));
   }
   return axios
     .post('/api/v1/users/signin', {
       name,
       password,
     })
-    .then((payload) => {
-      console.log(payload);
-      dispatch({ type: AUTHENTICATE_SUCCESS, payload });
-    })
-    .catch((err) => {
-      console.log(err);
-      dispatch({ type: AUTHENTICATE_FAILURE });
-    });
+    .then((payload) => dispatch({ type: AUTHENTICATE_SUCCESS, payload }))
+    .catch((err) => dispatch({ type: AUTHENTICATE_FAILURE, err }));
 };
