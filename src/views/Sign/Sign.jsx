@@ -140,15 +140,15 @@ class Sign extends Component {
                       name={isEmail ? 'email' : 'name'}
                       type="text"
                       onChange={(e) => {
-                        if (formik.values.name && formik.values.name.includes('@') && !isEmail) {
+                        if (e.target.value && e.target.value.includes('@') && !isEmail) {
                           toggleEmail();
                           // eslint-disable-next-line no-param-reassign
-                          formik.values.email = e.target.value;
+                          formik.setFieldValue('email', e.target.value);
                         }
                         if (formik.values.email && !formik.values.email.includes('@') && isEmail) {
                           toggleEmail();
                           // eslint-disable-next-line no-param-reassign
-                          formik.values.name = e.target.value;
+                          formik.setFieldValue('name', e.target.value);
                         }
                         formik.handleChange(e);
                       }}
