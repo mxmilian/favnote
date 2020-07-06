@@ -2,6 +2,7 @@
   "name": "favnote",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:1337",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
@@ -24,6 +25,7 @@
     "yup": "^0.29.1"
   },
   "scripts": {
+    "dev": "server start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -7,7 +7,7 @@ export const AUTHENTICATE_FAILURE = 'AUTHENTICATE_FAILURE';
 export const authenticateWithUsername = (name, password) => (dispatch) => {
   dispatch({ type: AUTHENTICATE_REQUEST });
   return axios
-    .post('http://localhost:1337/api/v1/users/signin', {
+    .post('/api/v1/users/signin', {
       name,
       password,
     })

@@ -2,6 +2,7 @@ import Input from 'components/atoms/Input/Input';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { routes } from 'routes';
 import styled from 'styled-components';
 import Button from 'components/atoms/Button/Button';
 import Heading from 'components/atoms/Heading/Heading';
@@ -11,6 +12,7 @@ import { Formik, Form } from 'formik';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import { authenticateWithUsername as authenticateWithUsernameAction } from 'actions/user';
+import { Redirect } from 'react-router';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -70,7 +72,8 @@ class Sign extends Component {
   render() {
     const { signUp, isEmail } = this.state;
     const { toggleSign, toggleEmail } = this;
-    const { authenticateWithUsername } = this.props;
+    const { authenticateWithUsername, userID } = this.props;
+    if (userID) return <Redirect push to={routes.notes} />;
     return (
       <AuthTemplate>
         <Formik
@@ -127,6 +130,7 @@ class Sign extends Component {
         >
           {(formik) => (
             <>
+              <StyledHeading>{userID}</StyledHeading>
               <StyledHeading>{signUp ? 'Sign up' : 'Sign in'}</StyledHeading>
               <StyledForm>
                 {signUp ? null : (
@@ -227,10 +231,20 @@ class Sign extends Component {
 }
 Sign.propTypes = {
   authenticateWithUsername: PropTypes.func.isRequired,
+  userID: PropTypes.string,
 };
+
+Sign.defaultProps = {
+  userID: null,
+};
+
+const mapStateToProps = ({ users }) => ({
+  userID: users.userID,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   authenticateWithUsername: (name, password) =>
     dispatch(authenticateWithUsernameAction(name, password)),
 });
 
-export default connect(null, mapDispatchToProps)(Sign);
+export default connect(mapStateToProps, mapDispatchToProps)(Sign);
