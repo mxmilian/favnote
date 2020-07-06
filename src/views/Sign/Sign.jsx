@@ -10,10 +10,8 @@ import AuthTemplate from 'templates/AuthTemplate';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
-import {
-  authenticateWithUsername as authenticateWithUsernameAction,
-  authenticateWithEmail as authenticateWithEmailAction,
-} from 'actions/user';
+// eslint-disable-next-line import/named
+import { authenticate as authenticateAction } from 'actions/user';
 import { Redirect } from 'react-router';
 
 const StyledForm = styled(Form)`
@@ -74,7 +72,7 @@ class Sign extends Component {
   render() {
     const { signUp, isEmail } = this.state;
     const { toggleSign, toggleEmail } = this;
-    const { authenticateWithUsername, authenticateWithEmail, userID } = this.props;
+    const { authenticate, userID } = this.props;
     if (userID) return <Redirect push to={routes.notes} />;
     return (
       <AuthTemplate>
@@ -115,9 +113,9 @@ class Sign extends Component {
             try {
               if (!signUp) {
                 if (isEmail) {
-                  authenticateWithEmail(values.email, values.password);
+                  authenticate(null, values.email, values.password);
                 } else if (!isEmail) {
-                  authenticateWithUsername(values.name, values.password);
+                  authenticate(values.name, null, values.password);
                 }
               }
             } catch (e) {
@@ -228,8 +226,7 @@ class Sign extends Component {
   }
 }
 Sign.propTypes = {
-  authenticateWithUsername: PropTypes.func.isRequired,
-  authenticateWithEmail: PropTypes.func.isRequired,
+  authenticate: PropTypes.func.isRequired,
   userID: PropTypes.string,
 };
 
@@ -242,10 +239,7 @@ const mapStateToProps = ({ users }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  authenticateWithUsername: (name, password) =>
-    dispatch(authenticateWithUsernameAction(name, password)),
-  authenticateWithEmail: (email, password) =>
-    dispatch(authenticateWithEmailAction(email, password)),
+  authenticate: (name, email, password) => dispatch(authenticateAction(name, email, password)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sign);
