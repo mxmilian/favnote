@@ -10,7 +10,6 @@ import AuthTemplate from 'templates/AuthTemplate';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
-// eslint-disable-next-line import/named
 import { authenticate as authenticateAction } from 'actions/user';
 import { Redirect } from 'react-router';
 

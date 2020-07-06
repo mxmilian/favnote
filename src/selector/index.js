@@ -1,4 +1,4 @@
-const getVisibleNotes = (notes, { text, sortBy }) =>
+const getVisibleNotes = (notes = [], { text, sortBy }) =>
   notes
     .filter((note) => note.title.toLowerCase().trim().includes(text.toLowerCase().trim()))
     .sort((a, b) => {

@@ -1,15 +1,22 @@
-import { notes, articles, twitters } from 'data/dummyData';
-import { REMOVE_NOTE, CREATE_NOTE } from 'actions/notes';
+import {
+  REMOVE_NOTE,
+  CREATE_NOTE,
+  // FETCH_REQUEST,
+  FETCH_SUCCESS,
+  // FETCH_FAILURE,
+} from 'actions/notes';
 
-const notesInitialState = {
-  notes,
-  articles,
-  twitters,
-};
+const notesInitialState = {};
 
 const notesReducer = (state = notesInitialState, action) => {
   const { type } = action;
   switch (type) {
+    case FETCH_SUCCESS:
+      console.log(action);
+      return {
+        ...state,
+        [action.payload.itemType]: [...action.payload.data],
+      };
     case REMOVE_NOTE:
       return {
         ...state,
