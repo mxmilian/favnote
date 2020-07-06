@@ -108,7 +108,7 @@ class Sign extends Component {
                   .required('Required')
               : '',
           })}
-          onSubmit={async (values, { setSubmitting }) => {
+          onSubmit={(values, { setSubmitting }) => {
             setSubmitting(false);
             try {
               if (!signUp) {
@@ -141,7 +141,7 @@ class Sign extends Component {
                           // eslint-disable-next-line no-param-reassign
                           formik.setFieldValue('email', e.target.value);
                         }
-                        if (formik.values.email && !formik.values.email.includes('@') && isEmail) {
+                        if (formik.values.email && !e.target.value.includes('@') && isEmail) {
                           toggleEmail();
                           // eslint-disable-next-line no-param-reassign
                           formik.setFieldValue('name', e.target.value);
@@ -154,12 +154,12 @@ class Sign extends Component {
                     />
                     {/* eslint-disable-next-line no-nested-ternary */}
                     {isEmail ? (
-                      formik.values.email && formik.errors.email ? (
+                      formik.touched.email && formik.errors.email ? (
                         <StyledError>
                           <StyledParagraph>{formik.errors.email}!</StyledParagraph>
                         </StyledError>
                       ) : null
-                    ) : formik.values.name && formik.errors.name ? (
+                    ) : formik.touched.name && formik.errors.name ? (
                       <StyledError>
                         <StyledParagraph>{formik.errors.name}!</StyledParagraph>
                       </StyledError>
