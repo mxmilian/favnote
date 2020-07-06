@@ -7,12 +7,12 @@ import Card from 'components/molecules/Card/Card';
 
 const Articles = ({ articles }) => (
   <GridTemplate>
-    {articles.map(({ id, title, created, content, articleUrl }) => (
+    {articles.map(({ _id: id, title, createdAt, content, articleUrl }) => (
       <Card
         id={id}
         key={id}
         title={title}
-        created={created}
+        createdAt={createdAt}
         content={content}
         articleUrl={articleUrl}
       />
@@ -23,10 +23,10 @@ const Articles = ({ articles }) => (
 Articles.propTypes = {
   articles: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      _id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
-      created: PropTypes.number.isRequired,
+      createdAt: PropTypes.number.isRequired,
       articleUrl: PropTypes.string.isRequired,
     }),
   ),
