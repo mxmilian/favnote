@@ -94,7 +94,7 @@ class Card extends Component {
 
   render() {
     const { redirect, show } = this.state;
-    const { id, pageContext, title, created, twitterName, articleUrl, content } = this.props;
+    const { id, pageContext, title, createdAt, twitterName, articleUrl, content } = this.props;
     if (redirect) return <Redirect push to={`${pageContext}/${id}`} />;
 
     return (
@@ -102,7 +102,7 @@ class Card extends Component {
         <StyledWrapper>
           <InnerWrapper activeColor={pageContext}>
             <Heading>{title}</Heading>
-            <DateInfo fromNow>{created}</DateInfo>
+            <DateInfo fromNow>{createdAt}</DateInfo>
             {pageContext === 'twitters' && (
               <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
             )}
@@ -135,7 +135,7 @@ Card.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
-  created: PropTypes.number.isRequired,
+  createdAt: PropTypes.string.isRequired,
   twitterName: PropTypes.string,
   articleUrl: PropTypes.string,
   content: PropTypes.string.isRequired,

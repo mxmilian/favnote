@@ -8,8 +8,10 @@ import GridTemplate from 'templates/GridTemplate';
 
 class Twitters extends Component {
   componentDidMount() {
-    // eslint-disable-next-line react/destructuring-assignment
-    this.props.fetchNotes();
+    const {
+      props: { fetchNotes },
+    } = this;
+    fetchNotes('twitters');
   }
 
   render() {
@@ -38,7 +40,7 @@ Twitters.propTypes = {
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
       twitterName: PropTypes.string.isRequired,
-      createdAt: PropTypes.number.isRequired,
+      createdAt: PropTypes.string.isRequired,
     }),
   ),
   fetchNotes: PropTypes.func.isRequired,
@@ -52,8 +54,10 @@ const mapStateToProps = ({ notes, filters }) => ({
   twitters: getVisibleNotes(notes.twitters, filters),
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  fetchNotes: () => dispatch(fetchNotesAction('twitters')),
-});
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchNotes: (pageContext) => dispatch(fetchNotesAction(pageContext)),
+  };
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Twitters);

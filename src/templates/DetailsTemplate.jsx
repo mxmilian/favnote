@@ -53,7 +53,7 @@ const StyledLink = styled.a`
   margin-bottom: 5.5rem;
 `;
 
-const DetailsTemplate = ({ pageContext, title, created, content, articleUrl, twitterName }) => (
+const DetailsTemplate = ({ pageContext, title, createdAt, content, articleUrl, twitterName }) => (
   <SidebarTemplate>
     <StyledWrapper>
       <Heading big as="h1">
@@ -61,7 +61,7 @@ const DetailsTemplate = ({ pageContext, title, created, content, articleUrl, twi
       </Heading>
       <StyledDate>
         <StyledDateCreated>Created:</StyledDateCreated>
-        <StyledDateParagraph fromNow>{created}</StyledDateParagraph>
+        <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
       </StyledDate>
       {pageContext === 'twitters' ? <StyledAvatar src={twitterName} /> : null}
       <StyledContentParagraph>{content}</StyledContentParagraph>
@@ -78,7 +78,7 @@ const DetailsTemplate = ({ pageContext, title, created, content, articleUrl, twi
 DetailsTemplate.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
   title: PropTypes.string.isRequired,
-  created: PropTypes.number.isRequired,
+  createdAt: PropTypes.string.isRequired,
   twitterName: PropTypes.string,
   articleUrl: PropTypes.string,
   content: PropTypes.string.isRequired,

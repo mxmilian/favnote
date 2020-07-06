@@ -78,7 +78,7 @@ Header.propTypes = {
       _id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
-      created: PropTypes.number.isRequired,
+      createdAt: PropTypes.string.isRequired,
     }),
   ).isRequired,
 };

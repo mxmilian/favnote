@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { v4 as uuid } from 'uuid';
 
 export const FETCH_REQUEST = 'FETCH_REQUEST';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
@@ -42,8 +41,6 @@ export const createNote = (itemType, itemContent) => ({
   payload: {
     itemType,
     item: {
-      id: uuid(),
-      created: Date.now(),
       ...itemContent,
     },
   },
