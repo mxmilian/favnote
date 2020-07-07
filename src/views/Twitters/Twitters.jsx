@@ -7,17 +7,22 @@ import getVisibleNotes from 'selector';
 import GridTemplate from 'templates/GridTemplate';
 
 class Twitters extends Component {
+  state = {
+    loading: true,
+  };
+
   componentDidMount() {
     const {
       props: { fetchNotes },
     } = this;
-    fetchNotes('twitters');
+    fetchNotes('twitters').then(this.setState({ loading: false }));
   }
 
   render() {
     const { twitters } = this.props;
+    const { loading } = this.state;
     return (
-      <GridTemplate>
+      <GridTemplate loading={loading}>
         {twitters.map(({ _id: id, title, createdAt, content, twitterName }) => (
           <Card
             id={id}

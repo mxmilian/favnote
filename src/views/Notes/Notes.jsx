@@ -7,17 +7,26 @@ import GridTemplate from 'templates/GridTemplate';
 import Card from 'components/molecules/Card/Card';
 
 class Notes extends Component {
+  state = {
+    loading: true,
+  };
+
   componentDidMount() {
     const {
       props: { fetchNotes },
     } = this;
-    fetchNotes('notes');
+
+    // setTimeout is to present loader :P
+    setTimeout(() => {
+      fetchNotes('notes').then(this.setState({ loading: false }));
+    }, 1000);
   }
 
   render() {
     const { notes } = this.props;
+    const { loading } = this.state;
     return (
-      <GridTemplate>
+      <GridTemplate loading={loading}>
         {notes.map(({ _id: id, title, createdAt, content }) => (
           <Card id={id} key={id} title={title} createdAt={createdAt} content={content} />
         ))}
