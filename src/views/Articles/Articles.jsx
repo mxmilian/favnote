@@ -15,7 +15,7 @@ class Articles extends Component {
     const {
       props: { fetchNotes },
     } = this;
-    fetchNotes('articles').then(this.setState({ loading: false }));
+    fetchNotes('articles').then(() => this.setState({ loading: false }));
   }
 
   render() {

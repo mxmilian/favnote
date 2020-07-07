@@ -20,7 +20,8 @@ class Notes extends Component {
     // setTimeout(() => {
     //   fetchNotes('notes').then(this.setState({ loading: false }));
     // }, 1000);
-    fetchNotes('notes').then(this.setState({ loading: false }));
+
+    fetchNotes('notes').then(() => this.setState({ loading: false }));
   }
 
   render() {

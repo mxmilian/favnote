@@ -15,7 +15,7 @@ class Twitters extends Component {
     const {
       props: { fetchNotes },
     } = this;
-    fetchNotes('twitters').then(this.setState({ loading: false }));
+    fetchNotes('twitters').then(() => this.setState({ loading: false }));
   }
 
   render() {
