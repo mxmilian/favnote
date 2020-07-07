@@ -74,8 +74,6 @@ class GridTemplate extends Component {
     const { showForm } = this.state;
     const { children, pageContext, loading } = this.props;
     const { toggleForm, handleSubmit } = this;
-    console.log(children);
-    console.log(loading);
     return (
       <SidebarTemplate>
         <StyledPageHeader>
