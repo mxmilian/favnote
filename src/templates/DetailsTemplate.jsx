@@ -63,7 +63,9 @@ const DetailsTemplate = ({ pageContext, title, createdAt, content, articleUrl, t
         <StyledDateCreated>Created:</StyledDateCreated>
         <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
       </StyledDate>
-      {pageContext === 'twitters' ? <StyledAvatar src={twitterName} /> : null}
+      {pageContext === 'twitters' ? (
+        <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
+      ) : null}
       <StyledContentParagraph>{content}</StyledContentParagraph>
       {pageContext === 'articles' || pageContext === 'twitters' ? (
         <StyledLink href={articleUrl}>Open {pageContext}</StyledLink>

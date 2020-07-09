@@ -1,22 +1,49 @@
-import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import DetailsTemplate from 'templates/DetailsTemplate';
 import withContext from 'hoc/withContext';
 import { connect } from 'react-redux';
+import axios from 'axios';
+import PropTypes from 'prop-types';
 
 class Details extends Component {
-  componentDidMount() {}
+  state = {
+    activeItem: {
+      title: '',
+      createdAt: '2020-01-01T01:01:01',
+      content: '',
+      articleUrl: '',
+      twitterName: '',
+    },
+  };
+
+  componentDidMount() {
+    const { activeItem } = this.props;
+    const {
+      match: {
+        params: { id },
+      },
+    } = this.props;
+
+    if (activeItem) {
+      const [item] = activeItem;
+      this.setState({ activeItem: item });
+    } else {
+      axios
+        .get(`/api/v1/notes/${id}`)
+        .then(({ data }) => this.setState({ activeItem: data.data.readDoc }))
+        .catch((err) => console.log(err));
+    }
+  }
 
   render() {
-    const { activeItem } = this.props;
-    const [item] = activeItem;
+    const { activeItem } = this.state;
     return (
       <DetailsTemplate
-        title={item.title}
-        createdAt={item.createdAt}
-        content={item.content}
-        articleUrl={item.articleUrl}
-        twitterName="https://i.kym-cdn.com/entries/icons/facebook/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.jpg"
+        title={activeItem.title}
+        createdAt={activeItem.createdAt}
+        content={activeItem.content}
+        articleUrl={activeItem.articleUrl}
+        twitterName={activeItem.twitterName}
       />
     );
   }
@@ -25,16 +52,31 @@ class Details extends Component {
 Details.propTypes = {
   activeItem: PropTypes.arrayOf(
     PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
-      createdAt: PropTypes.string.isRequired,
+      id: PropTypes.string,
+      title: PropTypes.string,
+      createdAt: PropTypes.string,
+      twitterName: PropTypes.string,
+      articleUrl: PropTypes.string,
+      content: PropTypes.string,
     }),
-  ).isRequired,
+  ),
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+    }),
+  }).isRequired,
 };
 
-const mapStateToProps = ({ notes }, { pageContext, match }) => ({
-  activeItem: notes[pageContext].filter(({ _id: id }) => id === match.params.id),
-});
+Details.defaultProps = {
+  activeItem: null,
+};
 
+const mapStateToProps = ({ notes }, { pageContext, match }) => {
+  if (notes[pageContext]) {
+    return {
+      activeItem: notes[pageContext].filter(({ _id: id }) => id === match.params.id),
+    };
+  }
+  return {};
+};
 export default withContext(connect(mapStateToProps)(Details));
