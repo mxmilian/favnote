@@ -8,7 +8,9 @@ import logoIcon from 'assets/logo.svg';
 import bulbIcon from 'assets/bulb.svg';
 import logoutIcon from 'assets/logout.svg';
 import twitterIcon from 'assets/twitter.svg';
+import userIcon from 'assets/user.svg';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
+import { routes } from 'routes';
 
 const StyledWrapper = styled.nav`
   position: fixed;
@@ -68,33 +70,60 @@ const StyledLogoutButton = styled(ButtonIcon)`
   }
 `;
 
+const StyledLinkListWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: calc(100vh / 3);
+
+  @media (max-width: 840px) {
+    flex-direction: row;
+    min-height: 0;
+    min-width: calc(100vw / 3);
+  }
+`;
+
 const StyledLinksList = styled.ul`
   margin: 0;
   padding: 0;
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 
   @media (max-width: 840px) {
-    display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
   }
 `;
 
 const Sidebar = ({ pageContext }) => (
   <StyledWrapper activeColor={pageContext}>
     <StyledLogoLink to="/" />
-    <StyledLinksList>
-      <li>
-        <ButtonIcon as={NavLink} activeClassName="active" to="/notes" icon={penIcon} />
-      </li>
-      <li>
-        <ButtonIcon as={NavLink} activeClassName="active" to="/twitters" icon={twitterIcon} />
-      </li>
-      <li>
-        <ButtonIcon as={NavLink} activeClassName="active" to="/articles" icon={bulbIcon} />
-      </li>
-    </StyledLinksList>
+    <StyledLinkListWrapper>
+      <StyledLinksList>
+        <li>
+          <ButtonIcon as={NavLink} activeClassName="active" to={routes.users} icon={userIcon} />
+        </li>
+      </StyledLinksList>
+      <StyledLinksList>
+        <li>
+          <ButtonIcon as={NavLink} activeClassName="active" to={routes.notes} icon={penIcon} />
+        </li>
+        <li>
+          <ButtonIcon
+            as={NavLink}
+            activeClassName="active"
+            to={routes.twitters}
+            icon={twitterIcon}
+          />
+        </li>
+        <li>
+          <ButtonIcon as={NavLink} activeClassName="active" to={routes.articles} icon={bulbIcon} />
+        </li>
+      </StyledLinksList>
+    </StyledLinkListWrapper>
     <StyledLogoutButton as={NavLink} to="/login" icon={logoutIcon} />
   </StyledWrapper>
 );
