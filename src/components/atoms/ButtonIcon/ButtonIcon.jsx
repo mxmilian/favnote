@@ -10,6 +10,10 @@ const ButtonIcon = styled.button`
   background-size: 50% 50%;
   cursor: pointer;
 
+  @media (max-width: 375px) {
+    background-size: 40% 40%;
+  }
+
   &.active {
     background-color: white;
   }

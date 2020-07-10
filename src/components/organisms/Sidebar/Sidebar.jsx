@@ -129,7 +129,7 @@ const Sidebar = ({ pageContext }) => (
 );
 
 Sidebar.propTypes = {
-  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles', 'users']).isRequired,
 };
 
 export default withContext(Sidebar);

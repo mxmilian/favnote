@@ -172,7 +172,7 @@ class FormBar extends Component {
 }
 
 FormBar.propTypes = {
-  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles', 'users']).isRequired,
   isVisible: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   toggleForm: PropTypes.func.isRequired,

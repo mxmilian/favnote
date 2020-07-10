@@ -107,7 +107,7 @@ class GridTemplate extends Component {
 }
 
 GridTemplate.propTypes = {
-  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles', 'users']).isRequired,
   children: PropTypes.arrayOf(PropTypes.object).isRequired,
   createNote: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,

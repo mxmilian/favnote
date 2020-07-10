@@ -68,7 +68,7 @@ const Header = ({ pageContext, notes, text, sortBy, setFilterText, setSortBy }) 
 );
 
 Header.propTypes = {
-  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles', 'users']).isRequired,
   text: PropTypes.string.isRequired,
   sortBy: PropTypes.string.isRequired,
   setFilterText: PropTypes.func.isRequired,
