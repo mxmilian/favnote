@@ -29,6 +29,12 @@ const StyledFilters = styled.div`
   display: flex;
   align-content: center;
   margin: 2rem 0 3rem 0;
+
+  @media (max-width: 560px) {
+    flex-direction: column;
+    max-width: 22rem;
+    align-content: center;
+  }
 `;
 
 const StyledSelect = styled.select`
@@ -47,15 +53,20 @@ const StyledSelect = styled.select`
   text-transform: uppercase;
   letter-spacing: 1px;
   color: ${({ theme }) => theme.black};
+
+  @media (max-width: 560px) {
+    margin-top: 2rem;
+    margin-left: 0;
+  }
 `;
 
-const Header = ({ pageContext, notes, text, sortBy, setFilterText, setSortBy }) => (
+const Header = ({ pageContext, items, text, sortBy, setFilterText, setSortBy }) => (
   <>
     <StyledHeading big as="h1">
       {pageContext}
     </StyledHeading>
     <StyledParagraph>
-      {notes.length} {pageContext}
+      {items.length} {pageContext}
     </StyledParagraph>
     <StyledFilters>
       <Input search value={text} onChange={(e) => setFilterText(e.target.value)} />
@@ -73,21 +84,28 @@ Header.propTypes = {
   sortBy: PropTypes.string.isRequired,
   setFilterText: PropTypes.func.isRequired,
   setSortBy: PropTypes.func.isRequired,
-  notes: PropTypes.arrayOf(
+  items: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired,
     }),
   ).isRequired,
 };
 
-const mapStateToProps = ({ filters, notes }, { pageContext }) => ({
-  notes: getVisibleNotes(notes[pageContext], filters),
-  text: filters.text,
-  sortBy: filters.sortBy,
-});
+const mapStateToProps = ({ filters, notes, users }, { pageContext }) => {
+  if (pageContext === 'users')
+    return {
+      items: getVisibleNotes(users[pageContext], filters),
+      text: filters.text,
+      sortBy: filters.sortBy,
+    };
+  return {
+    items: getVisibleNotes(notes[pageContext], filters),
+    text: filters.text,
+    sortBy: filters.sortBy,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   setFilterText: (text) => dispatch(setTextFilterAction(text)),

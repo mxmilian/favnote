@@ -1,26 +1,24 @@
-import Heading from 'components/atoms/Heading/Heading';
+import Header from 'components/molecules/Header/Header';
 import withContext from 'hoc/withContext';
 import PropTypes from 'prop-types';
 import React from 'react';
-import styled from 'styled-components';
 import SidebarTemplate from 'templates/SidebarTemplate';
 
-const StyledHeading = styled(Heading)`
-  ::first-letter {
-    text-transform: uppercase;
-  }
-`;
-
-const UsersTemplate = ({ pageContext }) => (
+const UsersTemplate = ({ children }) => (
   <SidebarTemplate>
-    <StyledHeading big as="h1">
-      {pageContext}
-    </StyledHeading>
+    <Header />
+    {children}
   </SidebarTemplate>
 );
 
 UsersTemplate.propTypes = {
-  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles', 'users']).isRequired,
+  children: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      createdAt: PropTypes.string.isRequired,
+    }),
+  ).isRequired,
 };
 
 export default withContext(UsersTemplate);
