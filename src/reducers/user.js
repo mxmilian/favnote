@@ -1,6 +1,13 @@
-import { AUTHENTICATE_SUCCESS } from 'actions/user';
+import {
+  AUTHENTICATE_SUCCESS,
+  FETCH_SUCCESS,
+  // FETCH_FAILURE,
+  // CREATE_REQUEST
+} from 'actions/user';
 
-const userReducer = (state = '', action) => {
+const usersInitialState = {};
+
+const userReducer = (state = usersInitialState, action) => {
   const { type } = action;
   switch (type) {
     case AUTHENTICATE_SUCCESS:
@@ -8,6 +15,11 @@ const userReducer = (state = '', action) => {
         ...state,
         // eslint-disable-next-line no-underscore-dangle
         userID: action.payload.data.data.user._id,
+      };
+    case FETCH_SUCCESS:
+      return {
+        ...state,
+        [action.payload.itemType]: [...action.payload.data],
       };
     default:
       return state;

@@ -100,6 +100,7 @@ const mapStateToProps = ({ filters, notes, users }, { pageContext }) => {
       text: filters.text,
       sortBy: filters.sortBy,
     };
+
   return {
     items: getVisibleNotes(notes[pageContext], filters),
     text: filters.text,
@@ -112,4 +113,4 @@ const mapDispatchToProps = (dispatch) => ({
   setSortBy: (sortBy) => dispatch(setSortByAction(sortBy)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withContext(Header));
+export default withContext(connect(mapStateToProps, mapDispatchToProps)(Header));

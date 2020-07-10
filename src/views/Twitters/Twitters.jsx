@@ -59,10 +59,8 @@ const mapStateToProps = ({ notes, filters }) => ({
   twitters: getVisibleNotes(notes.twitters, filters),
 });
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchNotes: (pageContext) => dispatch(fetchNotesAction(pageContext)),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  fetchNotes: (pageContext) => dispatch(fetchNotesAction(pageContext)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Twitters);
