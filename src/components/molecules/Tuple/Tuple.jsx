@@ -6,9 +6,13 @@ import React from 'react';
 import Moment from 'react-moment';
 import styled from 'styled-components';
 import Image from 'components/atoms/Image/Image';
-import plusIcon from 'assets/plus.svg';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import plusIcon from 'assets/plus.svg';
+import reqIcon from 'assets/request.svg';
+import accIcon from 'assets/accept.svg';
+import rejIcon from 'assets/reject.svg';
+import userIcon from 'assets/user.svg';
 
 const StyledWrapper = styled.div`
   min-height: 10rem;
@@ -17,7 +21,7 @@ const StyledWrapper = styled.div`
   border-radius: 1rem;
   overflow: hidden;
   position: relative;
-  border: 0.2rem solid ${({ theme, activeColor }) => (activeColor ? theme[activeColor] : 'white')};
+  border: 0.1rem solid ${({ theme, activeColor }) => (activeColor ? theme[activeColor] : 'white')};
   padding: 1.2rem 3.2rem;
   display: grid;
   grid-template-columns: 0.25fr 0.85fr 0.15fr;
@@ -27,9 +31,13 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const StyledDate = styled.div`
+const StyledDateWrapper = styled.div`
+  margin-top: 0.2rem;
   display: flex;
-  margin-bottom: 3.5rem;
+`;
+
+const StyledIconWrapper = styled.div`
+  display: flex;
 `;
 
 const StyledDateCreated = styled(Paragraph)`
@@ -58,20 +66,24 @@ const StyledHeadingWrapper = styled.div`
   }
 `;
 
-const Tuple = ({ id, yourID, name, photo, createdAt, friendState, pageContext }) => {
+const Tuple = ({ id, yourID, name, photo, createdAt, friendsStatus, pageContext }) => {
+  // 0, //'add friend',
+  //   1, //'requested',
+  //   2, //'pending',
+  //   3, //'friends'
   let sign = '';
-  switch (friendState) {
+  switch (friendsStatus) {
     case 0:
       sign = plusIcon;
       break;
     case 1:
-      sign = 'reqSign';
+      sign = reqIcon;
       break;
     case 2:
-      sign = 'penSign';
+      sign = reqIcon;
       break;
     case 3:
-      sign = 'friendSign';
+      sign = userIcon;
       break;
     default:
       sign = plusIcon;
@@ -86,13 +98,19 @@ const Tuple = ({ id, yourID, name, photo, createdAt, friendState, pageContext })
         <Heading>
           {name} {yourID === id ? '(You!)' : null}
         </Heading>
-        <StyledDate>
+        <StyledDateWrapper>
           <StyledDateCreated>Joined:</StyledDateCreated>
           <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
-        </StyledDate>
+        </StyledDateWrapper>
       </StyledHeadingWrapper>
       <StyledInnerWrapper>
-        <ButtonIcon icon={sign} />
+        {friendsStatus === 2 ? (
+          <StyledIconWrapper>
+            <ButtonIcon icon={accIcon} /> <ButtonIcon icon={rejIcon} />
+          </StyledIconWrapper>
+        ) : (
+          <ButtonIcon icon={sign} />
+        )}
       </StyledInnerWrapper>
     </StyledWrapper>
   );
@@ -105,11 +123,11 @@ Tuple.propTypes = {
   name: PropTypes.string.isRequired,
   photo: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
-  friendState: PropTypes.oneOf([0, 1, 2, 3]),
+  friendsStatus: PropTypes.oneOf([0, 1, 2, 3]),
 };
 
 Tuple.defaultProps = {
-  friendState: 0,
+  friendsStatus: 0,
   yourID: '',
 };
 

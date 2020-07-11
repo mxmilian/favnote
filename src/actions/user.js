@@ -30,12 +30,12 @@ export const authenticate = (name, email, password) => (dispatch) => {
 
 export const fetchUsers = () => (dispatch) => {
   dispatch({ type: FETCH_REQUEST });
-  return axios.get('/api/v1/users/').then(({ data }) => {
+  return axios.get('/api/v1/friends/').then(({ data }) => {
     console.log(data);
     return dispatch({
       type: FETCH_SUCCESS,
       payload: {
-        data: data.data.readDoc,
+        data: data.data.user,
         itemType: 'users',
       },
     });
