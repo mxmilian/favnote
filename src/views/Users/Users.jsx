@@ -5,6 +5,7 @@ import getVisibleNotes from 'selector';
 import UsersTemplate from 'templates/UsersTemplate';
 import Tuple from 'components/molecules/Tuple/Tuple';
 import PropTypes from 'prop-types';
+import withContext from 'hoc/withContext';
 
 class Users extends Component {
   state = {
@@ -16,14 +17,15 @@ class Users extends Component {
       props: { fetchUsers },
     } = this;
 
-    fetchUsers();
+    fetchUsers().then(() => this.setState({ loading: false }));
   }
 
   render() {
-    const { users, yourID } = this.props;
+    const { users, yourID, pageContext } = this.props;
     const { loading } = this.state;
+
     return (
-      <UsersTemplate loading={loading}>
+      <UsersTemplate loading={loading} pageType={pageContext}>
         {users.map(({ _id: id, name, createdAt, photo, friendsStatus }) => (
           <Tuple
             key={id}
@@ -42,6 +44,7 @@ class Users extends Component {
 
 Users.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
+  pageContext: PropTypes.oneOf(['users', 'notes']).isRequired,
   yourID: PropTypes.string,
   users: PropTypes.arrayOf(
     PropTypes.shape({
@@ -65,7 +68,7 @@ const mapStateToProps = ({ users, filters }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchUsers: (pageContext) => dispatch(fetchUsersAction(pageContext)),
+  fetchUsers: () => dispatch(fetchUsersAction()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Users);
+export default withContext(connect(mapStateToProps, mapDispatchToProps)(Users));
