@@ -44,7 +44,7 @@ class Users extends Component {
 
 Users.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
-  pageContext: PropTypes.oneOf(['users', 'notes']).isRequired,
+  pageContext: PropTypes.oneOf(['users', 'notes', 'twitters', 'articles']).isRequired,
   yourID: PropTypes.string,
   users: PropTypes.arrayOf(
     PropTypes.shape({
