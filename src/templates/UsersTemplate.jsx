@@ -12,13 +12,7 @@ const UsersTemplate = ({ children }) => (
 );
 
 UsersTemplate.propTypes = {
-  children: PropTypes.arrayOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      createdAt: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  children: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default withContext(UsersTemplate);

@@ -87,7 +87,8 @@ Header.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
+      title: PropTypes.string,
+      name: PropTypes.string,
       createdAt: PropTypes.string.isRequired,
     }),
   ).isRequired,
@@ -96,7 +97,7 @@ Header.propTypes = {
 const mapStateToProps = ({ filters, notes, users }, { pageContext }) => {
   if (pageContext === 'users')
     return {
-      items: getVisibleNotes(users[pageContext], filters),
+      items: getVisibleNotes(users[pageContext], filters, pageContext),
       text: filters.text,
       sortBy: filters.sortBy,
     };

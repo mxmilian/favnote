@@ -24,8 +24,8 @@ class Users extends Component {
     const { loading } = this.state;
     return (
       <UsersTemplate loading={loading}>
-        {users.map(({ _id: id, name, createdAt, imgSrc }) => (
-          <Tuple id={id} key={id} name={name} createdAt={createdAt} imgSrc={imgSrc} />
+        {users.map(({ _id: id, name, createdAt, photo }) => (
+          <Tuple id={id} key={id} name={name} createdAt={createdAt} photo={photo} />
         ))}
       </UsersTemplate>
     );
@@ -38,7 +38,7 @@ Users.propTypes = {
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
-      imgSrc: PropTypes.string.isRequired,
+      photo: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired,
     }),
   ),

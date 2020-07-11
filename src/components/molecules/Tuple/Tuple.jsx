@@ -3,6 +3,7 @@ import Heading from 'components/atoms/Heading/Heading';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import withContext from 'hoc/withContext';
 import React from 'react';
+import Moment from 'react-moment';
 import styled from 'styled-components';
 import Image from 'components/atoms/Image/Image';
 import plusIcon from 'assets/plus.svg';
@@ -25,6 +26,21 @@ const StyledWrapper = styled.div`
   }
 `;
 
+const StyledDate = styled.div`
+  display: flex;
+  margin-bottom: 3.5rem;
+`;
+
+const StyledDateCreated = styled(Paragraph)`
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  font-weight: ${({ theme }) => theme.bold};
+  margin-right: 0.8rem;
+`;
+const StyledDateParagraph = styled(Moment)`
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  font-weight: ${({ theme }) => theme.light};
+`;
+
 const StyledInnerWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -41,7 +57,7 @@ const StyledHeadingWrapper = styled.div`
   }
 `;
 
-const Tuple = ({ name, imgSrc, createdAt, friendState, pageContext }) => {
+const Tuple = ({ name, photo, createdAt, friendState, pageContext }) => {
   let sign = '';
   switch (friendState) {
     case 0:
@@ -63,11 +79,14 @@ const Tuple = ({ name, imgSrc, createdAt, friendState, pageContext }) => {
   return (
     <StyledWrapper activeColor={pageContext}>
       <StyledInnerWrapper>
-        <Image icon={imgSrc} activeColor={pageContext} />
+        <Image icon={`/src/assets/${photo}`} activeColor={pageContext} />
       </StyledInnerWrapper>
       <StyledHeadingWrapper>
         <Heading>{name}</Heading>
-        <Paragraph>Joined: {createdAt}</Paragraph>
+        <StyledDate>
+          <StyledDateCreated>Joined:</StyledDateCreated>
+          <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
+        </StyledDate>
       </StyledHeadingWrapper>
       <StyledInnerWrapper>
         <ButtonIcon icon={sign} />
@@ -79,9 +98,13 @@ const Tuple = ({ name, imgSrc, createdAt, friendState, pageContext }) => {
 Tuple.propTypes = {
   pageContext: PropTypes.oneOf(['users', 'notes', 'twitters', 'articles']).isRequired,
   name: PropTypes.string.isRequired,
-  imgSrc: PropTypes.string.isRequired,
+  photo: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
-  friendState: PropTypes.oneOf([0, 1, 2, 3]).isRequired,
+  friendState: PropTypes.oneOf([0, 1, 2, 3]),
+};
+
+Tuple.defaultProps = {
+  friendState: 0,
 };
 
 export default withContext(Tuple);
