@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import Image from 'components/atoms/Image/Image';
 import plusIcon from 'assets/plus.svg';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 const StyledWrapper = styled.div`
   min-height: 10rem;
@@ -57,7 +58,7 @@ const StyledHeadingWrapper = styled.div`
   }
 `;
 
-const Tuple = ({ name, photo, createdAt, friendState, pageContext }) => {
+const Tuple = ({ id, yourID, name, photo, createdAt, friendState, pageContext }) => {
   let sign = '';
   switch (friendState) {
     case 0:
@@ -79,10 +80,12 @@ const Tuple = ({ name, photo, createdAt, friendState, pageContext }) => {
   return (
     <StyledWrapper activeColor={pageContext}>
       <StyledInnerWrapper>
-        <Image icon={`/src/assets/${photo}`} activeColor={pageContext} />
+        <Image icon={`${photo}`} activeColor={pageContext} />
       </StyledInnerWrapper>
       <StyledHeadingWrapper>
-        <Heading>{name}</Heading>
+        <Heading>
+          {name} {yourID === id ? '(You!)' : null}
+        </Heading>
         <StyledDate>
           <StyledDateCreated>Joined:</StyledDateCreated>
           <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
@@ -97,6 +100,8 @@ const Tuple = ({ name, photo, createdAt, friendState, pageContext }) => {
 
 Tuple.propTypes = {
   pageContext: PropTypes.oneOf(['users', 'notes', 'twitters', 'articles']).isRequired,
+  id: PropTypes.string.isRequired,
+  yourID: PropTypes.string,
   name: PropTypes.string.isRequired,
   photo: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
@@ -105,6 +110,11 @@ Tuple.propTypes = {
 
 Tuple.defaultProps = {
   friendState: 0,
+  yourID: '',
 };
 
-export default withContext(Tuple);
+const mapStateToProps = ({ users }) => ({
+  yourID: users.userID,
+});
+
+export default withContext(connect(mapStateToProps)(Tuple));
