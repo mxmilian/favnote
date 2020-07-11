@@ -72,7 +72,7 @@ const Tuple = ({ id, currentID, name, photo, createdAt, friendsStatus, pageConte
   //   1, //'requested',
   //   2, //'pending',
   //   3, //'friends'
-  let sign = '';
+  let sign = null;
   if (currentID !== id) {
     switch (friendsStatus) {
       case 0:
@@ -105,12 +105,15 @@ const Tuple = ({ id, currentID, name, photo, createdAt, friendsStatus, pageConte
         </StyledDateWrapper>
       </StyledHeadingWrapper>
       <StyledInnerWrapper>
+        {/* eslint-disable-next-line no-nested-ternary */}
         {friendsStatus === 2 ? (
           <StyledIconWrapper>
             <ButtonIcon icon={accIcon} /> <ButtonIcon icon={rejIcon} />
           </StyledIconWrapper>
-        ) : (
+        ) : sign ? (
           <ButtonIcon icon={sign} />
+        ) : (
+          <Heading>You!</Heading>
         )}
       </StyledInnerWrapper>
     </StyledWrapper>
