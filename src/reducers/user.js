@@ -19,6 +19,7 @@ const userReducer = (state = usersInitialState, action) => {
     case FETCH_SUCCESS:
       return {
         ...state,
+        userID: action.payload.userID,
         [action.payload.itemType]: [...action.payload.data],
       };
     default:

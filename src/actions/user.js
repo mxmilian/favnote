@@ -35,6 +35,7 @@ export const fetchUsers = () => (dispatch) => {
     return dispatch({
       type: FETCH_SUCCESS,
       payload: {
+        userID: data.data.userID,
         data: data.data.user,
         itemType: 'users',
       },

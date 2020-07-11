@@ -1,18 +1,18 @@
+import React from 'react';
+import styled from 'styled-components';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 import Heading from 'components/atoms/Heading/Heading';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import withContext from 'hoc/withContext';
-import React from 'react';
 import Moment from 'react-moment';
-import styled from 'styled-components';
 import Image from 'components/atoms/Image/Image';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import plusIcon from 'assets/plus.svg';
 import reqIcon from 'assets/request.svg';
 import accIcon from 'assets/accept.svg';
 import rejIcon from 'assets/reject.svg';
 import userIcon from 'assets/user.svg';
+import defaultPhoto from 'assets/photo.jpg';
 
 const StyledWrapper = styled.div`
   min-height: 10rem;
@@ -25,6 +25,7 @@ const StyledWrapper = styled.div`
   padding: 1.2rem 3.2rem;
   display: grid;
   grid-template-columns: 0.25fr 0.85fr 0.15fr;
+  margin-bottom: 3.8rem;
 
   @media (max-width: 475px) {
     padding: 1.2rem 0.5rem;
@@ -66,38 +67,38 @@ const StyledHeadingWrapper = styled.div`
   }
 `;
 
-const Tuple = ({ id, yourID, name, photo, createdAt, friendsStatus, pageContext }) => {
+const Tuple = ({ id, currentID, name, photo, createdAt, friendsStatus, pageContext }) => {
   // 0, //'add friend',
   //   1, //'requested',
   //   2, //'pending',
   //   3, //'friends'
   let sign = '';
-  switch (friendsStatus) {
-    case 0:
-      sign = plusIcon;
-      break;
-    case 1:
-      sign = reqIcon;
-      break;
-    case 2:
-      sign = reqIcon;
-      break;
-    case 3:
-      sign = userIcon;
-      break;
-    default:
-      sign = plusIcon;
+  if (currentID !== id) {
+    switch (friendsStatus) {
+      case 0:
+        sign = plusIcon;
+        break;
+      case 1:
+        sign = reqIcon;
+        break;
+      case 2:
+        sign = reqIcon;
+        break;
+      case 3:
+        sign = userIcon;
+        break;
+      default:
+        sign = plusIcon;
+    }
   }
 
   return (
     <StyledWrapper activeColor={pageContext}>
       <StyledInnerWrapper>
-        <Image icon={`${photo}`} activeColor={pageContext} />
+        <Image icon={photo !== 'default.jpg' ? photo : defaultPhoto} activeColor={pageContext} />
       </StyledInnerWrapper>
       <StyledHeadingWrapper>
-        <Heading>
-          {name} {yourID === id ? '(You!)' : null}
-        </Heading>
+        <Heading>{name}</Heading>
         <StyledDateWrapper>
           <StyledDateCreated>Joined:</StyledDateCreated>
           <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
@@ -119,7 +120,7 @@ const Tuple = ({ id, yourID, name, photo, createdAt, friendsStatus, pageContext 
 Tuple.propTypes = {
   pageContext: PropTypes.oneOf(['users', 'notes', 'twitters', 'articles']).isRequired,
   id: PropTypes.string.isRequired,
-  yourID: PropTypes.string,
+  currentID: PropTypes.string,
   name: PropTypes.string.isRequired,
   photo: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
@@ -128,11 +129,7 @@ Tuple.propTypes = {
 
 Tuple.defaultProps = {
   friendsStatus: 0,
-  yourID: '',
+  currentID: '',
 };
 
-const mapStateToProps = ({ users }) => ({
-  yourID: users.userID,
-});
-
-export default withContext(connect(mapStateToProps)(Tuple));
+export default withContext(Tuple);

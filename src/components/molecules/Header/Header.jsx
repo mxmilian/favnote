@@ -28,7 +28,7 @@ const StyledParagraph = styled(Paragraph)`
 const StyledFilters = styled.div`
   display: flex;
   align-content: center;
-  margin: 2rem 0 3rem 0;
+  margin: 2rem 0 3.2rem 0;
 
   @media (max-width: 560px) {
     flex-direction: column;

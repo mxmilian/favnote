@@ -7,6 +7,7 @@ const Image = styled.img`
   border-radius: 100%;
   background: url(${({ icon }) => icon}) no-repeat 50% 50%;
   background-size: 100% 100%;
+  overflow: hidden;
 `;
 
 export default Image;

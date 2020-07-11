@@ -20,14 +20,15 @@ class Users extends Component {
   }
 
   render() {
-    const { users } = this.props;
+    const { users, yourID } = this.props;
     const { loading } = this.state;
     return (
       <UsersTemplate loading={loading}>
         {users.map(({ _id: id, name, createdAt, photo, friendsStatus }) => (
           <Tuple
-            id={id}
             key={id}
+            id={id}
+            currentID={yourID}
             name={name}
             createdAt={createdAt}
             photo={photo}
@@ -41,6 +42,7 @@ class Users extends Component {
 
 Users.propTypes = {
   fetchUsers: PropTypes.func.isRequired,
+  yourID: PropTypes.string,
   users: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
@@ -54,10 +56,12 @@ Users.propTypes = {
 
 Users.defaultProps = {
   users: [],
+  yourID: '',
 };
 
 const mapStateToProps = ({ users, filters }) => ({
   users: getVisibleNotes(users.users, filters, 'users'),
+  yourID: users.userID,
 });
 
 const mapDispatchToProps = (dispatch) => ({
