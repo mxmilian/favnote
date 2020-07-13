@@ -55,6 +55,11 @@ const StyledHeading = styled(Heading)`
   color: ${({ theme, pageContext }) => theme[pageContext]};
 `;
 
+const StyledSpan = styled.span`
+  text-decoration: underline;
+  cursor: pointer;
+`;
+
 class GridTemplate extends Component {
   state = {
     showForm: false,
@@ -89,7 +94,8 @@ class GridTemplate extends Component {
         ) : (
           <StyledLoaderEmptyWrapper>
             <StyledHeading pageContext={pageContext} as="h3">
-              Any {pageContext} here, please add some!
+              {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events */}
+              Any {pageContext} here, please <StyledSpan onClick={toggleForm}>add some!</StyledSpan>
             </StyledHeading>
           </StyledLoaderEmptyWrapper>
         )}
