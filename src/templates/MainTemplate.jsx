@@ -25,12 +25,14 @@ class MainTemplate extends Component {
     } = this.props;
     const pageTypes = ['notes', 'twitters', 'articles', 'users'];
     const [currentPage] = pageTypes.filter((el) => pathname.includes(el));
-    if (prevState.pageType !== currentPage) this.setState({ pageType: currentPage });
+    if (prevState.pageType !== currentPage && currentPage !== undefined)
+      this.setState({ pageType: currentPage });
   };
 
   render() {
     const { pageType } = this.state;
     const { children } = this.props;
+    console.log(pageType);
     return (
       <PageContext.Provider value={pageType}>
         <GlobalStyle />

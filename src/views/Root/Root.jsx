@@ -16,7 +16,7 @@ const Root = () => (
     <BrowserRouter>
       <MainTemplate>
         <Switch>
-          <Route exact path={routes.home} render={() => <Redirect to="/sign" />} />
+          <Route exact path={routes.home} render={() => <Redirect push to={routes.sign} />} />
           <Route exact path={routes.users} component={Users} />
           <Route exact path={routes.notes} component={Notes} />
           <Route path={routes.notesDetails} component={Details} />
