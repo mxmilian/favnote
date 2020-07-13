@@ -1,4 +1,8 @@
-import { reqFriend as reqFriendAction, accFriend as accFriendAction } from 'actions/user';
+import {
+  reqFriend as reqFriendAction,
+  accFriend as accFriendAction,
+  rejFriend as rejFriendAction,
+} from 'actions/user';
 import React from 'react';
 import styled from 'styled-components';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
@@ -79,6 +83,7 @@ const Tuple = ({
   pageContext,
   reqFriend,
   accFriend,
+  rejFriend,
 }) => {
   // 0, //'add friend',
   //   1, //'requested',
@@ -99,7 +104,7 @@ const Tuple = ({
           icon1: accIcon,
           method1: () => accFriend(id),
           icon2: rejIcon,
-          method2: () => console.log(id),
+          method2: () => rejFriend(id),
         };
         break;
       case 2:
@@ -158,6 +163,7 @@ Tuple.propTypes = {
   friendsStatus: PropTypes.oneOf([0, 1, 2, 3]),
   reqFriend: PropTypes.func.isRequired,
   accFriend: PropTypes.func.isRequired,
+  rejFriend: PropTypes.func.isRequired,
 };
 
 Tuple.defaultProps = {
@@ -168,6 +174,7 @@ Tuple.defaultProps = {
 const mapDispatchToProps = (dispatch) => ({
   reqFriend: (id) => dispatch(reqFriendAction(id)),
   accFriend: (id) => dispatch(accFriendAction(id)),
+  rejFriend: (id) => dispatch(rejFriendAction(id)),
 });
 
 export default connect(null, mapDispatchToProps)(withContext(Tuple));

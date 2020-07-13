@@ -16,6 +16,9 @@ export const ACC_REQUEST = 'ACC_REQUEST';
 export const ACC_SUCCESS = 'ACC_SUCCESS';
 export const ACC_FAILURE = 'ACC_FAILURE';
 
+export const REJ_REQUEST = 'REJ_REQUEST';
+export const REJ_SUCCESS = 'REJ_SUCCESS';
+export const REJ_FAILURE = 'REJ_FAILURE';
 export const authenticate = (name, email, password) => (dispatch) => {
   dispatch({ type: AUTHENTICATE_REQUEST });
   if (email) {
@@ -84,6 +87,26 @@ export const accFriend = (id) => (dispatch) => {
         payload: {
           id,
           data: data.data.accUser[0],
+          itemType: 'users',
+        },
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const rejFriend = (id) => (dispatch) => {
+  dispatch({ type: REJ_REQUEST });
+  return axios
+    .post('/api/v1/friends/rej', {
+      id,
+    })
+    .then(({ data }) => {
+      console.log(data.data.rejUser);
+      return dispatch({
+        type: REQ_SUCCESS,
+        payload: {
+          id,
+          data: data.data.rejUser[0],
           itemType: 'users',
         },
       });
