@@ -3,8 +3,6 @@ import {
   AUTHENTICATE_SUCCESS,
   FETCH_USERS_SUCCESS,
   REJ_SUCCESS,
-  // FETCH_FAILURE,
-  // CREATE_REQUEST
   REQ_SUCCESS,
 } from 'actions/user';
 

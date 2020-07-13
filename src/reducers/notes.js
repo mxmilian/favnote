@@ -1,14 +1,4 @@
-import {
-  // FETCH_REQUEST,
-  FETCH_SUCCESS,
-  // FETCH_FAILURE,
-  // CREATE_REQUEST,
-  CREATE_SUCCESS,
-  // CREATE_FAILURE,
-  // REMOVE_REQUEST
-  REMOVE_SUCCESS,
-  // REMOVE_FAILURE
-} from 'actions/notes';
+import { FETCH_SUCCESS, CREATE_SUCCESS, REMOVE_SUCCESS } from 'actions/notes';
 
 const notesInitialState = {};
 
