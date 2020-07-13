@@ -1,4 +1,5 @@
 import {
+  ACC_SUCCESS,
   AUTHENTICATE_SUCCESS,
   FETCH_USERS_SUCCESS,
   // FETCH_FAILURE,
@@ -24,6 +25,15 @@ const userReducer = (state = usersInitialState, action) => {
         [action.payload.itemType]: [...action.payload.data],
       };
     case REQ_SUCCESS:
+      return {
+        ...state,
+        [action.payload.itemType]: state.users.map((user) => {
+          // eslint-disable-next-line no-underscore-dangle
+          if (user._id === action.payload.data._id) return { ...user, ...action.payload.data };
+          return user;
+        }),
+      };
+    case ACC_SUCCESS:
       return {
         ...state,
         [action.payload.itemType]: state.users.map((user) => {

@@ -8,9 +8,13 @@ export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
 export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
 export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
 
-export const REQ_REQUEST = 'REQ_REQUES';
+export const REQ_REQUEST = 'REQ_REQUEST';
 export const REQ_SUCCESS = 'REQ_SUCCESS';
 export const REQ_FAILURE = 'REQ_FAILURE';
+
+export const ACC_REQUEST = 'ACC_REQUEST';
+export const ACC_SUCCESS = 'ACC_SUCCESS';
+export const ACC_FAILURE = 'ACC_FAILURE';
 
 export const authenticate = (name, email, password) => (dispatch) => {
   dispatch({ type: AUTHENTICATE_REQUEST });
@@ -60,6 +64,26 @@ export const reqFriend = (id) => (dispatch) => {
         payload: {
           id,
           data: data.data.reqUser[0],
+          itemType: 'users',
+        },
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
+export const accFriend = (id) => (dispatch) => {
+  dispatch({ type: ACC_REQUEST });
+  return axios
+    .post('/api/v1/friends/acc', {
+      id,
+    })
+    .then(({ data }) => {
+      console.log(data.data.accUser);
+      return dispatch({
+        type: REQ_SUCCESS,
+        payload: {
+          id,
+          data: data.data.accUser[0],
           itemType: 'users',
         },
       });
