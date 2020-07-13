@@ -1,3 +1,4 @@
+import { reqFriend as reqFriendAction } from 'actions/user';
 import React from 'react';
 import styled from 'styled-components';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
@@ -5,6 +6,7 @@ import Heading from 'components/atoms/Heading/Heading';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import withContext from 'hoc/withContext';
 import Moment from 'react-moment';
+import { connect } from 'react-redux';
 import Image from 'components/atoms/Image/Image';
 import PropTypes from 'prop-types';
 import plusIcon from 'assets/plus.svg';
@@ -67,25 +69,49 @@ const StyledHeadingWrapper = styled.div`
   }
 `;
 
-const Tuple = ({ id, currentID, name, photo, createdAt, friendsStatus, pageContext }) => {
+const Tuple = ({
+  id,
+  currentID,
+  name,
+  photo,
+  createdAt,
+  friendsStatus,
+  pageContext,
+  reqFriend,
+}) => {
   // 0, //'add friend',
   //   1, //'requested',
   //   2, //'pending',
   //   3, //'friends'
+
   let sign = null;
   if (currentID !== id) {
     switch (friendsStatus) {
       case 0:
-        sign = plusIcon;
+        sign = {
+          icon: plusIcon,
+          method: () => reqFriend(id),
+        };
         break;
       case 1:
-        sign = reqIcon;
+        sign = {
+          icon1: accIcon,
+          method1: () => console.log(id),
+          icon2: rejIcon,
+          method2: () => console.log(id),
+        };
         break;
       case 2:
-        sign = reqIcon;
+        sign = {
+          icon: reqIcon,
+          method: () => console.log(id),
+        };
         break;
       case 3:
-        sign = userIcon;
+        sign = {
+          icon: userIcon,
+          method: () => console.log(id),
+        };
         break;
       default:
         sign = plusIcon;
@@ -106,12 +132,13 @@ const Tuple = ({ id, currentID, name, photo, createdAt, friendsStatus, pageConte
       </StyledHeadingWrapper>
       <StyledInnerWrapper>
         {/* eslint-disable-next-line no-nested-ternary */}
-        {friendsStatus === 2 ? (
+        {friendsStatus === 1 ? (
           <StyledIconWrapper>
-            <ButtonIcon icon={accIcon} /> <ButtonIcon icon={rejIcon} />
+            <ButtonIcon icon={sign.icon1} onClick={sign.method1} />{' '}
+            <ButtonIcon icon={sign.icon2} onClick={sign.method2} />
           </StyledIconWrapper>
         ) : sign ? (
-          <ButtonIcon icon={sign} />
+          <ButtonIcon icon={sign.icon} onClick={sign.method} />
         ) : (
           <Heading>You!</Heading>
         )}
@@ -128,6 +155,7 @@ Tuple.propTypes = {
   photo: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
   friendsStatus: PropTypes.oneOf([0, 1, 2, 3]),
+  reqFriend: PropTypes.func.isRequired,
 };
 
 Tuple.defaultProps = {
@@ -135,4 +163,8 @@ Tuple.defaultProps = {
   currentID: '',
 };
 
-export default withContext(Tuple);
+const mapDispatchToProps = (dispatch) => ({
+  reqFriend: (id) => dispatch(reqFriendAction(id)),
+});
+
+export default connect(null, mapDispatchToProps)(withContext(Tuple));
