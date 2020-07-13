@@ -90,37 +90,29 @@ const Tuple = ({
   //   2, //'pending',
   //   3, //'friends'
 
-  let sign = null;
+  let Sign = () => <Heading>You!</Heading>;
   if (currentID !== id) {
     switch (friendsStatus) {
       case 0:
-        sign = {
-          icon: plusIcon,
-          method: () => reqFriend(id),
-        };
+        Sign = () => <ButtonIcon icon={plusIcon} onClick={() => reqFriend(id)} />;
         break;
       case 1:
-        sign = {
-          icon1: accIcon,
-          method1: () => accFriend(id),
-          icon2: rejIcon,
-          method2: () => rejFriend(id),
-        };
+        Sign = () => (
+          <StyledIconWrapper>
+            <ButtonIcon icon={accIcon} onClick={() => accFriend(id)} />{' '}
+            <ButtonIcon icon={rejIcon} onClick={() => rejFriend(id)} />
+          </StyledIconWrapper>
+        );
+
         break;
       case 2:
-        sign = {
-          icon: reqIcon,
-          method: () => console.log(id),
-        };
+        Sign = () => <ButtonIcon icon={reqIcon} onClick={() => console.log(id)} />;
         break;
       case 3:
-        sign = {
-          icon: userIcon,
-          method: () => console.log(id),
-        };
+        Sign = () => <ButtonIcon icon={userIcon} onClick={() => console.log(id)} />;
         break;
       default:
-        sign = plusIcon;
+        Sign = plusIcon;
     }
   }
 
@@ -137,17 +129,7 @@ const Tuple = ({
         </StyledDateWrapper>
       </StyledHeadingWrapper>
       <StyledInnerWrapper>
-        {/* eslint-disable-next-line no-nested-ternary */}
-        {friendsStatus === 1 ? (
-          <StyledIconWrapper>
-            <ButtonIcon icon={sign.icon1} onClick={sign.method1} />{' '}
-            <ButtonIcon icon={sign.icon2} onClick={sign.method2} />
-          </StyledIconWrapper>
-        ) : sign ? (
-          <ButtonIcon icon={sign.icon} onClick={sign.method} />
-        ) : (
-          <Heading>You!</Heading>
-        )}
+        <Sign />
       </StyledInnerWrapper>
     </StyledWrapper>
   );
