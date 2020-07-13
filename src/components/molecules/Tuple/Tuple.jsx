@@ -82,6 +82,11 @@ class Tuple extends Component {
 
   toggleLoading = () => this.setState((prevState) => ({ loading: !prevState.loading }));
 
+  friendFun = (func, id) => {
+    this.toggleLoading();
+    func(id).then(() => this.toggleLoading());
+  };
+
   render() {
     // 0, //'add friend',
     //   1, //'requested',
@@ -100,7 +105,7 @@ class Tuple extends Component {
       rejFriend,
     } = this.props;
 
-    const { toggleLoading } = this;
+    const { friendFun } = this;
 
     const { loading } = this.state;
 
@@ -108,21 +113,13 @@ class Tuple extends Component {
     if (currentID !== id) {
       switch (friendsStatus) {
         case 0:
-          Sign = () => (
-            <ButtonIcon
-              icon={plusIcon}
-              onClick={() => {
-                toggleLoading();
-                reqFriend(id).then(() => toggleLoading());
-              }}
-            />
-          );
+          Sign = () => <ButtonIcon icon={plusIcon} onClick={() => friendFun(reqFriend, id)} />;
           break;
         case 1:
           Sign = () => (
             <StyledIconWrapper>
-              <ButtonIcon icon={accIcon} onClick={() => accFriend(id)} />{' '}
-              <ButtonIcon icon={rejIcon} onClick={() => rejFriend(id)} />
+              <ButtonIcon icon={accIcon} onClick={() => friendFun(accFriend, id)} />{' '}
+              <ButtonIcon icon={rejIcon} onClick={() => friendFun(rejFriend, id)} />
             </StyledIconWrapper>
           );
 

@@ -2,11 +2,13 @@ import Input from 'components/atoms/Input/Input';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import Loader from 'react-loader-spinner';
 import { routes } from 'routes';
 import styled from 'styled-components';
 import Button from 'components/atoms/Button/Button';
 import Heading from 'components/atoms/Heading/Heading';
 import AuthTemplate from 'templates/AuthTemplate';
+import { theme as themeLoader } from 'theme/theme';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
@@ -30,6 +32,11 @@ const StyledInput = styled(Input)`
 `;
 
 const StyledButton = styled(Button)`
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+`;
+
+const StyledLoader = styled(Loader)`
   margin-top: 3rem;
   margin-bottom: 2rem;
 `;
@@ -58,6 +65,7 @@ class Sign extends Component {
   state = {
     signUp: false,
     isEmail: false,
+    loading: false,
   };
 
   toggleSign = () => {
@@ -68,9 +76,13 @@ class Sign extends Component {
     this.setState((prevState) => ({ isEmail: !prevState.isEmail }));
   };
 
+  toggleLoader = () => {
+    this.setState((prevState) => ({ loading: !prevState.loading }));
+  };
+
   render() {
-    const { signUp, isEmail } = this.state;
-    const { toggleSign, toggleEmail } = this;
+    const { signUp, isEmail, loading } = this.state;
+    const { toggleSign, toggleEmail, toggleLoader } = this;
     const { authenticate, userID } = this.props;
     if (userID) return <Redirect push to={routes.notes} />;
     return (
@@ -109,12 +121,17 @@ class Sign extends Component {
           })}
           onSubmit={(values, { setSubmitting }) => {
             setSubmitting(false);
+            toggleLoader();
             try {
               if (!signUp) {
                 if (isEmail) {
-                  authenticate(null, values.email, values.password);
+                  authenticate(null, values.email, values.password)
+                    .then(() => toggleLoader())
+                    .catch(() => toggleLoader());
                 } else if (!isEmail) {
-                  authenticate(values.name, null, values.password);
+                  authenticate(values.name, null, values.password)
+                    .then(() => toggleLoader())
+                    .catch(() => toggleLoader());
                 }
               }
             } catch (e) {
@@ -209,9 +226,13 @@ class Sign extends Component {
                     ) : null}
                   </>
                 ) : null}
-                <StyledButton activecolor="notes" type="submit">
-                  {signUp ? 'Sign up' : 'Sign in'}
-                </StyledButton>
+                {loading ? (
+                  <StyledLoader type="Oval" color={themeLoader.notes} height={50} width={50} />
+                ) : (
+                  <StyledButton activecolor="notes" type="submit">
+                    {signUp ? 'Sign up' : 'Sign in'}
+                  </StyledButton>
+                )}
               </StyledForm>
 
               <StyledLink onClick={toggleSign}>
