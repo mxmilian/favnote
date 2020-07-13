@@ -3,7 +3,8 @@ import {
   accFriend as accFriendAction,
   rejFriend as rejFriendAction,
 } from 'actions/user';
-import React from 'react';
+import React, { Component } from 'react';
+import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 import Heading from 'components/atoms/Heading/Heading';
@@ -19,6 +20,7 @@ import accIcon from 'assets/accept.svg';
 import rejIcon from 'assets/reject.svg';
 import userIcon from 'assets/user.svg';
 import defaultPhoto from 'assets/photo.jpg';
+import { theme as themeLoader } from 'theme/theme';
 
 const StyledWrapper = styled.div`
   min-height: 10rem;
@@ -73,67 +75,91 @@ const StyledHeadingWrapper = styled.div`
   }
 `;
 
-const Tuple = ({
-  id,
-  currentID,
-  name,
-  photo,
-  createdAt,
-  friendsStatus,
-  pageContext,
-  reqFriend,
-  accFriend,
-  rejFriend,
-}) => {
-  // 0, //'add friend',
-  //   1, //'requested',
-  //   2, //'pending',
-  //   3, //'friends'
+class Tuple extends Component {
+  state = {
+    loading: false,
+  };
 
-  let Sign = () => <Heading>You!</Heading>;
-  if (currentID !== id) {
-    switch (friendsStatus) {
-      case 0:
-        Sign = () => <ButtonIcon icon={plusIcon} onClick={() => reqFriend(id)} />;
-        break;
-      case 1:
-        Sign = () => (
-          <StyledIconWrapper>
-            <ButtonIcon icon={accIcon} onClick={() => accFriend(id)} />{' '}
-            <ButtonIcon icon={rejIcon} onClick={() => rejFriend(id)} />
-          </StyledIconWrapper>
-        );
+  toggleLoading = () => this.setState((prevState) => ({ loading: !prevState.loading }));
 
-        break;
-      case 2:
-        Sign = () => <ButtonIcon icon={reqIcon} onClick={() => console.log(id)} />;
-        break;
-      case 3:
-        Sign = () => <ButtonIcon icon={userIcon} onClick={() => console.log(id)} />;
-        break;
-      default:
-        Sign = plusIcon;
+  render() {
+    // 0, //'add friend',
+    //   1, //'requested',
+    //   2, //'pending',
+    //   3, //'friends'
+    const {
+      id,
+      currentID,
+      name,
+      photo,
+      createdAt,
+      friendsStatus,
+      pageContext,
+      reqFriend,
+      accFriend,
+      rejFriend,
+    } = this.props;
+
+    const { toggleLoading } = this;
+
+    const { loading } = this.state;
+
+    let Sign = () => <Heading>You!</Heading>;
+    if (currentID !== id) {
+      switch (friendsStatus) {
+        case 0:
+          Sign = () => (
+            <ButtonIcon
+              icon={plusIcon}
+              onClick={() => {
+                toggleLoading();
+                reqFriend(id).then(() => toggleLoading());
+              }}
+            />
+          );
+          break;
+        case 1:
+          Sign = () => (
+            <StyledIconWrapper>
+              <ButtonIcon icon={accIcon} onClick={() => accFriend(id)} />{' '}
+              <ButtonIcon icon={rejIcon} onClick={() => rejFriend(id)} />
+            </StyledIconWrapper>
+          );
+
+          break;
+        case 2:
+          Sign = () => <ButtonIcon icon={reqIcon} onClick={() => console.log(id)} />;
+          break;
+        case 3:
+          Sign = () => <ButtonIcon icon={userIcon} onClick={() => console.log(id)} />;
+          break;
+        default:
+          Sign = plusIcon;
+      }
     }
+    return (
+      <StyledWrapper activeColor={pageContext}>
+        <StyledInnerWrapper>
+          <Image icon={photo !== 'default.jpg' ? photo : defaultPhoto} activeColor={pageContext} />
+        </StyledInnerWrapper>
+        <StyledHeadingWrapper>
+          <Heading>{name}</Heading>
+          <StyledDateWrapper>
+            <StyledDateCreated>Joined:</StyledDateCreated>
+            <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
+          </StyledDateWrapper>
+        </StyledHeadingWrapper>
+        <StyledInnerWrapper>
+          {loading ? (
+            <Loader type="ThreeDots" color={themeLoader[pageContext]} height={50} width={50} />
+          ) : (
+            <Sign />
+          )}
+        </StyledInnerWrapper>
+      </StyledWrapper>
+    );
   }
-
-  return (
-    <StyledWrapper activeColor={pageContext}>
-      <StyledInnerWrapper>
-        <Image icon={photo !== 'default.jpg' ? photo : defaultPhoto} activeColor={pageContext} />
-      </StyledInnerWrapper>
-      <StyledHeadingWrapper>
-        <Heading>{name}</Heading>
-        <StyledDateWrapper>
-          <StyledDateCreated>Joined:</StyledDateCreated>
-          <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
-        </StyledDateWrapper>
-      </StyledHeadingWrapper>
-      <StyledInnerWrapper>
-        <Sign />
-      </StyledInnerWrapper>
-    </StyledWrapper>
-  );
-};
+}
 
 Tuple.propTypes = {
   pageContext: PropTypes.oneOf(['users', 'notes', 'twitters', 'articles']).isRequired,
