@@ -41,8 +41,7 @@ export const authenticate = (name, email, password) => (dispatch) => {
 
 export const fetchUsers = () => (dispatch) => {
   dispatch({ type: FETCH_USERS_REQUEST });
-  return axios.get('/api/v1/friends/').then(({ data }) => {
-    console.log(data.data.user);
+  return axios.get('/api/v1/friends/').then(({ data }) =>
     dispatch({
       type: FETCH_USERS_SUCCESS,
       payload: {
@@ -50,8 +49,8 @@ export const fetchUsers = () => (dispatch) => {
         data: data.data.user,
         itemType: 'users',
       },
-    });
-  });
+    }),
+  );
 };
 
 export const reqFriend = (id) => (dispatch) => {

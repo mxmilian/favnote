@@ -5,6 +5,7 @@ import { ThemeProvider } from 'styled-components';
 import PageContext from 'context';
 import GlobalStyle from 'theme/GlobalStyle';
 import { theme } from 'theme/theme';
+import HelmetTemplate from 'templates/HelmetTemplate';
 
 class MainTemplate extends Component {
   state = {
@@ -36,7 +37,9 @@ class MainTemplate extends Component {
     return (
       <PageContext.Provider value={pageType}>
         <GlobalStyle />
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <ThemeProvider theme={theme}>
+          <HelmetTemplate>{children}</HelmetTemplate>
+        </ThemeProvider>
       </PageContext.Provider>
     );
   }
