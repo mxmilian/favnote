@@ -64,13 +64,10 @@ Users.defaultProps = {
   yourID: '',
 };
 
-const mapStateToProps = (state) => {
-  console.log(state);
-  return {
-    users: getVisibleNotes(state.users.users, state.filters, 'users'),
-    yourID: state.users.userID,
-  };
-};
+const mapStateToProps = (state) => ({
+  users: getVisibleNotes(state.users.users, state.filters, 'users'),
+  yourID: state.users.userID,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   fetchUsers: () => dispatch(fetchUsersAction()),

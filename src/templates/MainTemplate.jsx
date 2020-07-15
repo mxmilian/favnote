@@ -33,7 +33,6 @@ class MainTemplate extends Component {
   render() {
     const { pageType } = this.state;
     const { children } = this.props;
-    console.log(pageType);
     return (
       <PageContext.Provider value={pageType}>
         <GlobalStyle />

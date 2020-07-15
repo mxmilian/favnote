@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import withContext from 'hoc/withContext';
@@ -41,7 +41,7 @@ const StyledAvatar = styled.img`
 `;
 
 const StyledContentParagraph = styled(Paragraph)`
-  margin-bottom: 3.5rem;
+  margin-bottom: 0rem;
 `;
 
 const StyledLink = styled.a`
@@ -50,32 +50,52 @@ const StyledLink = styled.a`
   color: ${({ theme }) => theme.black};
   font-weight: ${({ theme }) => theme.bold};
   text-transform: uppercase;
+  margin-top: 3.5rem;
   margin-bottom: 5.5rem;
 `;
 
-const DetailsTemplate = ({ pageContext, title, createdAt, content, articleUrl, twitterName }) => (
-  <SidebarTemplate>
-    <StyledWrapper>
-      <Heading big as="h1">
-        {title}
-      </Heading>
-      <StyledDate>
-        <StyledDateCreated>Created:</StyledDateCreated>
-        <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
-      </StyledDate>
-      {pageContext === 'twitters' ? (
-        <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
-      ) : null}
-      <StyledContentParagraph>{content}</StyledContentParagraph>
-      {pageContext === 'articles' || pageContext === 'twitters' ? (
-        <StyledLink href={articleUrl}>Open {pageContext}</StyledLink>
-      ) : null}
-      <Button activecolor={pageContext} as={Link} to={`/${pageContext}`}>
-        close
-      </Button>
-    </StyledWrapper>
-  </SidebarTemplate>
-);
+class DetailsTemplate extends Component {
+  state = {
+    editContent: false,
+  };
+
+  editContentToggle = () => this.setState((prevState) => ({ editContent: !prevState.editContent }));
+
+  render() {
+    const { editContent } = this.state;
+    const { pageContext, title, createdAt, content, articleUrl, twitterName } = this.props;
+    const { editContentToggle } = this;
+    return (
+      <SidebarTemplate>
+        <StyledWrapper>
+          <Heading big as="h1">
+            {title}
+          </Heading>
+          <StyledDate>
+            <StyledDateCreated>Created:</StyledDateCreated>
+            <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
+          </StyledDate>
+          {pageContext === 'twitters' ? (
+            <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
+          ) : null}
+          {editContent ? (
+            <form>
+              <textarea value={content} />
+            </form>
+          ) : (
+            <StyledContentParagraph onClick={editContentToggle}>{content}</StyledContentParagraph>
+          )}
+          {pageContext === 'articles' || pageContext === 'twitters' ? (
+            <StyledLink href={articleUrl}>Open {pageContext}</StyledLink>
+          ) : null}
+          <Button activecolor={pageContext} as={Link} to={`/${pageContext}`}>
+            close
+          </Button>
+        </StyledWrapper>
+      </SidebarTemplate>
+    );
+  }
+}
 
 DetailsTemplate.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,

@@ -76,6 +76,16 @@ const DateInfo = styled(Moment)`
   font-size: ${({ theme }) => theme.fontSize.xs};
 `;
 
+const StyledParagraph = styled(Paragraph)`
+  overflow: hidden;
+  word-break: break-word;
+  white-space: pre-wrap;
+  width: 100%;
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+`;
+
 class Card extends Component {
   state = {
     redirect: false,
@@ -95,6 +105,10 @@ class Card extends Component {
   render() {
     const { redirect, show } = this.state;
     const { id, pageContext, title, createdAt, twitterName, articleUrl, content } = this.props;
+
+    let prepareContent = content;
+    if (content.length >= 120) prepareContent = `${content.replace(/^(.{120}[^\s]*).*/, '$1')}...`;
+
     if (redirect) return <Redirect push to={`${pageContext}/${id}`} />;
 
     return (
@@ -110,7 +124,7 @@ class Card extends Component {
             {pageContext === 'articles' && <StyledLink href={articleUrl} />}
           </InnerWrapper>
           <InnerWrapper flex>
-            <Paragraph>{content}</Paragraph>
+            <StyledParagraph>{prepareContent}</StyledParagraph>
             <ButtonWrapper>
               <Button secondary onClick={this.handleModalClick}>
                 Remove
