@@ -41,7 +41,14 @@ const StyledAvatar = styled.img`
 `;
 
 const StyledContentParagraph = styled(Paragraph)`
-  margin-bottom: 0rem;
+  overflow: hidden;
+  margin-bottom: 3rem;
+  word-break: break-word;
+  white-space: pre-wrap;
+  width: 70%;
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
 `;
 
 const StyledLink = styled.a`
@@ -50,8 +57,29 @@ const StyledLink = styled.a`
   color: ${({ theme }) => theme.black};
   font-weight: ${({ theme }) => theme.bold};
   text-transform: uppercase;
-  margin-top: 3.5rem;
   margin-bottom: 5.5rem;
+`;
+
+const StyledTextArea = styled.textarea`
+  font-size: ${({ theme }) => theme.fontSize.s};
+  font-weight: ${({ theme }) => theme.regular};
+  background-color: ${({ theme }) => theme.grey100};
+  border: none;
+  padding: 1rem 1rem 3rem 1rem;
+  font-family: inherit;
+  border-radius: 2rem;
+  height: ${({ lines }) => `${lines * 2.5}rem`};
+  overflow: hidden;
+  word-break: break-word;
+  white-space: pre-wrap;
+  width: 70%;
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+`;
+
+const StyledForm = styled.form`
+  margin-bottom: 3rem;
 `;
 
 class DetailsTemplate extends Component {
@@ -65,6 +93,8 @@ class DetailsTemplate extends Component {
     const { editContent } = this.state;
     const { pageContext, title, createdAt, content, articleUrl, twitterName } = this.props;
     const { editContentToggle } = this;
+    const lines = content.split(/\r\n|\r|\n/).length;
+    console.log(lines);
     return (
       <SidebarTemplate>
         <StyledWrapper>
@@ -79,9 +109,9 @@ class DetailsTemplate extends Component {
             <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
           ) : null}
           {editContent ? (
-            <form>
-              <textarea value={content} />
-            </form>
+            <StyledForm>
+              <StyledTextArea value={content} lines={lines} />
+            </StyledForm>
           ) : (
             <StyledContentParagraph onClick={editContentToggle}>{content}</StyledContentParagraph>
           )}
