@@ -2,6 +2,7 @@ import {
   ACC_SUCCESS,
   AUTHENTICATE_SUCCESS,
   FETCH_USERS_SUCCESS,
+  REGISTER_SUCCESS,
   REJ_SUCCESS,
   REQ_SUCCESS,
 } from 'actions/user';
@@ -15,8 +16,15 @@ const userReducer = (state = usersInitialState, action) => {
       return {
         ...state,
         // eslint-disable-next-line no-underscore-dangle
-        userID: action.payload.data.data.user._id,
+        userID: action.payload.userID,
       };
+    case REGISTER_SUCCESS:
+      return {
+        ...state,
+        // eslint-disable-next-line no-underscore-dangle
+        userID: action.payload.userID,
+      };
+
     case FETCH_USERS_SUCCESS:
       return {
         ...state,

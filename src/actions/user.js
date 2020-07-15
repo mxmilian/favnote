@@ -4,6 +4,10 @@ export const AUTHENTICATE_REQUEST = 'AUTHENTICATE_REQUEST';
 export const AUTHENTICATE_SUCCESS = 'AUTHENTICATE_SUCCESS';
 export const AUTHENTICATE_FAILURE = 'AUTHENTICATE_FAILURE';
 
+export const REGISTER_REQUEST = 'REGISTER_REQUEST';
+export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
+export const REGISTER_FAILURE = 'REGISTER_FAILURE';
+
 export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
 export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
 export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
@@ -27,7 +31,15 @@ export const authenticate = (name, email, password) => (dispatch) => {
         email,
         password,
       })
-      .then((payload) => dispatch({ type: AUTHENTICATE_SUCCESS, payload }))
+      .then(({ data }) =>
+        dispatch({
+          type: AUTHENTICATE_SUCCESS,
+          payload: {
+            // eslint-disable-next-line no-underscore-dangle
+            userID: data.data.user._id,
+          },
+        }),
+      )
       .catch((err) => dispatch({ type: AUTHENTICATE_FAILURE, err }));
   }
   return axios
@@ -35,8 +47,40 @@ export const authenticate = (name, email, password) => (dispatch) => {
       name,
       password,
     })
-    .then((payload) => dispatch({ type: AUTHENTICATE_SUCCESS, payload }))
+    .then(({ data }) =>
+      dispatch({
+        type: AUTHENTICATE_SUCCESS,
+        payload: {
+          // eslint-disable-next-line no-underscore-dangle
+          userID: data.data.user._id,
+        },
+      }),
+    )
     .catch((err) => dispatch({ type: AUTHENTICATE_FAILURE, err }));
+};
+
+export const register = (name, email, password, confirmPassword) => (dispatch) => {
+  dispatch({ type: REGISTER_REQUEST });
+  return axios
+    .post('/api/v1/users/signup', {
+      name,
+      email,
+      password,
+      confirmPassword,
+    })
+    .then(({ data }) =>
+      dispatch({
+        type: REGISTER_SUCCESS,
+        payload: {
+          // eslint-disable-next-line no-underscore-dangle
+          userID: data.data.user._id,
+        },
+      }),
+    )
+    .catch((err) => {
+      console.log(err);
+      return dispatch({ type: REGISTER_FAILURE, err });
+    });
 };
 
 export const fetchUsers = () => (dispatch) => {

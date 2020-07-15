@@ -12,7 +12,7 @@ import { theme as themeLoader } from 'theme/theme';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
-import { authenticate as authenticateAction } from 'actions/user';
+import { authenticate as authenticateAction, register as registerAction } from 'actions/user';
 import { Redirect } from 'react-router';
 
 const StyledForm = styled(Form)`
@@ -83,7 +83,7 @@ class Sign extends Component {
   render() {
     const { signUp, isEmail, loading } = this.state;
     const { toggleSign, toggleEmail, toggleLoader } = this;
-    const { authenticate, userID } = this.props;
+    const { authenticate, register, userID } = this.props;
     if (userID) return <Redirect push to={routes.notes} />;
     return (
       <AuthTemplate>
@@ -133,6 +133,11 @@ class Sign extends Component {
                     .then(() => toggleLoader())
                     .catch(() => toggleLoader());
                 }
+              } else {
+                console.log(values.name, values.email, values.password, values.confirmPassword);
+                register(values.name, values.email, values.password, values.confirmPassword)
+                  .then(() => toggleLoader())
+                  .catch(() => toggleLoader());
               }
             } catch (e) {
               console.log('Not logged');
@@ -247,6 +252,7 @@ class Sign extends Component {
 }
 Sign.propTypes = {
   authenticate: PropTypes.func.isRequired,
+  register: PropTypes.func.isRequired,
   userID: PropTypes.string,
 };
 
@@ -260,6 +266,8 @@ const mapStateToProps = ({ users }) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   authenticate: (name, email, password) => dispatch(authenticateAction(name, email, password)),
+  register: (name, email, password, confirmPassword) =>
+    dispatch(registerAction(name, email, password, confirmPassword)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Sign);
