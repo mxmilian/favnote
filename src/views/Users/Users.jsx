@@ -17,7 +17,9 @@ class Users extends Component {
       props: { fetchUsers },
     } = this;
 
-    fetchUsers().then(() => this.setState({ loading: false }));
+    const { users } = this.props;
+    if (users.length === 0) fetchUsers('users').then(() => this.setState({ loading: false }));
+    else this.setState({ loading: false });
   }
 
   render() {

@@ -15,13 +15,14 @@ class Notes extends Component {
     const {
       props: { fetchNotes },
     } = this;
-
-    // setTimeout is to present loader :P
-    // setTimeout(() => {
-    //   fetchNotes('notes').then(this.setState({ loading: false }));
-    // }, 1000);
-
-    fetchNotes('notes').then(() => this.setState({ loading: false }));
+    const { notes } = this.props;
+    if (notes.length === 0) {
+      // setTimeout is to present loader :P
+      // setTimeout(() => {
+      //   fetchNotes('notes').then(this.setState({ loading: false }));
+      // }, 1000);
+      fetchNotes('notes').then(() => this.setState({ loading: false }));
+    } else this.setState({ loading: false });
   }
 
   render() {
