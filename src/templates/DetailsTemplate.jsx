@@ -117,14 +117,14 @@ class DetailsTemplate extends Component {
 
   editContentToggle = () => this.setState((prevState) => ({ editContent: !prevState.editContent }));
 
-  handleSubmit = (itemType, itemContent) => {
-    console.log(itemType, itemContent);
+  handleSubmit = (id, itemType, itemContent) => {
+    console.log(id, itemType, itemContent);
     this.editContentToggle();
   };
 
   render() {
     const { editContent } = this.state;
-    const { pageContext, title, createdAt, content, articleUrl, twitterName } = this.props;
+    const { id, pageContext, title, createdAt, content, articleUrl, twitterName } = this.props;
     const { editContentToggle, handleSubmit } = this;
     const lines = content.split(/\r\n|\r|\n/).length;
     return (
@@ -164,7 +164,7 @@ class DetailsTemplate extends Component {
                     .required('Required'),
                 })}
                 onSubmit={(values, { setSubmitting }) => {
-                  handleSubmit(pageContext, values);
+                  handleSubmit(id, pageContext, values);
                   setSubmitting(false);
                 }}
               >
@@ -177,7 +177,7 @@ class DetailsTemplate extends Component {
                     />
                     {formik.touched.content && formik.errors.content ? (
                       <StyledError>
-                        <StyledParagraph>{formik.errors.title}!</StyledParagraph>
+                        <StyledParagraph>{formik.errors.content}!</StyledParagraph>
                       </StyledError>
                     ) : null}
                     <StyledFormButtonWrapper>
@@ -191,12 +191,6 @@ class DetailsTemplate extends Component {
                   </StyledFormWrapper>
                 )}
               </Formik>
-              {/* <StyledForm> */}
-              {/*  <StyledTextArea value={content} lines={lines} /> */}
-              {/*  <StyledButton secondary activecolor={pageContext} onSubmit={editContentToggle}> */}
-              {/*    save edit */}
-              {/*  </StyledButton> */}
-              {/* </StyledForm> */}
             </>
           ) : (
             <StyledContentContainer>
@@ -220,6 +214,7 @@ class DetailsTemplate extends Component {
 
 DetailsTemplate.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
   twitterName: PropTypes.string,

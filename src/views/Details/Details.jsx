@@ -9,6 +9,7 @@ class Details extends Component {
   state = {
     activeItem: {
       title: '',
+      _id: '',
       createdAt: '2020-01-01T01:01:01',
       content: '',
       articleUrl: '',
@@ -44,6 +45,8 @@ class Details extends Component {
         content={activeItem.content}
         articleUrl={activeItem.articleUrl}
         twitterName={activeItem.twitterName}
+        /* eslint-disable-next-line no-underscore-dangle */
+        id={activeItem._id}
       />
     );
   }
