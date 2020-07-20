@@ -40,14 +40,17 @@ const StyledAvatar = styled.img`
   right: 0;
 `;
 
+const StyledContentContainer = styled.div`
+  width: 70%;
+  position: relative;
+`;
+
 const StyledContentParagraph = styled(Paragraph)`
   overflow: hidden;
   margin-bottom: 3rem;
   word-break: break-word;
   white-space: pre-wrap;
-  width: 70%;
   display: -webkit-box;
-  -webkit-line-clamp: 10;
   -webkit-box-orient: vertical;
 `;
 
@@ -58,6 +61,12 @@ const StyledLink = styled.a`
   font-weight: ${({ theme }) => theme.bold};
   text-transform: uppercase;
   margin-bottom: 5.5rem;
+`;
+
+const StyledEditButton = styled(Button)`
+  position: absolute;
+  right: 0;
+  bottom: -2rem;
 `;
 
 const StyledTextArea = styled.textarea`
@@ -74,12 +83,15 @@ const StyledTextArea = styled.textarea`
   white-space: pre-wrap;
   width: 70%;
   display: -webkit-box;
-  -webkit-line-clamp: 10;
   -webkit-box-orient: vertical;
 `;
 
 const StyledForm = styled.form`
   margin-bottom: 3rem;
+`;
+
+const StyledButton = styled(Button)`
+  margin-top: 1.2rem;
 `;
 
 class DetailsTemplate extends Component {
@@ -110,9 +122,17 @@ class DetailsTemplate extends Component {
           {editContent ? (
             <StyledForm>
               <StyledTextArea value={content} lines={lines} />
+              <StyledButton secondary activecolor={pageContext} onClick={editContentToggle}>
+                save edit
+              </StyledButton>
             </StyledForm>
           ) : (
-            <StyledContentParagraph onClick={editContentToggle}>{content}</StyledContentParagraph>
+            <StyledContentContainer>
+              <StyledContentParagraph onClick={editContentToggle}>{content}</StyledContentParagraph>
+              <StyledEditButton secondary activecolor={pageContext} onClick={editContentToggle}>
+                Edit {pageContext}
+              </StyledEditButton>
+            </StyledContentContainer>
           )}
           {pageContext === 'articles' || pageContext === 'twitters' ? (
             <StyledLink href={articleUrl}>Open {pageContext}</StyledLink>
