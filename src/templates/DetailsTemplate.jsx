@@ -10,6 +10,8 @@ import Heading from 'components/atoms/Heading/Heading';
 import Moment from 'react-moment';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import { connect } from 'react-redux';
+import { editNote as editNoteAction } from 'actions/notes';
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -119,6 +121,8 @@ class DetailsTemplate extends Component {
 
   handleSubmit = (id, itemType, itemContent) => {
     console.log(id, itemType, itemContent);
+    const { editNote } = this.props;
+    editNote(id, itemType, itemContent);
     this.editContentToggle();
   };
 
@@ -218,6 +222,7 @@ DetailsTemplate.propTypes = {
   twitterName: PropTypes.string,
   articleUrl: PropTypes.string,
   content: PropTypes.string.isRequired,
+  editNote: PropTypes.func.isRequired,
 };
 
 DetailsTemplate.defaultProps = {
@@ -225,4 +230,8 @@ DetailsTemplate.defaultProps = {
   articleUrl: null,
 };
 
-export default withContext(DetailsTemplate);
+const mapDispatchToProps = (dispatch) => ({
+  editNote: (id, itemType, itemContent) => dispatch(editNoteAction(id, itemType, itemContent)),
+});
+
+export default connect(null, mapDispatchToProps)(withContext(DetailsTemplate));

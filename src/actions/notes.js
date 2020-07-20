@@ -78,7 +78,23 @@ export const createNote = (itemType, itemContent) => (dispatch) => {
 
 export const editNote = (id, itemType, itemContent) => (dispatch) => {
   dispatch({ type: EDIT_REQUEST });
-  return axios.patch('api/v1/notes/', {
-    ...itemContent,
-  });
+  return axios
+    .patch(`/api/v1/notes/${id}`, {
+      ...itemContent,
+    })
+    .then(({ data }) => {
+      console.log(data.data.updatedDoc);
+      return dispatch({
+        type: EDIT_SUCCESS,
+        payload: {
+          id,
+          itemType,
+          data: data.data.updatedDoc,
+        },
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+      return dispatch({ type: EDIT_FAILURE, err });
+    });
 };
