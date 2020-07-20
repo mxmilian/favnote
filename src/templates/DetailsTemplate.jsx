@@ -141,57 +141,55 @@ class DetailsTemplate extends Component {
             <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
           ) : null}
           {editContent ? (
-            <>
-              <Formik
-                initialValues={{
-                  title,
-                  twitterName,
-                  articleUrl,
-                  content,
-                }}
-                validationSchema={Yup.object({
-                  title: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
-                  twitterName:
-                    pageContext === 'twitters'
-                      ? Yup.string().max(20, 'Must be 20 characters or less').required('Required')
-                      : '',
-                  articleUrl:
-                    pageContext === 'articles'
-                      ? Yup.string().url('This field must be a valid URL').required('Required')
-                      : '',
-                  content: Yup.string()
-                    .max(250, 'Must be 250 characters or less')
-                    .required('Required'),
-                })}
-                onSubmit={(values, { setSubmitting }) => {
-                  handleSubmit(id, pageContext, values);
-                  setSubmitting(false);
-                }}
-              >
-                {(formik) => (
-                  <StyledFormWrapper>
-                    <StyledTextArea
-                      as="textarea"
-                      {...formik.getFieldProps('content')}
-                      lines={lines}
-                    />
-                    {formik.touched.content && formik.errors.content ? (
-                      <StyledError>
-                        <StyledParagraph>{formik.errors.content}!</StyledParagraph>
-                      </StyledError>
-                    ) : null}
-                    <StyledFormButtonWrapper>
-                      <StyledSubmitButton secondary activecolor={pageContext} type="submit">
-                        save edit
-                      </StyledSubmitButton>
-                      <StyledSubmitButton secondary onClick={editContentToggle}>
-                        exit edit
-                      </StyledSubmitButton>
-                    </StyledFormButtonWrapper>
-                  </StyledFormWrapper>
-                )}
-              </Formik>
-            </>
+            <Formik
+              initialValues={{
+                title,
+                twitterName,
+                articleUrl,
+                content,
+              }}
+              validationSchema={Yup.object({
+                title: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
+                twitterName:
+                  pageContext === 'twitters'
+                    ? Yup.string().max(20, 'Must be 20 characters or less').required('Required')
+                    : '',
+                articleUrl:
+                  pageContext === 'articles'
+                    ? Yup.string().url('This field must be a valid URL').required('Required')
+                    : '',
+                content: Yup.string()
+                  .max(250, 'Must be 250 characters or less')
+                  .required('Required'),
+              })}
+              onSubmit={(values, { setSubmitting }) => {
+                handleSubmit(id, pageContext, values);
+                setSubmitting(false);
+              }}
+            >
+              {(formik) => (
+                <StyledFormWrapper>
+                  <StyledTextArea
+                    as="textarea"
+                    {...formik.getFieldProps('content')}
+                    lines={lines}
+                  />
+                  {formik.touched.content && formik.errors.content ? (
+                    <StyledError>
+                      <StyledParagraph>{formik.errors.content}!</StyledParagraph>
+                    </StyledError>
+                  ) : null}
+                  <StyledFormButtonWrapper>
+                    <StyledSubmitButton secondary activecolor={pageContext} type="submit">
+                      save edit
+                    </StyledSubmitButton>
+                    <StyledSubmitButton secondary onClick={editContentToggle}>
+                      exit edit
+                    </StyledSubmitButton>
+                  </StyledFormButtonWrapper>
+                </StyledFormWrapper>
+              )}
+            </Formik>
           ) : (
             <StyledContentContainer>
               <StyledContentParagraph>{content}</StyledContentParagraph>

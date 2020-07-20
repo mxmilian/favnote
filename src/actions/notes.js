@@ -12,6 +12,10 @@ export const REMOVE_REQUEST = 'REMOVE_REQUEST';
 export const REMOVE_SUCCESS = 'REMOVE_SUCCESS';
 export const REMOVE_FAILURE = 'REMOVE_FAILURE';
 
+export const EDIT_REQUEST = 'EDIT_REQUEST';
+export const EDIT_SUCCESS = 'EDIT_SUCCESS';
+export const EDIT_FAILURE = 'EDIT_FAILURE';
+
 export const fetchNotes = (itemType) => (dispatch) => {
   dispatch({ type: FETCH_REQUEST });
   return axios
@@ -35,11 +39,7 @@ export const fetchNotes = (itemType) => (dispatch) => {
 export const removeNote = (id, itemType) => (dispatch) => {
   dispatch({ type: REMOVE_REQUEST });
   return axios
-    .delete('/api/v1/notes/', {
-      params: {
-        id,
-      },
-    })
+    .delete(`/api/v1/notes/${id}`)
     .then(() =>
       dispatch({
         type: REMOVE_SUCCESS,
@@ -74,4 +74,11 @@ export const createNote = (itemType, itemContent) => (dispatch) => {
       console.log(err);
       return dispatch({ type: CREATE_FAILURE });
     });
+};
+
+export const editNote = (id, itemType, itemContent) => (dispatch) => {
+  dispatch({ type: EDIT_REQUEST });
+  return axios.patch('api/v1/notes/', {
+    ...itemContent,
+  });
 };
