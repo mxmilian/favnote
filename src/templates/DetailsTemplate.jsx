@@ -8,6 +8,8 @@ import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import SidebarTemplate from 'templates/SidebarTemplate';
 import Heading from 'components/atoms/Heading/Heading';
 import Moment from 'react-moment';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -69,6 +71,14 @@ const StyledEditButton = styled(Button)`
   bottom: -2rem;
 `;
 
+const StyledSubmitButton = styled(Button)``;
+
+const StyledFormButtonWrapper = styled.div`
+  margin-top: 1.2rem;
+  display: flex;
+  justify-content: space-between;
+`;
+
 const StyledTextArea = styled.textarea`
   font-size: ${({ theme }) => theme.fontSize.s};
   font-weight: ${({ theme }) => theme.regular};
@@ -81,17 +91,23 @@ const StyledTextArea = styled.textarea`
   overflow: hidden;
   word-break: break-word;
   white-space: pre-wrap;
-  width: 70%;
+  width: 100%;
   display: -webkit-box;
   -webkit-box-orient: vertical;
 `;
 
-const StyledForm = styled.form`
+const StyledFormWrapper = styled(Form)`
   margin-bottom: 3rem;
+  width: 70%;
 `;
 
-const StyledButton = styled(Button)`
-  margin-top: 1.2rem;
+const StyledError = styled.div`
+  padding: 0.2rem 0 0 2rem;
+`;
+
+const StyledParagraph = styled(Paragraph)`
+  color: ${({ theme }) => theme.error};
+  font-weight: ${({ theme }) => theme.bold};
 `;
 
 class DetailsTemplate extends Component {
@@ -101,10 +117,15 @@ class DetailsTemplate extends Component {
 
   editContentToggle = () => this.setState((prevState) => ({ editContent: !prevState.editContent }));
 
+  handleSubmit = (itemType, itemContent) => {
+    console.log(itemType, itemContent);
+    this.editContentToggle();
+  };
+
   render() {
     const { editContent } = this.state;
     const { pageContext, title, createdAt, content, articleUrl, twitterName } = this.props;
-    const { editContentToggle } = this;
+    const { editContentToggle, handleSubmit } = this;
     const lines = content.split(/\r\n|\r|\n/).length;
     return (
       <SidebarTemplate>
@@ -120,12 +141,63 @@ class DetailsTemplate extends Component {
             <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
           ) : null}
           {editContent ? (
-            <StyledForm>
-              <StyledTextArea value={content} lines={lines} />
-              <StyledButton secondary activecolor={pageContext} onSubmit={editContentToggle}>
-                save edit
-              </StyledButton>
-            </StyledForm>
+            <>
+              <Formik
+                initialValues={{
+                  title,
+                  twitterName,
+                  articleUrl,
+                  content,
+                }}
+                validationSchema={Yup.object({
+                  title: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
+                  twitterName:
+                    pageContext === 'twitters'
+                      ? Yup.string().max(20, 'Must be 20 characters or less').required('Required')
+                      : '',
+                  articleUrl:
+                    pageContext === 'articles'
+                      ? Yup.string().url('This field must be a valid URL').required('Required')
+                      : '',
+                  content: Yup.string()
+                    .max(250, 'Must be 250 characters or less')
+                    .required('Required'),
+                })}
+                onSubmit={(values, { setSubmitting }) => {
+                  handleSubmit(pageContext, values);
+                  setSubmitting(false);
+                }}
+              >
+                {(formik) => (
+                  <StyledFormWrapper>
+                    <StyledTextArea
+                      as="textarea"
+                      {...formik.getFieldProps('content')}
+                      lines={lines}
+                    />
+                    {formik.touched.content && formik.errors.content ? (
+                      <StyledError>
+                        <StyledParagraph>{formik.errors.title}!</StyledParagraph>
+                      </StyledError>
+                    ) : null}
+                    <StyledFormButtonWrapper>
+                      <StyledSubmitButton secondary activecolor={pageContext} type="submit">
+                        save edit
+                      </StyledSubmitButton>
+                      <StyledSubmitButton secondary onClick={editContentToggle}>
+                        exit edit
+                      </StyledSubmitButton>
+                    </StyledFormButtonWrapper>
+                  </StyledFormWrapper>
+                )}
+              </Formik>
+              {/* <StyledForm> */}
+              {/*  <StyledTextArea value={content} lines={lines} /> */}
+              {/*  <StyledButton secondary activecolor={pageContext} onSubmit={editContentToggle}> */}
+              {/*    save edit */}
+              {/*  </StyledButton> */}
+              {/* </StyledForm> */}
+            </>
           ) : (
             <StyledContentContainer>
               <StyledContentParagraph>{content}</StyledContentParagraph>
