@@ -94,7 +94,6 @@ class DetailsTemplate extends Component {
     const { pageContext, title, createdAt, content, articleUrl, twitterName } = this.props;
     const { editContentToggle } = this;
     const lines = content.split(/\r\n|\r|\n/).length;
-    console.log(lines);
     return (
       <SidebarTemplate>
         <StyledWrapper>
