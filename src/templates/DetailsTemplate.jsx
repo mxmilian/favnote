@@ -122,13 +122,13 @@ class DetailsTemplate extends Component {
           {editContent ? (
             <StyledForm>
               <StyledTextArea value={content} lines={lines} />
-              <StyledButton secondary activecolor={pageContext} onClick={editContentToggle}>
+              <StyledButton secondary activecolor={pageContext} onSubmit={editContentToggle}>
                 save edit
               </StyledButton>
             </StyledForm>
           ) : (
             <StyledContentContainer>
-              <StyledContentParagraph onClick={editContentToggle}>{content}</StyledContentParagraph>
+              <StyledContentParagraph>{content}</StyledContentParagraph>
               <StyledEditButton secondary activecolor={pageContext} onClick={editContentToggle}>
                 Edit {pageContext}
               </StyledEditButton>
