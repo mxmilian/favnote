@@ -2,51 +2,29 @@ import React, { Component } from 'react';
 import DetailsTemplate from 'templates/DetailsTemplate';
 import withContext from 'hoc/withContext';
 import { connect } from 'react-redux';
-import axios from 'axios';
+import { fetchNotes as fetchNotesAction } from 'actions/notes';
 import PropTypes from 'prop-types';
 
 class Details extends Component {
-  state = {
-    activeItem: {
-      title: '',
-      _id: '',
-      createdAt: '2020-01-01T01:01:01',
-      content: '',
-      articleUrl: '',
-      twitterName: '',
-    },
-  };
-
   componentDidMount() {
-    const { activeItem } = this.props;
-    const {
-      match: {
-        params: { id },
-      },
-    } = this.props;
-
-    if (activeItem) {
-      const [item] = activeItem;
-      this.setState({ activeItem: item });
-    } else {
-      axios
-        .get(`/api/v1/notes/${id}`)
-        .then(({ data }) => this.setState({ activeItem: data.data.readDoc }))
-        .catch((err) => console.log(err));
+    const { fetchNotes, match, activeItem } = this.props;
+    // eslint-disable-next-line no-underscore-dangle
+    if (!activeItem[0]._id) {
+      fetchNotes(match.path.split('/')[1]);
     }
   }
 
   render() {
-    const { activeItem } = this.state;
+    const { activeItem } = this.props;
     return (
       <DetailsTemplate
-        title={activeItem.title}
-        createdAt={activeItem.createdAt}
-        content={activeItem.content}
-        articleUrl={activeItem.articleUrl}
-        twitterName={activeItem.twitterName}
-        /* eslint-disable-next-line no-underscore-dangle */
-        id={activeItem._id}
+        title={activeItem[0].title}
+        createdAt={activeItem[0].createdAt}
+        content={activeItem[0].content}
+        articleUrl={activeItem[0].articleUrl}
+        twitterName={activeItem[0].twitterName}
+        /* eslint-disable-next-line react/prop-types,no-underscore-dangle */
+        id={activeItem[0]._id}
       />
     );
   }
@@ -55,23 +33,24 @@ class Details extends Component {
 Details.propTypes = {
   activeItem: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string,
-      title: PropTypes.string,
-      createdAt: PropTypes.string,
-      twitterName: PropTypes.string,
-      articleUrl: PropTypes.string,
-      content: PropTypes.string,
-    }),
-  ),
+      _id: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      createdAt: PropTypes.string.isRequired,
+      twitterName: PropTypes.string.isRequired,
+      articleUrl: PropTypes.string.isRequired,
+      content: PropTypes.string.isRequired,
+    }).isRequired,
+  ).isRequired,
   match: PropTypes.shape({
+    path: PropTypes.shape({
+      split: PropTypes.string.isRequired,
+    }),
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
     }),
   }).isRequired,
-};
-
-Details.defaultProps = {
-  activeItem: null,
+  fetchNotes: PropTypes.func.isRequired,
+  // pageContext: PropTypes.oneOf(['users', 'notes', 'twitters', 'articles']).isRequired,
 };
 
 const mapStateToProps = ({ notes }, { pageContext, match }) => {
@@ -80,6 +59,24 @@ const mapStateToProps = ({ notes }, { pageContext, match }) => {
       activeItem: notes[pageContext].filter(({ _id: id }) => id === match.params.id),
     };
   }
-  return {};
+  return {
+    activeItem: [
+      {
+        _id: '',
+        title: 'Undefined',
+        createdAt: '139223123',
+        twitterName: '',
+        articleUrl: '',
+        content: '',
+      },
+    ],
+  };
 };
-export default withContext(connect(mapStateToProps)(Details));
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchNotes: (pageType) => dispatch(fetchNotesAction(pageType)),
+  };
+};
+
+export default withContext(connect(mapStateToProps, mapDispatchToProps)(Details));
