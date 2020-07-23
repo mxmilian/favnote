@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from 'views/Root/Root';
-import 'bulma';
+import 'theme/style.scss';
 
 ReactDOM.render(
   <React.StrictMode>
