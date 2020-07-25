@@ -21,6 +21,7 @@ import rejIcon from 'assets/reject.svg';
 import userIcon from 'assets/user.svg';
 import defaultPhoto from 'assets/photo.jpg';
 import { theme as themeLoader } from 'theme/theme';
+import withLoader from 'hoc/withLoader';
 
 const StyledWrapper = styled.div`
   min-height: 10rem;
@@ -182,4 +183,4 @@ const mapDispatchToProps = (dispatch) => ({
   rejFriend: (id) => dispatch(rejFriendAction(id)),
 });
 
-export default connect(null, mapDispatchToProps)(withContext(Tuple));
+export default withLoader(connect(null, mapDispatchToProps)(withContext(Tuple)));
