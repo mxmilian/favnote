@@ -14,6 +14,7 @@ import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
 import { authenticate as authenticateAction, register as registerAction } from 'actions/user';
 import { Redirect } from 'react-router';
+import withLoader from 'hoc/withLoader';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -65,7 +66,6 @@ class Sign extends Component {
   state = {
     signUp: false,
     isEmail: false,
-    loading: false,
   };
 
   toggleSign = () => {
@@ -76,14 +76,10 @@ class Sign extends Component {
     this.setState((prevState) => ({ isEmail: !prevState.isEmail }));
   };
 
-  toggleLoader = () => {
-    this.setState((prevState) => ({ loading: !prevState.loading }));
-  };
-
   render() {
-    const { signUp, isEmail, loading } = this.state;
-    const { toggleSign, toggleEmail, toggleLoader } = this;
-    const { authenticate, register, userID } = this.props;
+    const { signUp, isEmail } = this.state;
+    const { toggleSign, toggleEmail } = this;
+    const { authenticate, register, userID, loading, toggleLoading } = this.props;
     if (userID) return <Redirect push to={routes.notes} />;
     return (
       <AuthTemplate>
@@ -121,23 +117,23 @@ class Sign extends Component {
           })}
           onSubmit={(values, { setSubmitting }) => {
             setSubmitting(false);
-            toggleLoader();
+            toggleLoading();
             try {
               if (!signUp) {
                 if (isEmail) {
                   authenticate(null, values.email, values.password)
-                    .then(() => toggleLoader())
-                    .catch(() => toggleLoader());
+                    .then(() => toggleLoading())
+                    .catch(() => toggleLoading());
                 } else if (!isEmail) {
                   authenticate(values.name, null, values.password)
-                    .then(() => toggleLoader())
-                    .catch(() => toggleLoader());
+                    .then(() => toggleLoading())
+                    .catch(() => toggleLoading());
                 }
               } else {
                 console.log(values.name, values.email, values.password, values.confirmPassword);
                 register(values.name, values.email, values.password, values.confirmPassword)
-                  .then(() => toggleLoader())
-                  .catch(() => toggleLoader());
+                  .then(() => toggleLoading())
+                  .catch(() => toggleLoading());
               }
             } catch (e) {
               console.log('Not logged');
@@ -254,6 +250,8 @@ Sign.propTypes = {
   authenticate: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
   userID: PropTypes.string,
+  loading: PropTypes.bool.isRequired,
+  toggleLoading: PropTypes.func.isRequired,
 };
 
 Sign.defaultProps = {
@@ -270,4 +268,4 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(registerAction(name, email, password, confirmPassword)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Sign);
+export default connect(mapStateToProps, mapDispatchToProps)(withLoader(Sign));
