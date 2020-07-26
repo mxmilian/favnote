@@ -6,25 +6,23 @@ import UsersTemplate from 'templates/UsersTemplate';
 import Tuple from 'components/molecules/Tuple/Tuple';
 import PropTypes from 'prop-types';
 import withContext from 'hoc/withContext';
+import withLoader from 'hoc/withLoader';
 
 class Users extends Component {
-  state = {
-    loading: true,
-  };
-
   componentDidMount() {
     const {
-      props: { fetchUsers },
+      props: { fetchUsers, toggleLoading },
     } = this;
 
     const { users } = this.props;
-    if (users.length === 0) fetchUsers('users').then(() => this.setState({ loading: false }));
-    else this.setState({ loading: false });
+    if (users.length === 0) {
+      toggleLoading();
+      fetchUsers('users').then(() => toggleLoading());
+    }
   }
 
   render() {
-    const { users, yourID, pageContext } = this.props;
-    const { loading } = this.state;
+    const { users, yourID, pageContext, loading } = this.props;
 
     return (
       <UsersTemplate loading={loading} pageType={pageContext}>
@@ -57,6 +55,8 @@ Users.propTypes = {
       friendsStatus: PropTypes.oneOf([0, 1, 2, 3]).isRequired,
     }),
   ),
+  loading: PropTypes.bool.isRequired,
+  toggleLoading: PropTypes.func.isRequired,
 };
 
 Users.defaultProps = {
@@ -73,4 +73,4 @@ const mapDispatchToProps = (dispatch) => ({
   fetchUsers: () => dispatch(fetchUsersAction()),
 });
 
-export default withContext(connect(mapStateToProps, mapDispatchToProps)(Users));
+export default withContext(connect(mapStateToProps, mapDispatchToProps)(withLoader(Users)));
