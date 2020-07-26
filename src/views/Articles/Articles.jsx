@@ -5,24 +5,22 @@ import { connect } from 'react-redux';
 import getVisibleNotes from 'selector';
 import GridTemplate from 'templates/GridTemplate';
 import Card from 'components/molecules/Card/Card';
+import withLoader from 'hoc/withLoader';
 
 class Articles extends Component {
-  state = {
-    loading: true,
-  };
-
   componentDidMount() {
     const {
-      props: { fetchNotes },
+      props: { fetchNotes, toggleLoading },
     } = this;
     const { articles } = this.props;
-    if (articles.length === 0) fetchNotes('articles').then(() => this.setState({ loading: false }));
-    else this.setState({ loading: false });
+    if (articles.length === 0) {
+      toggleLoading();
+      fetchNotes('articles').then(() => toggleLoading());
+    }
   }
 
   render() {
-    const { articles } = this.props;
-    const { loading } = this.state;
+    const { articles, loading } = this.props;
     return (
       <GridTemplate loading={loading}>
         {articles.map(({ _id: id, title, createdAt, content, articleUrl }) => (
@@ -51,6 +49,8 @@ Articles.propTypes = {
     }),
   ),
   fetchNotes: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  toggleLoading: PropTypes.func.isRequired,
 };
 
 Articles.defaultProps = {
@@ -67,4 +67,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Articles);
+export default connect(mapStateToProps, mapDispatchToProps)(withLoader(Articles));

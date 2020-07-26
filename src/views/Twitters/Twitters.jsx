@@ -5,24 +5,22 @@ import { connect } from 'react-redux';
 import Card from 'components/molecules/Card/Card';
 import getVisibleNotes from 'selector';
 import GridTemplate from 'templates/GridTemplate';
+import withLoader from 'hoc/withLoader';
 
 class Twitters extends Component {
-  state = {
-    loading: true,
-  };
-
   componentDidMount() {
     const {
-      props: { fetchNotes },
+      props: { fetchNotes, toggleLoading },
     } = this;
     const { twitters } = this.props;
-    if (twitters.length === 0) fetchNotes('twitters').then(() => this.setState({ loading: false }));
-    else this.setState({ loading: false });
+    if (twitters.length === 0) {
+      toggleLoading();
+      fetchNotes('twitters').then(() => toggleLoading());
+    }
   }
 
   render() {
-    const { twitters } = this.props;
-    const { loading } = this.state;
+    const { twitters, loading } = this.props;
     return (
       <GridTemplate loading={loading}>
         {twitters.map(({ _id: id, title, createdAt, content, twitterName }) => (
@@ -51,6 +49,8 @@ Twitters.propTypes = {
     }),
   ),
   fetchNotes: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  toggleLoading: PropTypes.func.isRequired,
 };
 
 Twitters.defaultProps = {
@@ -65,4 +65,4 @@ const mapDispatchToProps = (dispatch) => ({
   fetchNotes: (pageContext) => dispatch(fetchNotesAction(pageContext)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Twitters);
+export default connect(mapStateToProps, mapDispatchToProps)(withLoader(Twitters));

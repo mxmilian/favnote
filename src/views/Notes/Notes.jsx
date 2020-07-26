@@ -5,29 +5,22 @@ import { connect } from 'react-redux';
 import getVisibleNotes from 'selector';
 import GridTemplate from 'templates/GridTemplate';
 import Card from 'components/molecules/Card/Card';
+import withLoader from 'hoc/withLoader';
 
 class Notes extends Component {
-  state = {
-    loading: true,
-  };
-
   componentDidMount() {
     const {
-      props: { fetchNotes },
+      props: { fetchNotes, toggleLoading },
     } = this;
     const { notes } = this.props;
     if (notes.length === 0) {
-      // setTimeout is to present loader :P
-      // setTimeout(() => {
-      //   fetchNotes('notes').then(this.setState({ loading: false }));
-      // }, 1000);
-      fetchNotes('notes').then(() => this.setState({ loading: false }));
-    } else this.setState({ loading: false });
+      toggleLoading();
+      fetchNotes('notes').then(() => toggleLoading());
+    }
   }
 
   render() {
-    const { notes } = this.props;
-    const { loading } = this.state;
+    const { notes, loading } = this.props;
     return (
       <GridTemplate loading={loading}>
         {notes.map(({ _id: id, title, createdAt, content }) => (
@@ -47,6 +40,8 @@ Notes.propTypes = {
     }),
   ),
   fetchNotes: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  toggleLoading: PropTypes.func.isRequired,
 };
 
 Notes.defaultProps = {
@@ -63,4 +58,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Notes);
+export default connect(mapStateToProps, mapDispatchToProps)(withLoader(Notes));
