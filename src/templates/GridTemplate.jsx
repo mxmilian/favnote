@@ -1,5 +1,5 @@
 import Heading from 'components/atoms/Heading/Heading';
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createNote as createNoteAction } from 'actions/notes';
@@ -60,57 +60,49 @@ const StyledSpan = styled.span`
   cursor: pointer;
 `;
 
-class GridTemplate extends Component {
-  state = {
-    showForm: false,
+const GridTemplate = ({ createNote, children, pageContext, loading }) => {
+  const [showForm, setShowForm] = useState(false);
+
+  const toggleForm = () => {
+    setShowForm(!showForm);
   };
 
-  toggleForm = () => {
-    this.setState((prevState) => ({ showForm: !prevState.showForm }));
-  };
-
-  handleSubmit = (itemType, itemContent) => {
-    const { createNote } = this.props;
+  const handleSubmit = (itemType, itemContent) => {
     createNote(itemType, itemContent);
-    this.toggleForm();
+    toggleForm();
   };
 
-  render() {
-    const { showForm } = this.state;
-    const { children, pageContext, loading } = this.props;
-    const { toggleForm, handleSubmit } = this;
-    return (
-      <SidebarTemplate>
-        <StyledPageHeader>
-          <Header pageContext={pageContext} />
-        </StyledPageHeader>
-        {/* eslint-disable-next-line no-nested-ternary */}
-        {loading ? (
-          <StyledLoaderEmptyWrapper>
-            <Loader type="Grid" color={themeLoader[pageContext]} height={250} width={250} />
-          </StyledLoaderEmptyWrapper>
-        ) : children.length ? (
-          <StyledGridWrapper>{children}</StyledGridWrapper>
-        ) : (
-          <StyledLoaderEmptyWrapper>
-            <StyledHeading pageContext={pageContext} as="h3">
-              {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events */}
-              Any {pageContext} here, please <StyledSpan onClick={toggleForm}>add some!</StyledSpan>
-            </StyledHeading>
-          </StyledLoaderEmptyWrapper>
-        )}
+  return (
+    <SidebarTemplate>
+      <StyledPageHeader>
+        <Header pageContext={pageContext} />
+      </StyledPageHeader>
+      {/* eslint-disable-next-line no-nested-ternary */}
+      {loading ? (
+        <StyledLoaderEmptyWrapper>
+          <Loader type="Grid" color={themeLoader[pageContext]} height={250} width={250} />
+        </StyledLoaderEmptyWrapper>
+      ) : children.length ? (
+        <StyledGridWrapper>{children}</StyledGridWrapper>
+      ) : (
+        <StyledLoaderEmptyWrapper>
+          <StyledHeading pageContext={pageContext} as="h3">
+            {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions,jsx-a11y/click-events-have-key-events */}
+            Any {pageContext} here, please <StyledSpan onClick={toggleForm}>add some!</StyledSpan>
+          </StyledHeading>
+        </StyledLoaderEmptyWrapper>
+      )}
 
-        <StyledButtonIcon
-          id="toggleFormButton"
-          activeColor={pageContext}
-          icon={showForm ? minusIcon : plusIcon}
-          onClick={toggleForm}
-        />
-        <FormBar isVisible={showForm} toggleForm={toggleForm} handleSubmit={handleSubmit} />
-      </SidebarTemplate>
-    );
-  }
-}
+      <StyledButtonIcon
+        id="toggleFormButton"
+        activeColor={pageContext}
+        icon={showForm ? minusIcon : plusIcon}
+        onClick={toggleForm}
+      />
+      <FormBar isVisible={showForm} toggleForm={toggleForm} handleSubmit={handleSubmit} />
+    </SidebarTemplate>
+  );
+};
 
 GridTemplate.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles', 'users']).isRequired,
