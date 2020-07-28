@@ -1,19 +1,15 @@
 import { fetchNotes as fetchNotesAction } from 'actions/notes';
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Card from 'components/molecules/Card/Card';
 import getVisibleNotes from 'selector';
 import GridTemplate from 'templates/GridTemplate';
 import withLoader from 'hoc/withLoader';
+import { useFetchData } from 'hooks/useFetchData';
 
 const Twitters = ({ twitters, loading, fetchNotes, toggleLoading }) => {
-  useEffect(() => {
-    if (twitters.length === 0) {
-      toggleLoading();
-      fetchNotes('twitters').then(() => toggleLoading());
-    }
-  }, [fetchNotes, toggleLoading, twitters.length]);
+  useFetchData(fetchNotes, twitters, 'twitters', toggleLoading);
 
   return (
     <GridTemplate loading={loading}>
