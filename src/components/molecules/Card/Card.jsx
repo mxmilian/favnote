@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { connect } from 'react-redux';
@@ -86,64 +86,61 @@ const StyledParagraph = styled(Paragraph)`
   -webkit-box-orient: vertical;
 `;
 
-class Card extends Component {
-  state = {
-    redirect: false,
-    show: false,
-  };
+const Card = ({
+  removeNote,
+  id,
+  pageContext,
+  title,
+  createdAt,
+  twitterName,
+  articleUrl,
+  content,
+}) => {
+  const [redirect, setRedirect] = useState(false);
+  const [show, setShow] = useState(false);
 
-  handleClick = () => this.setState({ redirect: true });
+  const handleClick = () => setRedirect(true);
 
-  handleModalClick = () => this.setState((prevState) => ({ show: !prevState.show }));
+  const handleModalClick = () => setShow(!show);
 
-  handleRemove = () => {
-    const { id, pageContext, removeNote } = this.props;
+  const handleRemove = () => {
     removeNote(id, pageContext);
-    this.setState((prevState) => ({ show: !prevState.show }));
+    handleModalClick();
   };
 
-  render() {
-    const { redirect, show } = this.state;
-    const { id, pageContext, title, createdAt, twitterName, articleUrl, content } = this.props;
+  let prepareContent = content;
+  if (content.length >= 120) prepareContent = `${content.replace(/^(.{120}[^\s]*).*/, '$1')}...`;
 
-    let prepareContent = content;
-    if (content.length >= 120) prepareContent = `${content.replace(/^(.{120}[^\s]*).*/, '$1')}...`;
+  if (redirect) return <Redirect push to={`${pageContext}/${id}`} />;
 
-    if (redirect) return <Redirect push to={`${pageContext}/${id}`} />;
+  return (
+    <>
+      <StyledWrapper>
+        <InnerWrapper activeColor={pageContext}>
+          <Heading>{title}</Heading>
+          <DateInfo fromNow>{createdAt}</DateInfo>
+          {pageContext === 'twitters' && (
+            <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
+          )}
 
-    return (
-      <>
-        <StyledWrapper>
-          <InnerWrapper activeColor={pageContext}>
-            <Heading>{title}</Heading>
-            <DateInfo fromNow>{createdAt}</DateInfo>
-            {pageContext === 'twitters' && (
-              <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
-            )}
-
-            {pageContext === 'articles' && <StyledLink href={articleUrl} />}
-          </InnerWrapper>
-          <InnerWrapper flex>
-            <StyledParagraph>{prepareContent}</StyledParagraph>
-            <ButtonWrapper>
-              <Button secondary onClick={this.handleModalClick}>
-                Remove
-              </Button>
-              <Button secondary onClick={this.handleClick}>
-                Details
-              </Button>
-            </ButtonWrapper>
-          </InnerWrapper>
-        </StyledWrapper>
-        <Modal
-          showModal={show}
-          handleClose={this.handleModalClick}
-          handleRemove={this.handleRemove}
-        />
-      </>
-    );
-  }
-}
+          {pageContext === 'articles' && <StyledLink href={articleUrl} />}
+        </InnerWrapper>
+        <InnerWrapper flex>
+          <StyledParagraph>{prepareContent}</StyledParagraph>
+          <ButtonWrapper>
+            <Button secondary onClick={handleModalClick}>
+              Remove
+            </Button>
+            <Button secondary onClick={handleClick}>
+              Details
+            </Button>
+          </ButtonWrapper>
+        </InnerWrapper>
+      </StyledWrapper>
+      <Modal showModal={show} handleClose={handleModalClick} handleRemove={handleRemove} />
+    </>
+  );
+};
 
 Card.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles', 'users']).isRequired,
