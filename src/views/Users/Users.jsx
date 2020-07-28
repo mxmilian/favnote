@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import { useFetchData } from 'hooks/useFetchData';
+import React from 'react';
 import { connect } from 'react-redux';
 import { fetchUsers as fetchUsersAction } from 'actions/user';
 import getVisibleNotes from 'selector';
@@ -8,39 +9,25 @@ import PropTypes from 'prop-types';
 import withContext from 'hoc/withContext';
 import withLoader from 'hoc/withLoader';
 
-class Users extends Component {
-  componentDidMount() {
-    const {
-      props: { fetchUsers, toggleLoading },
-    } = this;
+const Users = ({ users, yourID, pageContext, loading, fetchUsers, toggleLoading }) => {
+  useFetchData(fetchUsers, users, 'users', toggleLoading);
 
-    const { users } = this.props;
-    if (users.length === 0) {
-      toggleLoading();
-      fetchUsers('users').then(() => toggleLoading());
-    }
-  }
-
-  render() {
-    const { users, yourID, pageContext, loading } = this.props;
-
-    return (
-      <UsersTemplate loading={loading} pageType={pageContext}>
-        {users.map(({ _id: id, name, createdAt, photo, friendsStatus }) => (
-          <Tuple
-            key={id}
-            id={id}
-            currentID={yourID}
-            name={name}
-            createdAt={createdAt}
-            photo={photo}
-            friendsStatus={friendsStatus}
-          />
-        ))}
-      </UsersTemplate>
-    );
-  }
-}
+  return (
+    <UsersTemplate loading={loading} pageType={pageContext}>
+      {users.map(({ _id: id, name, createdAt, photo, friendsStatus }) => (
+        <Tuple
+          key={id}
+          id={id}
+          currentID={yourID}
+          name={name}
+          createdAt={createdAt}
+          photo={photo}
+          friendsStatus={friendsStatus}
+        />
+      ))}
+    </UsersTemplate>
+  );
+};
 
 Users.propTypes = {
   fetchUsers: PropTypes.func.isRequired,

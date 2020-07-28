@@ -9,16 +9,6 @@ import withLoader from 'hoc/withLoader';
 import { useFetchData } from 'hooks/useFetchData';
 
 const Articles = ({ articles, loading, fetchNotes, toggleLoading }) => {
-  // componentDidMount() {
-  //   const {
-  //     props: { fetchNotes, toggleLoading },
-  //   } = this;
-  //   const { articles } = this.props;
-  //   if (articles.length === 0) {
-  //     toggleLoading();
-  //     fetchNotes('articles').then(() => toggleLoading());
-  //   }
-  // }
   useFetchData(fetchNotes, articles, 'articles', toggleLoading);
 
   return (
