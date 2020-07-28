@@ -146,7 +146,7 @@ class Card extends Component {
 }
 
 Card.propTypes = {
-  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles', 'users']).isRequired,
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
