@@ -1,34 +1,30 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import DetailsTemplate from 'templates/DetailsTemplate';
 import withContext from 'hoc/withContext';
 import { connect } from 'react-redux';
 import { fetchNotes as fetchNotesAction } from 'actions/notes';
 import PropTypes from 'prop-types';
 
-class Details extends Component {
-  componentDidMount() {
-    const { fetchNotes, match, activeItem } = this.props;
+const Details = ({ fetchNotes, match, activeItem }) => {
+  useEffect(() => {
     // eslint-disable-next-line no-underscore-dangle
     if (!activeItem[0]._id) {
       fetchNotes(match.path.split('/')[1]);
     }
-  }
+  });
 
-  render() {
-    const { activeItem } = this.props;
-    return (
-      <DetailsTemplate
-        title={activeItem[0].title}
-        createdAt={activeItem[0].createdAt}
-        content={activeItem[0].content}
-        articleUrl={activeItem[0].articleUrl}
-        twitterName={activeItem[0].twitterName}
-        /* eslint-disable-next-line react/prop-types,no-underscore-dangle */
-        id={activeItem[0]._id}
-      />
-    );
-  }
-}
+  return (
+    <DetailsTemplate
+      title={activeItem[0].title}
+      createdAt={activeItem[0].createdAt}
+      content={activeItem[0].content}
+      articleUrl={activeItem[0].articleUrl}
+      twitterName={activeItem[0].twitterName}
+      /* eslint-disable-next-line react/prop-types,no-underscore-dangle */
+      id={activeItem[0]._id}
+    />
+  );
+};
 
 Details.propTypes = {
   activeItem: PropTypes.arrayOf(
@@ -43,7 +39,7 @@ Details.propTypes = {
   ).isRequired,
   match: PropTypes.shape({
     path: PropTypes.shape({
-      split: PropTypes.string.isRequired,
+      split: PropTypes.oneOf(['users', 'notes', 'twitters', 'articles']).isRequired,
     }),
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
