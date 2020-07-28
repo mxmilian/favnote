@@ -1,35 +1,24 @@
 import { fetchNotes as fetchNotesAction } from 'actions/notes';
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import getVisibleNotes from 'selector';
 import GridTemplate from 'templates/GridTemplate';
 import Card from 'components/molecules/Card/Card';
 import withLoader from 'hoc/withLoader';
+import { useFetchData } from 'hooks/useFetchData';
 
-class Notes extends Component {
-  componentDidMount() {
-    const {
-      props: { fetchNotes, toggleLoading },
-    } = this;
-    const { notes } = this.props;
-    if (notes.length === 0) {
-      toggleLoading();
-      fetchNotes('notes').then(() => toggleLoading());
-    }
-  }
+const Notes = ({ notes, loading, fetchNotes, toggleLoading }) => {
+  useFetchData(fetchNotes, notes, 'notes', toggleLoading);
 
-  render() {
-    const { notes, loading } = this.props;
-    return (
-      <GridTemplate loading={loading}>
-        {notes.map(({ _id: id, title, createdAt, content }) => (
-          <Card id={id} key={id} title={title} createdAt={createdAt} content={content} />
-        ))}
-      </GridTemplate>
-    );
-  }
-}
+  return (
+    <GridTemplate loading={loading}>
+      {notes.map(({ _id: id, title, createdAt, content }) => (
+        <Card id={id} key={id} title={title} createdAt={createdAt} content={content} />
+      ))}
+    </GridTemplate>
+  );
+};
 Notes.propTypes = {
   notes: PropTypes.arrayOf(
     PropTypes.shape({
