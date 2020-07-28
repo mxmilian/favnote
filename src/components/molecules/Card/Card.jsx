@@ -11,6 +11,9 @@ import Button from 'components/atoms/Button/Button';
 import Modal from 'components/organisms/Modal/Modal';
 import linkIcon from 'assets/link.svg';
 import Moment from 'react-moment';
+import withLoader from 'hoc/withLoader';
+import Loader from 'react-loader-spinner';
+import { theme as themeLoader } from 'theme/theme';
 
 const StyledWrapper = styled.div`
   min-height: 38rem;
@@ -39,6 +42,12 @@ const InnerWrapper = styled.div`
       justify-content: space-between;
       padding: 2.6rem 3.2rem;
     `}
+`;
+
+const LoaderWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ButtonWrapper = styled.div`
@@ -95,6 +104,8 @@ const Card = ({
   twitterName,
   articleUrl,
   content,
+  loading,
+  toggleLoading,
 }) => {
   const [redirect, setRedirect] = useState(false);
   const [show, setShow] = useState(false);
@@ -104,7 +115,8 @@ const Card = ({
   const handleModalClick = () => setShow(!show);
 
   const handleRemove = () => {
-    removeNote(id, pageContext);
+    toggleLoading();
+    removeNote(id, pageContext).then(() => toggleLoading());
     handleModalClick();
   };
 
@@ -125,17 +137,25 @@ const Card = ({
 
           {pageContext === 'articles' && <StyledLink href={articleUrl} />}
         </InnerWrapper>
-        <InnerWrapper flex>
-          <StyledParagraph>{prepareContent}</StyledParagraph>
-          <ButtonWrapper>
-            <Button secondary onClick={handleModalClick}>
-              Remove
-            </Button>
-            <Button secondary onClick={handleClick}>
-              Details
-            </Button>
-          </ButtonWrapper>
-        </InnerWrapper>
+        {!loading ? (
+          <InnerWrapper flex>
+            <StyledParagraph>{prepareContent}</StyledParagraph>
+            <ButtonWrapper>
+              <Button secondary onClick={handleModalClick}>
+                Remove
+              </Button>
+              <Button secondary onClick={handleClick}>
+                Details
+              </Button>
+            </ButtonWrapper>
+          </InnerWrapper>
+        ) : (
+          <InnerWrapper>
+            <LoaderWrapper>
+              <Loader type="ThreeDots" color={themeLoader[pageContext]} height={150} width={150} />
+            </LoaderWrapper>
+          </InnerWrapper>
+        )}
       </StyledWrapper>
       <Modal showModal={show} handleClose={handleModalClick} handleRemove={handleRemove} />
     </>
@@ -151,6 +171,8 @@ Card.propTypes = {
   articleUrl: PropTypes.string,
   content: PropTypes.string.isRequired,
   removeNote: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  toggleLoading: PropTypes.func.isRequired,
 };
 
 Card.defaultProps = {
@@ -162,4 +184,4 @@ const mapDispatchToProps = (dispatch) => ({
   removeNote: (id, itemType) => dispatch(removeNoteAction(id, itemType)),
 });
 
-export default connect(null, mapDispatchToProps)(withContext(Card));
+export default connect(null, mapDispatchToProps)(withLoader(withContext(Card)));
