@@ -1,5 +1,5 @@
 import { fetchNotes as fetchNotesAction } from 'actions/notes';
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Card from 'components/molecules/Card/Card';
@@ -7,36 +7,29 @@ import getVisibleNotes from 'selector';
 import GridTemplate from 'templates/GridTemplate';
 import withLoader from 'hoc/withLoader';
 
-class Twitters extends Component {
-  componentDidMount() {
-    const {
-      props: { fetchNotes, toggleLoading },
-    } = this;
-    const { twitters } = this.props;
+const Twitters = ({ twitters, loading, fetchNotes, toggleLoading }) => {
+  useEffect(() => {
     if (twitters.length === 0) {
       toggleLoading();
       fetchNotes('twitters').then(() => toggleLoading());
     }
-  }
+  }, [fetchNotes, toggleLoading, twitters.length]);
 
-  render() {
-    const { twitters, loading } = this.props;
-    return (
-      <GridTemplate loading={loading}>
-        {twitters.map(({ _id: id, title, createdAt, content, twitterName }) => (
-          <Card
-            id={id}
-            key={id}
-            title={title}
-            createdAt={createdAt}
-            content={content}
-            twitterName={twitterName}
-          />
-        ))}
-      </GridTemplate>
-    );
-  }
-}
+  return (
+    <GridTemplate loading={loading}>
+      {twitters.map(({ _id: id, title, createdAt, content, twitterName }) => (
+        <Card
+          id={id}
+          key={id}
+          title={title}
+          createdAt={createdAt}
+          content={content}
+          twitterName={twitterName}
+        />
+      ))}
+    </GridTemplate>
+  );
+};
 
 Twitters.propTypes = {
   twitters: PropTypes.arrayOf(
