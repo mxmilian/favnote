@@ -77,7 +77,7 @@ const Header = ({ pageContext, items, text, shared, setFilterText, setSortBy, se
 Header.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles', 'users']).isRequired,
   text: PropTypes.string.isRequired,
-  shared: PropTypes.bool.isRequired,
+  shared: PropTypes.bool,
   setFilterText: PropTypes.func.isRequired,
   setSortBy: PropTypes.func.isRequired,
   setShared: PropTypes.func.isRequired,
@@ -89,6 +89,9 @@ Header.propTypes = {
       createdAt: PropTypes.string.isRequired,
     }),
   ).isRequired,
+};
+Header.defaultProps = {
+  shared: false,
 };
 
 const mapStateToProps = ({ filters, notes, users }, { pageContext }) => {

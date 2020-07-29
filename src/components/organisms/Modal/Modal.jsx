@@ -77,7 +77,7 @@ const Modal = ({ pageContext, showModal, handleClose, handleRemove }) => {
 };
 
 Modal.propTypes = {
-  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles', 'users']).isRequired,
   showModal: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
   handleRemove: PropTypes.func.isRequired,

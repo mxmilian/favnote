@@ -12,14 +12,11 @@ import withLoader from 'hoc/withLoader';
 import { useFetchData } from 'hooks/useFetchData';
 
 const Notes = ({ notes, shared, loading, fetchNotes, fetchFriendsNotes, toggleLoading }) => {
-  console.log(shared);
   let fetchAction = fetchNotes;
   if (shared) {
-    console.log('XDD');
     fetchAction = fetchFriendsNotes;
   }
-  useFetchData(fetchAction, notes, 'notes', toggleLoading);
-
+  useFetchData(fetchAction, notes, 'notes', toggleLoading, shared);
   return (
     <GridTemplate loading={loading}>
       {notes.map(({ _id: id, title, createdAt, content }) => (
