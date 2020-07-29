@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import withContext from 'hoc/withContext';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -10,6 +10,7 @@ import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import {
   setTextFilter as setTextFilterAction,
   setSortBy as setSortByAction,
+  setShared as setSharedAction,
 } from 'actions/filters';
 import Select from 'components/atoms/Select/Select';
 
@@ -36,9 +37,7 @@ const StyledFilters = styled.div`
   }
 `;
 
-const Header = ({ pageContext, items, text, setFilterText, setSortBy }) => {
-  const [shared, setShared] = useState(false);
-
+const Header = ({ pageContext, items, text, shared, setFilterText, setSortBy, setShared }) => {
   return (
     <>
       <StyledHeading big as="h1">
@@ -56,16 +55,20 @@ const Header = ({ pageContext, items, text, setFilterText, setSortBy }) => {
           ]}
           setSortBy={setSortBy}
         />
-        <input
-          id="sharedRadio"
-          type="radio"
-          name="sharedRadio"
-          checked={shared}
-          onChange={() => setShared(!shared)}
-          onClick={() => setShared(!shared)}
-        />
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label htmlFor="sharedRadio">Shared</label>
+        {pageContext !== 'users' && (
+          <>
+            <input
+              id="sharedRadio"
+              type="radio"
+              name="sharedRadio"
+              checked={shared}
+              onClick={() => setShared(!shared)}
+              onChange={() => setShared(!shared)}
+            />
+            {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+            <label htmlFor="sharedRadio">Shared</label>
+          </>
+        )}
       </StyledFilters>
     </>
   );
@@ -74,8 +77,10 @@ const Header = ({ pageContext, items, text, setFilterText, setSortBy }) => {
 Header.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles', 'users']).isRequired,
   text: PropTypes.string.isRequired,
+  shared: PropTypes.bool.isRequired,
   setFilterText: PropTypes.func.isRequired,
   setSortBy: PropTypes.func.isRequired,
+  setShared: PropTypes.func.isRequired,
   items: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
@@ -98,12 +103,14 @@ const mapStateToProps = ({ filters, notes, users }, { pageContext }) => {
     items: getVisibleNotes(notes[pageContext], filters),
     text: filters.text,
     sortBy: filters.sortBy,
+    shared: filters.shared,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   setFilterText: (text) => dispatch(setTextFilterAction(text)),
   setSortBy: (sortBy) => dispatch(setSortByAction(sortBy)),
+  setShared: (shared) => dispatch(setSharedAction(shared)),
 });
 
 export default withContext(connect(mapStateToProps, mapDispatchToProps)(Header));
