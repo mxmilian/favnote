@@ -1,5 +1,6 @@
 import {
   FETCH_SUCCESS,
+  FETCH_FRIENDS_NOTES_SUCCESS,
   CREATE_SUCCESS,
   REMOVE_SUCCESS,
   EDIT_SUCCESS,
@@ -12,6 +13,11 @@ const notesReducer = (state = notesInitialState, action) => {
   const { type } = action;
   switch (type) {
     case FETCH_SUCCESS:
+      return {
+        ...state,
+        [action.payload.itemType]: [...action.payload.data],
+      };
+    case FETCH_FRIENDS_NOTES_SUCCESS:
       return {
         ...state,
         [action.payload.itemType]: [...action.payload.data],
