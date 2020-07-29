@@ -12,6 +12,10 @@ export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST';
 export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS';
 export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE';
 
+export const FETCH_ONE_USER_REQUEST = 'FETCH_ONE_USER_REQUEST';
+export const FETCH_ONE_USER_SUCCESS = 'FETCH_ONE_USER_SUCCESS';
+export const FETCH_ONE_USER_FAILURE = 'FETCH_ONE_USER_FAILURE';
+
 export const REQ_REQUEST = 'REQ_REQUEST';
 export const REQ_SUCCESS = 'REQ_SUCCESS';
 export const REQ_FAILURE = 'REQ_FAILURE';
@@ -57,6 +61,22 @@ export const authenticate = (name, email, password) => (dispatch) => {
       }),
     )
     .catch((err) => dispatch({ type: AUTHENTICATE_FAILURE, err }));
+};
+
+export const fetchUser = () => (dispatch) => {
+  dispatch({ type: FETCH_ONE_USER_REQUEST });
+  return axios
+    .get('/api/v1/users/user')
+    .then(({ data }) =>
+      dispatch({
+        type: FETCH_ONE_USER_SUCCESS,
+        payload: {
+          // eslint-disable-next-line no-underscore-dangle
+          userID: data.data.readDoc._id,
+        },
+      }),
+    )
+    .catch((err) => console.log(err));
 };
 
 export const register = (name, email, password, confirmPassword) => (dispatch) => {
