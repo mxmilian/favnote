@@ -4,6 +4,10 @@ export const FETCH_REQUEST = 'FETCH_REQUEST';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
 export const FETCH_FAILURE = 'FETCH_FAILURE';
 
+export const FETCH_FRIENDS_NOTES_REQUEST = 'FETCH_FRIENDS_NOTES_REQUEST';
+export const FETCH_FRIENDS_NOTES_SUCCESS = 'FETCH_FRIENDS_NOTES_SUCCESS';
+export const FETCH_FRIENDS_NOTES_FAILURE = 'FETCH_FRIENDS_NOTES_FAILURE';
+
 export const FETCH_ONE_REQUEST = 'FETCH_ONE_REQUEST';
 export const FETCH_ONE_SUCCESS = 'FETCH_ONE_SUCCESS';
 export const FETCH_ONE_FAILURE = 'FETCH_ONE_FAILURE';
@@ -38,6 +42,26 @@ export const fetchNotes = (itemType) => (dispatch) => {
       }),
     )
     .catch((err) => dispatch({ type: FETCH_FAILURE }, console.log(err)));
+};
+
+export const fetchFriendsNotes = (itemType) => (dispatch) => {
+  dispatch({ type: FETCH_FRIENDS_NOTES_REQUEST });
+  return axios
+    .get('/api/v1/notes/type', {
+      params: {
+        type: itemType,
+      },
+    })
+    .then(({ data }) =>
+      dispatch({
+        type: FETCH_FRIENDS_NOTES_SUCCESS,
+        payload: {
+          data: data.data.sharedNotes,
+          itemType,
+        },
+      }),
+    )
+    .catch((err) => dispatch({ type: FETCH_FRIENDS_NOTES_FAILURE }, console.log(err)));
 };
 
 export const fetchOneNote = (id, itemType) => (dispatch) => {

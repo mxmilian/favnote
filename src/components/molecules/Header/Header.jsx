@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import withContext from 'hoc/withContext';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -36,30 +36,40 @@ const StyledFilters = styled.div`
   }
 `;
 
-const Header = ({ pageContext, items, text, setFilterText, setSortBy }) => (
-  <>
-    <StyledHeading big as="h1">
-      {pageContext}
-    </StyledHeading>
-    <StyledParagraph>
-      {items.length} {pageContext}
-    </StyledParagraph>
-    <StyledFilters>
-      <Input search value={text} onChange={(e) => setFilterText(e.target.value)} />
-      <Select
-        items={[
-          { name: 'Ascending', value: 'asc' },
-          { name: 'Descending', value: 'desc' },
-        ]}
-        setSortBy={setSortBy}
-      />
-      {/* <StyledSelect value={sortBy} onChange={(e) => setSortBy(e.target.value)}> */}
-      {/*  <option value="asc">Ascending</option> */}
-      {/*  <option value="desc">Descending</option> */}
-      {/* </StyledSelect> */}
-    </StyledFilters>
-  </>
-);
+const Header = ({ pageContext, items, text, setFilterText, setSortBy }) => {
+  const [shared, setShared] = useState(false);
+
+  return (
+    <>
+      <StyledHeading big as="h1">
+        {pageContext}
+      </StyledHeading>
+      <StyledParagraph>
+        {items.length} {pageContext}
+      </StyledParagraph>
+      <StyledFilters>
+        <Input search value={text} onChange={(e) => setFilterText(e.target.value)} />
+        <Select
+          items={[
+            { name: 'Ascending', value: 'asc' },
+            { name: 'Descending', value: 'desc' },
+          ]}
+          setSortBy={setSortBy}
+        />
+        <input
+          id="sharedRadio"
+          type="radio"
+          name="sharedRadio"
+          checked={shared}
+          onChange={() => setShared(!shared)}
+          onClick={() => setShared(!shared)}
+        />
+        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+        <label htmlFor="sharedRadio">Shared</label>
+      </StyledFilters>
+    </>
+  );
+};
 
 Header.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles', 'users']).isRequired,
