@@ -1,8 +1,9 @@
-import { SET_TEXT_FILTER, SET_SORT_BY } from 'actions/filters';
+import { SET_TEXT_FILTER, SET_SORT_BY, SET_SHARED } from 'actions/filters';
 
 const filtersInitialState = {
   text: '',
   sortBy: 'asc',
+  shared: false,
 };
 
 const filtersReducer = (state = filtersInitialState, action) => {
@@ -17,6 +18,11 @@ const filtersReducer = (state = filtersInitialState, action) => {
       return {
         ...state,
         sortBy: action.sortBy,
+      };
+    case SET_SHARED:
+      return {
+        ...state,
+        shared: action.shared,
       };
     default:
       return state;
