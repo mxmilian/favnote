@@ -103,7 +103,7 @@ const mapStateToProps = ({ filters, notes, users }, { pageContext }) => {
     };
 
   return {
-    items: getVisibleNotes(notes[pageContext], filters),
+    items: getVisibleNotes(notes[pageContext], filters, null, users.userID),
     text: filters.text,
     sortBy: filters.sortBy,
     shared: filters.shared,
