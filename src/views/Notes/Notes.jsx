@@ -62,7 +62,7 @@ Notes.defaultProps = {
 };
 
 const mapStateToProps = ({ notes, filters, users }) => ({
-  notes: getVisibleNotes(notes.notes, filters),
+  notes: getVisibleNotes(notes.notes, filters, null, users.userID),
   shared: filters.shared,
   userID: users.userID,
 });
