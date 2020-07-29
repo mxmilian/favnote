@@ -1,4 +1,7 @@
-import { fetchNotes as fetchNotesAction } from 'actions/notes';
+import {
+  fetchNotes as fetchNotesAction,
+  fetchFriendsNotes as fetchFriendsNotesAction,
+} from 'actions/notes';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -8,8 +11,14 @@ import Card from 'components/molecules/Card/Card';
 import withLoader from 'hoc/withLoader';
 import { useFetchData } from 'hooks/useFetchData';
 
-const Notes = ({ notes, loading, fetchNotes, toggleLoading }) => {
-  useFetchData(fetchNotes, notes, 'notes', toggleLoading);
+const Notes = ({ notes, shared, loading, fetchNotes, fetchFriendsNotes, toggleLoading }) => {
+  console.log(shared);
+  let fetchAction = fetchNotes;
+  if (shared) {
+    console.log('XDD');
+    fetchAction = fetchFriendsNotes;
+  }
+  useFetchData(fetchAction, notes, 'notes', toggleLoading);
 
   return (
     <GridTemplate loading={loading}>
@@ -29,8 +38,10 @@ Notes.propTypes = {
     }),
   ),
   fetchNotes: PropTypes.func.isRequired,
+  fetchFriendsNotes: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   toggleLoading: PropTypes.func.isRequired,
+  shared: PropTypes.bool.isRequired,
 };
 
 Notes.defaultProps = {
@@ -39,11 +50,13 @@ Notes.defaultProps = {
 
 const mapStateToProps = ({ notes, filters }) => ({
   notes: getVisibleNotes(notes.notes, filters),
+  shared: filters.shared,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchNotes: (itemType) => dispatch(fetchNotesAction(itemType)),
+    fetchFriendsNotes: (itemType) => dispatch(fetchFriendsNotesAction(itemType)),
   };
 };
 

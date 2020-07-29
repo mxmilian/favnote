@@ -47,20 +47,21 @@ export const fetchNotes = (itemType) => (dispatch) => {
 export const fetchFriendsNotes = (itemType) => (dispatch) => {
   dispatch({ type: FETCH_FRIENDS_NOTES_REQUEST });
   return axios
-    .get('/api/v1/notes/type', {
+    .get('/api/v1/notes/shared', {
       params: {
         type: itemType,
       },
     })
-    .then(({ data }) =>
-      dispatch({
+    .then(({ data }) => {
+      console.log(data);
+      return dispatch({
         type: FETCH_FRIENDS_NOTES_SUCCESS,
         payload: {
           data: data.data.sharedNotes,
           itemType,
         },
-      }),
-    )
+      });
+    })
     .catch((err) => dispatch({ type: FETCH_FRIENDS_NOTES_FAILURE }, console.log(err)));
 };
 
