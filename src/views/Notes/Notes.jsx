@@ -23,14 +23,12 @@ const Notes = ({
   toggleLoading,
   fetchUser,
 }) => {
-  console.log(userID);
   let fetchAction = fetchNotes;
   if (shared) {
     fetchAction = fetchFriendsNotes;
   }
   useFetchUser(fetchUser, userID);
   useFetchData(fetchAction, notes, 'notes', toggleLoading, shared);
-  console.log(notes);
   return (
     <GridTemplate loading={loading}>
       {notes.map(({ _id: id, title, createdAt, author, content }) => (
@@ -61,11 +59,12 @@ Notes.propTypes = {
   loading: PropTypes.bool.isRequired,
   toggleLoading: PropTypes.func.isRequired,
   shared: PropTypes.bool.isRequired,
-  userID: PropTypes.string.isRequired,
+  userID: PropTypes.string,
 };
 
 Notes.defaultProps = {
   notes: [],
+  userID: '',
 };
 
 const mapStateToProps = ({ notes, filters, users }) => ({
