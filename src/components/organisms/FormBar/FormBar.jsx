@@ -1,3 +1,4 @@
+import Radio from 'components/atoms/Radio/Radio';
 import React, { createRef, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -47,7 +48,7 @@ const StyledInput = styled(Input)`
 `;
 
 const StyledTextArea = styled(Input)`
-  margin: 3rem 0 0;
+  margin: 3rem 0 3rem;
   font-family: inherit;
   border-radius: 2rem;
   height: 30vh;
@@ -92,6 +93,7 @@ const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit }) => {
         twitterName: '',
         articleUrl: '',
         content: '',
+        public: false,
       }}
       validationSchema={Yup.object({
         title: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
@@ -106,6 +108,7 @@ const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit }) => {
         content: Yup.string().max(250, 'Must be 250 characters or less').required('Required'),
       })}
       onSubmit={(values, { setSubmitting }) => {
+        console.log(values);
         handleSubmit(pageContext, values);
         setSubmitting(false);
       }}
@@ -154,6 +157,13 @@ const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit }) => {
               </StyledError>
             ) : null}
 
+            {/* <Radio shared={} pageContext={} setShared={} /> */}
+            <Radio
+              pageContext={pageContext}
+              content="Note for friends"
+              checked={formik.values.public}
+              setChecked={() => formik.setFieldValue('public', !formik.values.public)}
+            />
             <StyledButton activecolor={pageContext} type="submit">
               Add {pageContext.slice(0, -1)}
             </StyledButton>

@@ -5,7 +5,6 @@ import styled from 'styled-components';
 const StyledLabel = styled.label`
   display: flex;
   cursor: pointer;
-  text-align: center;
   font-weight: ${({ theme }) => theme.normal};
 `;
 
@@ -41,27 +40,28 @@ const StyledSpan = styled.span`
   }
 `;
 
-const Radio = ({ pageContext, shared, setShared }) => (
+const Radio = ({ pageContext, checked, setChecked, content }) => (
   <>
     <StyledLabel>
       <StyledInput
         id="sharedRadio"
         type="radio"
         name="sharedRadio"
-        checked={shared}
-        onClick={() => setShared(!shared)}
-        onChange={() => setShared(!shared)}
+        checked={checked}
+        onClick={setChecked}
+        onChange={setChecked}
       />
       <StyledSpan pageContext={pageContext} />
-      Checked
+      {content}
     </StyledLabel>
   </>
 );
 
 Radio.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles', 'users']).isRequired,
-  shared: PropTypes.bool.isRequired,
-  setShared: PropTypes.func.isRequired,
+  checked: PropTypes.bool.isRequired,
+  setChecked: PropTypes.func.isRequired,
+  content: PropTypes.string.isRequired,
 };
 
 export default Radio;

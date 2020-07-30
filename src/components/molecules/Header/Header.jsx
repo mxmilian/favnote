@@ -70,7 +70,12 @@ const Header = ({ pageContext, items, text, shared, setFilterText, setSortBy, se
           //   {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
           //   <label htmlFor="sharedRadio">Shared</label>
           // </>
-          <Radio pageContext={pageContext} shared={shared} setShared={setShared} />
+          <Radio
+            pageContext={pageContext}
+            content={`Show friends ${pageContext}`}
+            checked={shared}
+            setChecked={() => setShared(!shared)}
+          />
         )}
       </StyledFilters>
     </>
