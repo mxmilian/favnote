@@ -27,12 +27,12 @@ const StyledDate = styled.div`
 
 const StyledDateCreated = styled(Paragraph)`
   font-size: ${({ theme }) => theme.fontSize.xs};
-  font-weight: ${({ theme }) => theme.normal};
+  font-weight: ${({ theme }) => theme.bold};
   margin-right: 0.6rem;
 `;
 const StyledDateParagraph = styled(Moment)`
   font-size: ${({ theme }) => theme.fontSize.xs};
-  font-weight: ${({ theme }) => theme.bold};
+  font-weight: ${({ theme }) => theme.normal};
 `;
 
 const StyledAvatar = styled.img`
@@ -118,13 +118,13 @@ const InfoWrapper = styled.div`
 `;
 
 const StyledHeaderParagraph = styled(Paragraph)`
-  font-weight: ${({ theme }) => theme.normal};
+  font-weight: ${({ theme }) => theme.bold};
   font-size: ${({ theme }) => theme.fontSize.xs};
   display: block;
 `;
 
 const StyledHeaderParagraphContent = styled.span`
-  font-weight: ${({ theme }) => theme.bold};
+  font-weight: ${({ theme }) => theme.normal};
 `;
 
 class DetailsTemplate extends Component {
