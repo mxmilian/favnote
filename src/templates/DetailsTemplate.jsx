@@ -22,12 +22,13 @@ const StyledWrapper = styled.div`
 const StyledDate = styled.div`
   display: flex;
   margin-bottom: 3.5rem;
+  margin-right: 2rem;
 `;
 
 const StyledDateCreated = styled(Paragraph)`
   font-size: ${({ theme }) => theme.fontSize.xs};
-  font-weight: ${({ theme }) => theme.bold};
-  margin-right: 0.8rem;
+  font-weight: ${({ theme }) => theme.normal};
+  margin-right: 0.6rem;
 `;
 const StyledDateParagraph = styled(Moment)`
   font-size: ${({ theme }) => theme.fontSize.xs};
@@ -111,6 +112,20 @@ const StyledParagraph = styled(Paragraph)`
   color: ${({ theme }) => theme.error};
   font-weight: ${({ theme }) => theme.bold};
 `;
+const InfoWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const StyledHeaderParagraph = styled(Paragraph)`
+  font-weight: ${({ theme }) => theme.normal};
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  display: block;
+`;
+
+const StyledHeaderParagraphContent = styled.span`
+  font-weight: ${({ theme }) => theme.bold};
+`;
 
 class DetailsTemplate extends Component {
   state = {
@@ -128,7 +143,16 @@ class DetailsTemplate extends Component {
 
   render() {
     const { editContent } = this.state;
-    const { id, pageContext, title, createdAt, content, articleUrl, twitterName } = this.props;
+    const {
+      id,
+      pageContext,
+      title,
+      createdAt,
+      author,
+      content,
+      articleUrl,
+      twitterName,
+    } = this.props;
     const { editContentToggle, handleSubmit } = this;
     const lines = content.split(/\r\n|\r|\n/).length;
     return (
@@ -137,10 +161,15 @@ class DetailsTemplate extends Component {
           <Heading big as="h1">
             {title}
           </Heading>
-          <StyledDate>
-            <StyledDateCreated>Created:</StyledDateCreated>
-            <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
-          </StyledDate>
+          <InfoWrapper>
+            <StyledDate>
+              <StyledDateCreated>Created:</StyledDateCreated>
+              <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
+            </StyledDate>
+            <StyledHeaderParagraph>
+              By: <StyledHeaderParagraphContent>{author}</StyledHeaderParagraphContent>
+            </StyledHeaderParagraph>
+          </InfoWrapper>
           {pageContext === 'twitters' ? (
             <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
           ) : null}
@@ -219,6 +248,7 @@ DetailsTemplate.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
   twitterName: PropTypes.string,
   articleUrl: PropTypes.string,
   content: PropTypes.string.isRequired,

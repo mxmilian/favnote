@@ -80,11 +80,6 @@ const StyledLink = styled.a`
   background-size: 50%;
 `;
 
-const DateInfo = styled(Moment)`
-  font-weight: ${({ theme }) => theme.bold};
-  font-size: ${({ theme }) => theme.fontSize.xs};
-`;
-
 const StyledParagraph = styled(Paragraph)`
   overflow: hidden;
   word-break: break-word;
@@ -95,6 +90,36 @@ const StyledParagraph = styled(Paragraph)`
   -webkit-box-orient: vertical;
 `;
 
+const StyledHeaderParagraph = styled(Paragraph)`
+  font-weight: ${({ theme }) => theme.normal};
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  display: block;
+`;
+
+const StyledHeaderParagraphContent = styled.span`
+  font-weight: ${({ theme }) => theme.bold};
+`;
+
+const InfoWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const StyledDate = styled.div`
+  display: flex;
+  margin-right: 0.8rem;
+`;
+
+const StyledDateCreated = styled(Paragraph)`
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  font-weight: ${({ theme }) => theme.normal};
+  margin-right: 0.3rem;
+`;
+const StyledDateParagraph = styled(Moment)`
+  font-size: ${({ theme }) => theme.fontSize.xs};
+  font-weight: ${({ theme }) => theme.bold};
+`;
+
 const Card = ({
   removeNote,
   id,
@@ -103,6 +128,7 @@ const Card = ({
   createdAt,
   twitterName,
   articleUrl,
+  author,
   content,
   loading,
   toggleLoading,
@@ -130,7 +156,15 @@ const Card = ({
       <StyledWrapper>
         <InnerWrapper activeColor={pageContext}>
           <Heading>{title}</Heading>
-          <DateInfo fromNow>{createdAt}</DateInfo>
+          <InfoWrapper>
+            <StyledDate>
+              <StyledDateCreated>Created:</StyledDateCreated>
+              <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
+            </StyledDate>
+            <StyledHeaderParagraph>
+              By: <StyledHeaderParagraphContent>{author}</StyledHeaderParagraphContent>
+            </StyledHeaderParagraph>
+          </InfoWrapper>
           {pageContext === 'twitters' && (
             <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
           )}
@@ -167,6 +201,7 @@ Card.propTypes = {
   id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
   twitterName: PropTypes.string,
   articleUrl: PropTypes.string,
   content: PropTypes.string.isRequired,

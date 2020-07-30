@@ -30,11 +30,18 @@ const Notes = ({
   }
   useFetchUser(fetchUser, userID);
   useFetchData(fetchAction, notes, 'notes', toggleLoading, shared);
-
+  console.log(notes);
   return (
     <GridTemplate loading={loading}>
-      {notes.map(({ _id: id, title, createdAt, content }) => (
-        <Card id={id} key={id} title={title} createdAt={createdAt} content={content} />
+      {notes.map(({ _id: id, title, createdAt, author, content }) => (
+        <Card
+          id={id}
+          key={id}
+          title={title}
+          createdAt={createdAt}
+          author={author}
+          content={content}
+        />
       ))}
     </GridTemplate>
   );

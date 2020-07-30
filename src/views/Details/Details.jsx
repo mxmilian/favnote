@@ -18,6 +18,7 @@ const Details = ({ fetchNotes, match, activeItem }) => {
       title={activeItem[0].title}
       createdAt={activeItem[0].createdAt}
       content={activeItem[0].content}
+      author={activeItem[0].author}
       articleUrl={activeItem[0].articleUrl}
       twitterName={activeItem[0].twitterName}
       /* eslint-disable-next-line react/prop-types,no-underscore-dangle */
@@ -32,6 +33,7 @@ Details.propTypes = {
       _id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired,
+      author: PropTypes.string.isRequired,
       twitterName: PropTypes.string.isRequired,
       articleUrl: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
@@ -61,6 +63,7 @@ const mapStateToProps = ({ notes }, { pageContext, match }) => {
         _id: '',
         title: 'Undefined',
         createdAt: '139223123',
+        author: '',
         twitterName: '',
         articleUrl: '',
         content: '',
