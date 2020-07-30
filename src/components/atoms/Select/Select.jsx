@@ -28,9 +28,7 @@ const StyledSelectButton = styled.button`
   min-width: 20rem;
 
   @media (max-width: 560px) {
-    margin-top: 2rem;
-    margin-left: 0;
-    margin-right: 0;
+    margin: 2rem 0;
   }
 `;
 

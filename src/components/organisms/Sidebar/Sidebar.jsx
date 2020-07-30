@@ -25,7 +25,7 @@ const StyledWrapper = styled.nav`
   justify-content: space-between;
   align-items: center;
 
-  @media (max-width: 840px) {
+  @media (max-width: 880px) {
     width: 100vw;
     height: 10rem;
     position: fixed;
@@ -57,7 +57,7 @@ const StyledLogoLink = styled(NavLink)`
   border: none;
   margin-bottom: 10vh;
 
-  @media (max-width: 840px) {
+  @media (max-width: 880px) {
     margin-left: 2rem;
     margin-bottom: 0;
   }
@@ -65,7 +65,7 @@ const StyledLogoLink = styled(NavLink)`
 
 const StyledLogoutButton = styled(ButtonIcon)`
   margin-top: auto;
-  @media (max-width: 840px) {
+  @media (max-width: 880px) {
     margin-top: 0;
   }
 `;
@@ -77,7 +77,7 @@ const StyledLinkListWrapper = styled.div`
   align-items: center;
   min-height: calc(100vh / 3);
 
-  @media (max-width: 840px) {
+  @media (max-width: 880px) {
     flex-direction: row;
     min-height: 0;
     min-width: calc(100vw / 3);
@@ -93,7 +93,7 @@ const StyledLinksList = styled.ul`
   justify-content: space-between;
   align-items: center;
 
-  @media (max-width: 840px) {
+  @media (max-width: 880px) {
     flex-direction: row;
   }
 `;

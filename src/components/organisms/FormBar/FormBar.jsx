@@ -108,7 +108,6 @@ const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit }) => {
         content: Yup.string().max(250, 'Must be 250 characters or less').required('Required'),
       })}
       onSubmit={(values, { setSubmitting }) => {
-        console.log(values);
         handleSubmit(pageContext, values);
         setSubmitting(false);
       }}

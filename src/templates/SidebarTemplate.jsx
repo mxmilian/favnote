@@ -6,7 +6,7 @@ import Sidebar from 'components/organisms/Sidebar/Sidebar';
 
 const StyledWrapper = styled.div`
   padding: 2.5rem 5rem 2.5rem 20rem;
-  @media (max-width: 840px) {
+  @media (max-width: 880px) {
     padding: 2.5rem 5rem 12.5rem 5rem;
   }
   @media (max-width: 375px) {

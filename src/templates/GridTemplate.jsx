@@ -23,7 +23,7 @@ const StyledGridWrapper = styled.div`
     grid-gap: 4.5rem;
     grid-template-columns: repeat(2, 1fr);
   }
-  @media (max-width: 840px) {
+  @media (max-width: 880px) {
     grid-template-columns: 1fr;
   }
 `;
@@ -46,7 +46,7 @@ const StyledButtonIcon = styled(ButtonIcon)`
   right: 2rem;
   z-index: 2;
 
-  @media (max-width: 840px) {
+  @media (max-width: 880px) {
     top: 2rem;
   }
 `;

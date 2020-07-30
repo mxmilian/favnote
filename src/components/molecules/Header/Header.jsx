@@ -58,18 +58,6 @@ const Header = ({ pageContext, items, text, shared, setFilterText, setSortBy, se
           setSortBy={setSortBy}
         />
         {pageContext !== 'users' && (
-          // <>
-          //   <input
-          //     id="sharedRadio"
-          //     type="radio"
-          //     name="sharedRadio"
-          //     checked={shared}
-          //     onClick={() => setShared(!shared)}
-          //     onChange={() => setShared(!shared)}
-          //   />
-          //   {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-          //   <label htmlFor="sharedRadio">Shared</label>
-          // </>
           <Radio
             pageContext={pageContext}
             content={`Show friends ${pageContext}`}
