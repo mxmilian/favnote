@@ -8,6 +8,7 @@ import cx from 'classnames';
 
 const StyledWrapper = styled.div`
   margin-left: 2rem;
+  margin-right: 2rem;
 `;
 
 const StyledSelectButton = styled.button`
@@ -29,6 +30,7 @@ const StyledSelectButton = styled.button`
   @media (max-width: 560px) {
     margin-top: 2rem;
     margin-left: 0;
+    margin-right: 0;
   }
 `;
 
