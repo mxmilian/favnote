@@ -32,17 +32,20 @@ const Twitters = ({
 
   return (
     <GridTemplate loading={loading}>
-      {twitters.map(({ _id: id, title, createdAt, author, content, twitterName }) => (
-        <Card
-          id={id}
-          key={id}
-          title={title}
-          createdAt={createdAt}
-          author={author}
-          content={content}
-          twitterName={twitterName}
-        />
-      ))}
+      {twitters.map(
+        ({ _id: id, title, createdAt, author, public: sharedNote, content, twitterName }) => (
+          <Card
+            id={id}
+            key={id}
+            title={title}
+            createdAt={createdAt}
+            author={author}
+            shared={sharedNote}
+            content={content}
+            twitterName={twitterName}
+          />
+        ),
+      )}
     </GridTemplate>
   );
 };
@@ -55,6 +58,7 @@ Twitters.propTypes = {
       content: PropTypes.string.isRequired,
       twitterName: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired,
+      public: PropTypes.bool.isRequired,
     }),
   ),
   fetchNotes: PropTypes.func.isRequired,

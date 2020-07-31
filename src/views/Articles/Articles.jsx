@@ -32,17 +32,20 @@ const Articles = ({
 
   return (
     <GridTemplate loading={loading}>
-      {articles.map(({ _id: id, title, createdAt, author, content, articleUrl }) => (
-        <Card
-          id={id}
-          key={id}
-          title={title}
-          createdAt={createdAt}
-          author={author}
-          content={content}
-          articleUrl={articleUrl}
-        />
-      ))}
+      {articles.map(
+        ({ _id: id, title, createdAt, author, content, public: sharedNote, articleUrl }) => (
+          <Card
+            id={id}
+            key={id}
+            title={title}
+            createdAt={createdAt}
+            author={author}
+            shared={sharedNote}
+            content={content}
+            articleUrl={articleUrl}
+          />
+        ),
+      )}
     </GridTemplate>
   );
 };
@@ -55,6 +58,7 @@ Articles.propTypes = {
       content: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired,
       articleUrl: PropTypes.string.isRequired,
+      public: PropTypes.bool.isRequired,
     }),
   ),
   fetchNotes: PropTypes.func.isRequired,

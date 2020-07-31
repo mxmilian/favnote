@@ -31,13 +31,14 @@ const Notes = ({
   useFetchData(fetchAction, notes, 'notes', toggleLoading, shared);
   return (
     <GridTemplate loading={loading}>
-      {notes.map(({ _id: id, title, createdAt, author, content }) => (
+      {notes.map(({ _id: id, title, createdAt, author, public: sharedNote, content }) => (
         <Card
           id={id}
           key={id}
           title={title}
           createdAt={createdAt}
           author={author}
+          shared={sharedNote}
           content={content}
         />
       ))}
@@ -51,6 +52,7 @@ Notes.propTypes = {
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
       createdAt: PropTypes.string.isRequired,
+      public: PropTypes.bool.isRequired,
     }),
   ),
   fetchNotes: PropTypes.func.isRequired,

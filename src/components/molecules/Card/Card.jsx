@@ -129,6 +129,7 @@ const Card = ({
   twitterName,
   articleUrl,
   author,
+  shared,
   content,
   loading,
   toggleLoading,
@@ -155,7 +156,9 @@ const Card = ({
     <>
       <StyledWrapper>
         <InnerWrapper activeColor={pageContext}>
-          <Heading>{title}</Heading>
+          <Heading>
+            {title} {shared && '🌐'}
+          </Heading>
           <InfoWrapper>
             <StyledDate>
               <StyledDateCreated>Created:</StyledDateCreated>
@@ -208,6 +211,7 @@ Card.propTypes = {
   removeNote: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   toggleLoading: PropTypes.func.isRequired,
+  shared: PropTypes.bool.isRequired,
 };
 
 Card.defaultProps = {
