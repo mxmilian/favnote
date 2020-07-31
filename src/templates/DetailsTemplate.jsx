@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import withContext from 'hoc/withContext';
@@ -9,9 +10,11 @@ import SidebarTemplate from 'templates/SidebarTemplate';
 import Heading from 'components/atoms/Heading/Heading';
 import Moment from 'react-moment';
 import { Formik, Form } from 'formik';
+import { theme as themeLoader } from 'theme/theme';
 import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import { editNote as editNoteAction } from 'actions/notes';
+import withLoader from 'hoc/withLoader';
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -137,14 +140,19 @@ const DetailsTemplate = ({
   articleUrl,
   twitterName,
   editNote,
+  loading,
+  toggleLoading,
 }) => {
   const [editContent, setEditContent] = useState(false);
 
   const editContentToggle = () => setEditContent(!editContent);
 
   const handleSubmit = (itemID, itemType, itemContent) => {
-    editNote(itemID, itemType, itemContent);
-    editContentToggle();
+    toggleLoading();
+    editNote(itemID, itemType, itemContent).then(() => {
+      toggleLoading();
+      editContentToggle();
+    });
   };
 
   const lines = content.split(/\r\n|\r|\n/).length;
@@ -191,24 +199,37 @@ const DetailsTemplate = ({
               setSubmitting(false);
             }}
           >
-            {(formik) => (
-              <StyledFormWrapper>
-                <StyledTextArea as="textarea" {...formik.getFieldProps('content')} lines={lines} />
-                {formik.touched.content && formik.errors.content ? (
-                  <StyledError>
-                    <StyledParagraph>{formik.errors.content}!</StyledParagraph>
-                  </StyledError>
-                ) : null}
-                <StyledFormButtonWrapper>
-                  <StyledSubmitButton secondary activecolor={pageContext} type="submit">
-                    save edit
-                  </StyledSubmitButton>
-                  <StyledSubmitButton secondary onClick={editContentToggle}>
-                    exit edit
-                  </StyledSubmitButton>
-                </StyledFormButtonWrapper>
-              </StyledFormWrapper>
-            )}
+            {(formik) => {
+              if (loading) {
+                return (
+                  <StyledFormWrapper>
+                    <Loader type="Oval" color={themeLoader.notes} height={50} width={50} />
+                  </StyledFormWrapper>
+                );
+              }
+              return (
+                <StyledFormWrapper>
+                  <StyledTextArea
+                    as="textarea"
+                    {...formik.getFieldProps('content')}
+                    lines={lines}
+                  />
+                  {formik.touched.content && formik.errors.content ? (
+                    <StyledError>
+                      <StyledParagraph>{formik.errors.content}!</StyledParagraph>
+                    </StyledError>
+                  ) : null}
+                  <StyledFormButtonWrapper>
+                    <StyledSubmitButton secondary activecolor={pageContext} type="submit">
+                      save edit
+                    </StyledSubmitButton>
+                    <StyledSubmitButton secondary onClick={editContentToggle}>
+                      exit edit
+                    </StyledSubmitButton>
+                  </StyledFormButtonWrapper>
+                </StyledFormWrapper>
+              );
+            }}
           </Formik>
         ) : (
           <StyledContentContainer>
@@ -239,6 +260,8 @@ DetailsTemplate.propTypes = {
   articleUrl: PropTypes.string,
   content: PropTypes.string.isRequired,
   editNote: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
+  toggleLoading: PropTypes.func.isRequired,
 };
 
 DetailsTemplate.defaultProps = {
@@ -250,4 +273,4 @@ const mapDispatchToProps = (dispatch) => ({
   editNote: (id, itemType, itemContent) => dispatch(editNoteAction(id, itemType, itemContent)),
 });
 
-export default connect(null, mapDispatchToProps)(withContext(DetailsTemplate));
+export default connect(null, mapDispatchToProps)(withLoader(withContext(DetailsTemplate)));
