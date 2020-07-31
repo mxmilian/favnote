@@ -48,7 +48,7 @@ const StyledInput = styled(Input)`
 `;
 
 const StyledTextArea = styled(Input)`
-  margin: 3rem 0 3rem;
+  margin-top: 3rem;
   font-family: inherit;
   border-radius: 2rem;
   height: 30vh;
@@ -65,6 +65,11 @@ const StyledError = styled.div`
 const StyledParagraph = styled(Paragraph)`
   color: ${({ theme }) => theme.error};
   font-weight: ${({ theme }) => theme.bold};
+`;
+
+const StyledRadioWrapper = styled.div`
+  display: block;
+  margin-top: 3rem;
 `;
 
 const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit }) => {
@@ -96,16 +101,22 @@ const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit }) => {
         public: false,
       }}
       validationSchema={Yup.object({
-        title: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
+        title: Yup.string()
+          .max(25, 'Must be 20 characters or less')
+          .min(3, 'Must be 3 characters or more')
+          .required('Required'),
+        content: Yup.string()
+          .max(250, 'Must be 250 characters or less')
+          .min(3, 'Must be 3 characters or more')
+          .required('Required'),
         twitterName:
           pageContext === 'twitters'
             ? Yup.string().max(20, 'Must be 20 characters or less').required('Required')
             : '',
         articleUrl:
           pageContext === 'articles'
-            ? Yup.string().url('This field must be a valid URL').required('Required')
+            ? Yup.string().url('Must be a valid URL').required('Required')
             : '',
-        content: Yup.string().max(250, 'Must be 250 characters or less').required('Required'),
       })}
       onSubmit={(values, { setSubmitting }) => {
         handleSubmit(pageContext, values);
@@ -132,7 +143,7 @@ const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit }) => {
                 />
                 {formik.touched.twitterName && formik.errors.twitterName ? (
                   <StyledError>
-                    <StyledParagraph>{formik.errors.title}!</StyledParagraph>
+                    <StyledParagraph>{formik.errors.twitterName}!</StyledParagraph>
                   </StyledError>
                 ) : null}
               </>
@@ -143,7 +154,7 @@ const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit }) => {
                 <StyledInput placeholder="article url" {...formik.getFieldProps('articleUrl')} />
                 {formik.touched.articleUrl && formik.errors.articleUrl ? (
                   <StyledError>
-                    <StyledParagraph>{formik.errors.title}!</StyledParagraph>
+                    <StyledParagraph>{formik.errors.articleUrl}!</StyledParagraph>
                   </StyledError>
                 ) : null}
               </>
@@ -152,17 +163,18 @@ const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit }) => {
             <StyledTextArea as="textarea" {...formik.getFieldProps('content')} />
             {formik.touched.content && formik.errors.content ? (
               <StyledError>
-                <StyledParagraph>{formik.errors.title}!</StyledParagraph>
+                <StyledParagraph>{formik.errors.content}!</StyledParagraph>
               </StyledError>
             ) : null}
 
-            {/* <Radio shared={} pageContext={} setShared={} /> */}
-            <Radio
-              pageContext={pageContext}
-              content="Note for friends"
-              checked={formik.values.public}
-              setChecked={() => formik.setFieldValue('public', !formik.values.public)}
-            />
+            <StyledRadioWrapper>
+              <Radio
+                pageContext={pageContext}
+                content="Note for friends"
+                checked={formik.values.public}
+                setChecked={() => formik.setFieldValue('public', !formik.values.public)}
+              />
+            </StyledRadioWrapper>
             <StyledButton activecolor={pageContext} type="submit">
               Add {pageContext.slice(0, -1)}
             </StyledButton>
