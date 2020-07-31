@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import withContext from 'hoc/withContext';
@@ -127,121 +127,107 @@ const StyledHeaderParagraphContent = styled.span`
   font-weight: ${({ theme }) => theme.normal};
 `;
 
-class DetailsTemplate extends Component {
-  state = {
-    editContent: false,
+const DetailsTemplate = ({
+  id,
+  pageContext,
+  title,
+  createdAt,
+  author,
+  content,
+  articleUrl,
+  twitterName,
+  editNote,
+}) => {
+  const [editContent, setEditContent] = useState(false);
+
+  const editContentToggle = () => setEditContent(!editContent);
+
+  const handleSubmit = (itemID, itemType, itemContent) => {
+    editNote(itemID, itemType, itemContent);
+    editContentToggle();
   };
 
-  editContentToggle = () => this.setState((prevState) => ({ editContent: !prevState.editContent }));
-
-  handleSubmit = (id, itemType, itemContent) => {
-    console.log(id, itemType, itemContent);
-    const { editNote } = this.props;
-    editNote(id, itemType, itemContent);
-    this.editContentToggle();
-  };
-
-  render() {
-    const { editContent } = this.state;
-    const {
-      id,
-      pageContext,
-      title,
-      createdAt,
-      author,
-      content,
-      articleUrl,
-      twitterName,
-    } = this.props;
-    const { editContentToggle, handleSubmit } = this;
-    const lines = content.split(/\r\n|\r|\n/).length;
-    return (
-      <SidebarTemplate>
-        <StyledWrapper>
-          <Heading big as="h1">
-            {title}
-          </Heading>
-          <InfoWrapper>
-            <StyledDate>
-              <StyledDateCreated>Created:</StyledDateCreated>
-              <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
-            </StyledDate>
-            <StyledHeaderParagraph>
-              By: <StyledHeaderParagraphContent>{author}</StyledHeaderParagraphContent>
-            </StyledHeaderParagraph>
-          </InfoWrapper>
-          {pageContext === 'twitters' ? (
-            <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
-          ) : null}
-          {editContent ? (
-            <Formik
-              initialValues={{
-                title,
-                twitterName,
-                articleUrl,
-                content,
-              }}
-              validationSchema={Yup.object({
-                title: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
-                twitterName:
-                  pageContext === 'twitters'
-                    ? Yup.string().max(20, 'Must be 20 characters or less').required('Required')
-                    : '',
-                articleUrl:
-                  pageContext === 'articles'
-                    ? Yup.string().url('This field must be a valid URL').required('Required')
-                    : '',
-                content: Yup.string()
-                  .max(250, 'Must be 250 characters or less')
-                  .required('Required'),
-              })}
-              onSubmit={(values, { setSubmitting }) => {
-                handleSubmit(id, pageContext, values);
-                setSubmitting(false);
-              }}
-            >
-              {(formik) => (
-                <StyledFormWrapper>
-                  <StyledTextArea
-                    as="textarea"
-                    {...formik.getFieldProps('content')}
-                    lines={lines}
-                  />
-                  {formik.touched.content && formik.errors.content ? (
-                    <StyledError>
-                      <StyledParagraph>{formik.errors.content}!</StyledParagraph>
-                    </StyledError>
-                  ) : null}
-                  <StyledFormButtonWrapper>
-                    <StyledSubmitButton secondary activecolor={pageContext} type="submit">
-                      save edit
-                    </StyledSubmitButton>
-                    <StyledSubmitButton secondary onClick={editContentToggle}>
-                      exit edit
-                    </StyledSubmitButton>
-                  </StyledFormButtonWrapper>
-                </StyledFormWrapper>
-              )}
-            </Formik>
-          ) : (
-            <StyledContentContainer>
-              <StyledContentParagraph>{content}</StyledContentParagraph>
-              <StyledEditButton secondary activecolor={pageContext} onClick={editContentToggle}>
-                Edit {pageContext}
-              </StyledEditButton>
-            </StyledContentContainer>
-          )}
-          {pageContext === 'articles' || pageContext === 'twitters' ? (
-            <StyledLink href={articleUrl}>Open {pageContext}</StyledLink>
-          ) : null}
-          <Button activecolor={pageContext} as={Link} to={`/${pageContext}`}>
-            close
-          </Button>
-        </StyledWrapper>
-      </SidebarTemplate>
-    );
-  }
-}
+  const lines = content.split(/\r\n|\r|\n/).length;
+  return (
+    <SidebarTemplate>
+      <StyledWrapper>
+        <Heading big as="h1">
+          {title}
+        </Heading>
+        <InfoWrapper>
+          <StyledDate>
+            <StyledDateCreated>Created:</StyledDateCreated>
+            <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
+          </StyledDate>
+          <StyledHeaderParagraph>
+            By: <StyledHeaderParagraphContent>{author}</StyledHeaderParagraphContent>
+          </StyledHeaderParagraph>
+        </InfoWrapper>
+        {pageContext === 'twitters' ? (
+          <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
+        ) : null}
+        {editContent ? (
+          <Formik
+            initialValues={{
+              title,
+              twitterName,
+              articleUrl,
+              content,
+            }}
+            validationSchema={Yup.object({
+              title: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
+              twitterName:
+                pageContext === 'twitters'
+                  ? Yup.string().max(20, 'Must be 20 characters or less').required('Required')
+                  : '',
+              articleUrl:
+                pageContext === 'articles'
+                  ? Yup.string().url('This field must be a valid URL').required('Required')
+                  : '',
+              content: Yup.string().max(250, 'Must be 250 characters or less').required('Required'),
+            })}
+            onSubmit={(values, { setSubmitting }) => {
+              handleSubmit(id, pageContext, values);
+              setSubmitting(false);
+            }}
+          >
+            {(formik) => (
+              <StyledFormWrapper>
+                <StyledTextArea as="textarea" {...formik.getFieldProps('content')} lines={lines} />
+                {formik.touched.content && formik.errors.content ? (
+                  <StyledError>
+                    <StyledParagraph>{formik.errors.content}!</StyledParagraph>
+                  </StyledError>
+                ) : null}
+                <StyledFormButtonWrapper>
+                  <StyledSubmitButton secondary activecolor={pageContext} type="submit">
+                    save edit
+                  </StyledSubmitButton>
+                  <StyledSubmitButton secondary onClick={editContentToggle}>
+                    exit edit
+                  </StyledSubmitButton>
+                </StyledFormButtonWrapper>
+              </StyledFormWrapper>
+            )}
+          </Formik>
+        ) : (
+          <StyledContentContainer>
+            <StyledContentParagraph>{content}</StyledContentParagraph>
+            <StyledEditButton secondary activecolor={pageContext} onClick={editContentToggle}>
+              Edit {pageContext}
+            </StyledEditButton>
+          </StyledContentContainer>
+        )}
+        {pageContext === 'articles' || pageContext === 'twitters' ? (
+          <StyledLink href={articleUrl}>Open {pageContext}</StyledLink>
+        ) : null}
+        <Button activecolor={pageContext} as={Link} to={`/${pageContext}`}>
+          close
+        </Button>
+      </StyledWrapper>
+    </SidebarTemplate>
+  );
+};
 
 DetailsTemplate.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']).isRequired,
