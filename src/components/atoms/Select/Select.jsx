@@ -27,7 +27,7 @@ const StyledSelectButton = styled.button`
   color: ${({ theme }) => theme.black};
   min-width: 20rem;
 
-  @media (max-width: 560px) {
+  @media (max-width: 730px) {
     margin: 2rem 0;
   }
 `;

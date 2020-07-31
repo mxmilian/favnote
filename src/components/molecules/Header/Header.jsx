@@ -32,7 +32,7 @@ const StyledFilters = styled.div`
   align-items: center;
   margin: 2rem 0 3.2rem 0;
 
-  @media (max-width: 560px) {
+  @media (max-width: 730px) {
     flex-direction: column;
     max-width: 22rem;
     align-content: center;
