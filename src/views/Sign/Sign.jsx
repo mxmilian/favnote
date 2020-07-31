@@ -95,23 +95,23 @@ class Sign extends Component {
               ? ''
               : Yup.string()
                   .max(30, 'Must be 30 characters or less')
-                  .min(5, 'Must be 5 characters or more')
+                  .min(8, 'Must be 8 characters or more')
                   .required('Required'),
             email:
               signUp || isEmail
                 ? Yup.string()
                     .email('Must be email')
-                    .max(30, 'Must be XD characters or less')
+                    .max(40, 'Must be 40 characters or less')
                     .required('Required')
                 : '',
             password: Yup.string()
               .max(30, 'Must be 30 characters or less')
-              .min(5, 'Must be 5 characters or more')
+              .min(8, 'Must be 8 characters or more')
               .required('Required'),
             confirmPassword: signUp
               ? Yup.string()
                   .max(30, 'Must be 30 characters or less')
-                  .min(5, 'Must be 5 characters or more')
+                  .min(8, 'Must be 8 characters or more')
                   .required('Required')
               : '',
           })}
@@ -130,7 +130,6 @@ class Sign extends Component {
                     .catch(() => toggleLoading());
                 }
               } else {
-                console.log(values.name, values.email, values.password, values.confirmPassword);
                 register(values.name, values.email, values.password, values.confirmPassword)
                   .then(() => toggleLoading())
                   .catch(() => toggleLoading());
