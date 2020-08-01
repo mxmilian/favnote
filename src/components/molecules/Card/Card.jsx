@@ -139,7 +139,7 @@ const Card = ({
 
   const handleClick = () => setRedirect(true);
 
-  const handleModalClick = () => setShow(!show);
+  const handleModalClick = () => setShow((prevState) => !prevState);
 
   const handleRemove = () => {
     toggleLoading();
@@ -157,7 +157,12 @@ const Card = ({
       <StyledWrapper>
         <InnerWrapper activeColor={pageContext}>
           <Heading>
-            {title} {shared && '🌐'}
+            {title}{' '}
+            {shared && (
+              <span role="img" aria-label="public" title="public note">
+                🌐
+              </span>
+            )}
           </Heading>
           <InfoWrapper>
             <StyledDate>

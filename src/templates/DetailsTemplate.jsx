@@ -145,7 +145,7 @@ const DetailsTemplate = ({
 }) => {
   const [editContent, setEditContent] = useState(false);
 
-  const editContentToggle = () => setEditContent(!editContent);
+  const editContentToggle = () => setEditContent((prevState) => !prevState);
 
   const handleSubmit = (itemID, itemType, itemContent) => {
     toggleLoading();

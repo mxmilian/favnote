@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
 
-export const useFetchData = (action, state, type, loading, shared) => {
+export const useFetchData = (action, state, type, setLoading, shared) => {
   useEffect(() => {
     if (state) {
-      loading();
-      action(type).then(() => loading());
+      setLoading();
+      action(type).then(() => {
+        setLoading();
+      });
     }
   }, [shared]);
 };

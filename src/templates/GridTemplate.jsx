@@ -64,7 +64,7 @@ const GridTemplate = ({ createNote, children, pageContext, loading }) => {
   const [showForm, setShowForm] = useState(false);
 
   const toggleForm = () => {
-    setShowForm(!showForm);
+    setShowForm((prevState) => !prevState);
   };
 
   const handleSubmit = (itemType, itemContent) => {

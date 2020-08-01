@@ -1,18 +1,10 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-const withLoader = (WrappedComponent) =>
-  class WithLoader extends Component {
-    state = {
-      loading: false,
-    };
+const withLoader = (WrappedComponent) => (props) => {
+  const [loading, setLoading] = useState(false);
+  const toggleLoading = () => setLoading((prevState) => !prevState);
 
-    toggleLoading = () => this.setState((prevState) => ({ loading: !prevState.loading }));
-
-    render() {
-      const { loading } = this.state;
-      const { props, toggleLoading } = this;
-      return <WrappedComponent {...props} loading={loading} toggleLoading={toggleLoading} />;
-    }
-  };
+  return <WrappedComponent {...props} loading={loading} toggleLoading={toggleLoading} />;
+};
 
 export default withLoader;
