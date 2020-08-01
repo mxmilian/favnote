@@ -29,6 +29,7 @@ const userReducer = (state = usersInitialState, action) => {
       return {
         ...state,
         userID: action.payload.userID,
+        name: action.payload.name,
       };
     case FETCH_USERS_SUCCESS:
       return {

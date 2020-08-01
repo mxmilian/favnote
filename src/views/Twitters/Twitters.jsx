@@ -11,23 +11,12 @@ import getVisibleNotes from 'selector';
 import GridTemplate from 'templates/GridTemplate';
 import withLoader from 'hoc/withLoader';
 import { useFetchData } from 'hooks/useFetchData';
-import { useFetchUser } from 'hooks/useFetchUser';
 
-const Twitters = ({
-  twitters,
-  shared,
-  userID,
-  loading,
-  fetchNotes,
-  fetchFriendsNotes,
-  fetchUser,
-  toggleLoading,
-}) => {
+const Twitters = ({ twitters, shared, loading, fetchNotes, fetchFriendsNotes, toggleLoading }) => {
   let fetchAction = fetchNotes;
   if (shared) {
     fetchAction = fetchFriendsNotes;
   }
-  useFetchUser(fetchUser, userID);
   useFetchData(fetchAction, twitters, 'twitters', toggleLoading, shared);
 
   return (
@@ -63,22 +52,18 @@ Twitters.propTypes = {
   ),
   fetchNotes: PropTypes.func.isRequired,
   fetchFriendsNotes: PropTypes.func.isRequired,
-  fetchUser: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   toggleLoading: PropTypes.func.isRequired,
   shared: PropTypes.bool.isRequired,
-  userID: PropTypes.string,
 };
 
 Twitters.defaultProps = {
   twitters: [],
-  userID: '',
 };
 
 const mapStateToProps = ({ notes, filters, users }) => ({
   twitters: getVisibleNotes(notes.twitters, filters, null, users.userID),
   shared: filters.shared,
-  userID: users.userID,
 });
 
 const mapDispatchToProps = (dispatch) => ({

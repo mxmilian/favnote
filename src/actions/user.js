@@ -73,6 +73,7 @@ export const fetchUser = () => (dispatch) => {
         payload: {
           // eslint-disable-next-line no-underscore-dangle
           userID: data.data.readDoc._id,
+          name: data.data.readDoc.name,
         },
       }),
     )

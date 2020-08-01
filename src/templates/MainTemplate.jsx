@@ -1,3 +1,4 @@
+import { fetchUser as fetchUserAction } from 'actions/user';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
@@ -7,9 +8,12 @@ import GlobalStyle from 'theme/GlobalStyle';
 import { theme } from 'theme/theme';
 import HelmetTemplate from 'templates/HelmetTemplate';
 import { useCurrentPage } from 'hooks/useCurrentPage';
+import { connect } from 'react-redux';
+import { useFetchUser } from 'hooks/useFetchUser';
 
-const MainTemplate = ({ children, location }) => {
+const MainTemplate = ({ children, location, user, fetchUser }) => {
   const pageType = useCurrentPage(location);
+  useFetchUser(fetchUser, user);
 
   return (
     <PageContext.Provider value={pageType}>
@@ -26,6 +30,26 @@ MainTemplate.propTypes = {
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }).isRequired,
+  fetchUser: PropTypes.func.isRequired,
+  user: PropTypes.shape({
+    userID: PropTypes.string,
+    name: PropTypes.string,
+  }),
 };
 
-export default withRouter(MainTemplate);
+MainTemplate.defaultProps = {
+  user: {
+    userID: '',
+    name: '',
+  },
+};
+
+const mapStateToProps = ({ users }) => ({
+  user: users,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchUser: () => dispatch(fetchUserAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MainTemplate));

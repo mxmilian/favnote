@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 
-export const useFetchUser = (action, state) => {
+export const useFetchUser = (fetchUser, user) => {
   useEffect(() => {
-    if (!state) {
-      action();
+    if (!user) {
+      fetchUser();
     }
-  }, [state]);
+  }, [user]);
 };
