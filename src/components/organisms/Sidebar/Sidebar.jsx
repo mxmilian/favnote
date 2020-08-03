@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import { deauthenticate as deauthenticateAction } from 'actions/user';
 import withContext from 'hoc/withContext';
-import { NavLink } from 'react-router-dom';
+import styled from 'styled-components';
+import { NavLink, Redirect } from 'react-router-dom';
 import penIcon from 'assets/pen.svg';
 import logoIcon from 'assets/logo.svg';
 import bulbIcon from 'assets/bulb.svg';
@@ -11,6 +12,7 @@ import twitterIcon from 'assets/twitter.svg';
 import userIcon from 'assets/user.svg';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 import { routes } from 'routes';
+import { connect } from 'react-redux';
 
 const StyledWrapper = styled.nav`
   position: fixed;
@@ -98,7 +100,7 @@ const StyledLinksList = styled.ul`
   }
 `;
 
-const Sidebar = ({ pageContext }) => (
+const Sidebar = ({ pageContext, deauthenticate }) => (
   <StyledWrapper activeColor={pageContext}>
     <StyledLogoLink to="/" />
     <StyledLinkListWrapper>
@@ -124,12 +126,31 @@ const Sidebar = ({ pageContext }) => (
         </li>
       </StyledLinksList>
     </StyledLinkListWrapper>
-    <StyledLogoutButton as={NavLink} to="/login" icon={logoutIcon} />
+    <StyledLogoutButton
+      as={NavLink}
+      to="/sign"
+      icon={logoutIcon}
+      onClick={() => {
+        deauthenticate().then(() => {
+          console.log('deauthenticate');
+          return <Redirect push to={routes.sign} />;
+        });
+      }}
+    />
   </StyledWrapper>
 );
 
 Sidebar.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles', 'users']).isRequired,
+  deauthenticate: PropTypes.func.isRequired,
 };
 
-export default withContext(Sidebar);
+const mapStateToProps = ({ users }) => ({
+  user: users,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  deauthenticate: () => dispatch(deauthenticateAction()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withContext(Sidebar));

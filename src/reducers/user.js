@@ -6,6 +6,7 @@ import {
   REGISTER_SUCCESS,
   REJ_SUCCESS,
   REQ_SUCCESS,
+  DEAUTHENTICATE_SUCCESS,
 } from 'actions/user';
 
 const usersInitialState = {};
@@ -23,6 +24,12 @@ const userReducer = (state = usersInitialState, action) => {
       return {
         ...state,
         // eslint-disable-next-line no-underscore-dangle
+        userID: action.payload.userID,
+      };
+    case DEAUTHENTICATE_SUCCESS:
+      return {
+        ...state,
+        name: action.payload.name,
         userID: action.payload.userID,
       };
     case FETCH_ONE_USER_SUCCESS:

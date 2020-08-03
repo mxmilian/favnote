@@ -1,3 +1,4 @@
+import { useMeasure } from 'hooks/useMeasure';
 import React, { useState } from 'react';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
@@ -93,7 +94,7 @@ const StyledTextArea = styled.textarea`
   padding: 1rem 1rem 3rem 1rem;
   font-family: inherit;
   border-radius: 2rem;
-  height: ${({ lines }) => `${lines * 2.5}rem`};
+  height: ${({ height }) => `${(height + 10) / 10}rem`};
   overflow: hidden;
   word-break: break-word;
   white-space: pre-wrap;
@@ -155,7 +156,8 @@ const DetailsTemplate = ({
     });
   };
 
-  const lines = content.split(/\r\n|\r|\n/).length;
+  const [rect, conRef] = useMeasure(id);
+
   return (
     <SidebarTemplate>
       <StyledWrapper>
@@ -212,7 +214,7 @@ const DetailsTemplate = ({
                   <StyledTextArea
                     as="textarea"
                     {...formik.getFieldProps('content')}
-                    lines={lines}
+                    height={rect.height}
                   />
                   {formik.touched.content && formik.errors.content ? (
                     <StyledError>
@@ -233,7 +235,7 @@ const DetailsTemplate = ({
           </Formik>
         ) : (
           <StyledContentContainer>
-            <StyledContentParagraph>{content}</StyledContentParagraph>
+            <StyledContentParagraph ref={conRef}>{content}</StyledContentParagraph>
             <StyledEditButton secondary activecolor={pageContext} onClick={editContentToggle}>
               Edit {pageContext}
             </StyledEditButton>

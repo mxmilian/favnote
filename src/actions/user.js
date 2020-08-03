@@ -4,6 +4,10 @@ export const AUTHENTICATE_REQUEST = 'AUTHENTICATE_REQUEST';
 export const AUTHENTICATE_SUCCESS = 'AUTHENTICATE_SUCCESS';
 export const AUTHENTICATE_FAILURE = 'AUTHENTICATE_FAILURE';
 
+export const DEAUTHENTICATE_REQUEST = 'DEAUTHENTICATE_REQUEST';
+export const DEAUTHENTICATE_SUCCESS = 'DEAUTHENTICATE_SUCCESS';
+export const DEAUTHENTICATE_FAILURE = 'DEAUTHENTICATE_FAILURE';
+
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAILURE = 'REGISTER_FAILURE';
@@ -61,6 +65,26 @@ export const authenticate = (name, email, password) => (dispatch) => {
       }),
     )
     .catch((err) => dispatch({ type: AUTHENTICATE_FAILURE, err }));
+};
+
+export const deauthenticate = () => (dispatch) => {
+  dispatch({ type: DEAUTHENTICATE_REQUEST });
+
+  return axios
+    .get('/api/v1/users/signout')
+    .then(() =>
+      dispatch({
+        type: DEAUTHENTICATE_SUCCESS,
+        payload: {
+          userID: undefined,
+          name: undefined,
+        },
+      }),
+    )
+    .catch((err) => {
+      console.log(err);
+      dispatch({ type: DEAUTHENTICATE_FAILURE, err });
+    });
 };
 
 export const fetchUser = () => (dispatch) => {

@@ -41,7 +41,7 @@ Details.propTypes = {
   ).isRequired,
   match: PropTypes.shape({
     path: PropTypes.shape({
-      split: PropTypes.oneOf(['users', 'notes', 'twitters', 'articles']).isRequired,
+      split: PropTypes.string.isRequired,
     }),
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
