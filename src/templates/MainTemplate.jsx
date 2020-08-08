@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { ThemeProvider } from 'styled-components';
-import PageContext from 'context';
+import PageContext from 'context/PageContext';
 import GlobalStyle from 'theme/GlobalStyle';
 import { theme } from 'theme/theme';
 import HelmetTemplate from 'templates/HelmetTemplate';
