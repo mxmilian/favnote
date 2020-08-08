@@ -2,7 +2,6 @@ import {
   fetchNotes as fetchNotesAction,
   fetchFriendsNotes as fetchFriendsNotesAction,
 } from 'actions/notes';
-import { fetchUser as fetchUserAction } from 'actions/user';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -69,7 +68,6 @@ const mapStateToProps = ({ notes, filters, users }) => ({
 const mapDispatchToProps = (dispatch) => ({
   fetchNotes: (pageContext) => dispatch(fetchNotesAction(pageContext)),
   fetchFriendsNotes: (itemType) => dispatch(fetchFriendsNotesAction(itemType)),
-  fetchUser: () => dispatch(fetchUserAction()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withLoader(Twitters));
