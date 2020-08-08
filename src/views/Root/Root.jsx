@@ -1,3 +1,4 @@
+import ProtectedRoute from 'hoc/ProtectedRoutes';
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { Provider } from 'react-redux';
@@ -17,13 +18,13 @@ const Root = () => (
       <MainTemplate>
         <Switch>
           <Route exact path={routes.home} render={() => <Redirect push to={routes.sign} />} />
-          <Route exact path={routes.users} component={Users} />
-          <Route exact path={routes.notes} component={Notes} />
-          <Route path={routes.notesDetails} component={Details} />
-          <Route exact path={routes.articles} component={Articles} />
-          <Route path={routes.articlesDetails} component={Details} />
-          <Route exact path={routes.twitters} component={Twitters} />
-          <Route path={routes.twittersDetails} component={Details} />
+          <ProtectedRoute exact path={routes.users} component={Users} />
+          <ProtectedRoute exact path={routes.notes} component={Notes} />
+          <ProtectedRoute path={routes.notesDetails} component={Details} />
+          <ProtectedRoute exact path={routes.articles} component={Articles} />
+          <ProtectedRoute path={routes.articlesDetails} component={Details} />
+          <ProtectedRoute exact path={routes.twitters} component={Twitters} />
+          <ProtectedRoute path={routes.twittersDetails} component={Details} />
           <Route path={routes.sign} component={Sign} />
         </Switch>
       </MainTemplate>
