@@ -9,8 +9,8 @@ import PropTypes from 'prop-types';
 import withContext from 'hoc/withContext';
 import withLoader from 'hoc/withLoader';
 
-const Users = ({ users, yourID, pageContext, loading, fetchUsers, toggleLoading }) => {
-  useFetchData(fetchUsers, users, 'users', toggleLoading);
+const Users = ({ users, yourID, pageContext, fetchUsers }) => {
+  const loading = useFetchData(fetchUsers, 'users');
 
   return (
     <UsersTemplate loading={loading} pageType={pageContext}>
@@ -42,8 +42,6 @@ Users.propTypes = {
       friendsStatus: PropTypes.oneOf([0, 1, 2, 3]).isRequired,
     }),
   ),
-  loading: PropTypes.bool.isRequired,
-  toggleLoading: PropTypes.func.isRequired,
 };
 
 Users.defaultProps = {

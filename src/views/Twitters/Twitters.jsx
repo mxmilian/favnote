@@ -8,15 +8,14 @@ import { connect } from 'react-redux';
 import Card from 'components/molecules/Card/Card';
 import getVisibleNotes from 'selector';
 import GridTemplate from 'templates/GridTemplate';
-import withLoader from 'hoc/withLoader';
 import { useFetchData } from 'hooks/useFetchData';
 
-const Twitters = ({ twitters, shared, loading, fetchNotes, fetchFriendsNotes, toggleLoading }) => {
+const Twitters = ({ twitters, shared, fetchNotes, fetchFriendsNotes }) => {
   let fetchAction = fetchNotes;
   if (shared) {
     fetchAction = fetchFriendsNotes;
   }
-  useFetchData(fetchAction, twitters, 'twitters', toggleLoading, shared);
+  const loading = useFetchData(fetchAction, 'twitters');
 
   return (
     <GridTemplate loading={loading}>
@@ -51,8 +50,6 @@ Twitters.propTypes = {
   ),
   fetchNotes: PropTypes.func.isRequired,
   fetchFriendsNotes: PropTypes.func.isRequired,
-  loading: PropTypes.bool.isRequired,
-  toggleLoading: PropTypes.func.isRequired,
   shared: PropTypes.bool.isRequired,
 };
 
@@ -70,4 +67,4 @@ const mapDispatchToProps = (dispatch) => ({
   fetchFriendsNotes: (itemType) => dispatch(fetchFriendsNotesAction(itemType)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withLoader(Twitters));
+export default connect(mapStateToProps, mapDispatchToProps)(Twitters);
