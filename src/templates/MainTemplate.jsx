@@ -10,6 +10,7 @@ import HelmetTemplate from 'templates/HelmetTemplate';
 import { useCurrentPage } from 'hooks/useCurrentPage';
 import { connect } from 'react-redux';
 import { useFetchUser } from 'hooks/useFetchUser';
+import UserContext from 'context/UserContext';
 
 const MainTemplate = ({ children, location, user, fetchUser }) => {
   const pageType = useCurrentPage(location);
@@ -17,10 +18,12 @@ const MainTemplate = ({ children, location, user, fetchUser }) => {
 
   return (
     <PageContext.Provider value={pageType}>
-      <GlobalStyle />
-      <ThemeProvider theme={theme}>
-        <HelmetTemplate>{children}</HelmetTemplate>
-      </ThemeProvider>
+      <UserContext.Provider value={user}>
+        <GlobalStyle />
+        <ThemeProvider theme={theme}>
+          <HelmetTemplate>{children}</HelmetTemplate>
+        </ThemeProvider>
+      </UserContext.Provider>
     </PageContext.Provider>
   );
 };
