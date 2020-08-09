@@ -1,5 +1,5 @@
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import closeIcon from 'assets/close.svg';
 import PropTypes from 'prop-types';
@@ -32,22 +32,16 @@ const StyledButton = styled.button`
   cursor: pointer;
 `;
 
-const Error = ({ failure }) => {
-  const [visible, setVisible] = useState(true);
-
-  if (visible) {
-    return (
-      <ErrorWrapper>
-        <StyledParagraph>{failure}</StyledParagraph>
-        <StyledButton icon={closeIcon} onClick={() => setVisible((prevState) => !prevState)} />
-      </ErrorWrapper>
-    );
-  }
-  return null;
-};
+const Error = ({ failure, setVisible }) => (
+  <ErrorWrapper>
+    <StyledParagraph>{failure}</StyledParagraph>
+    <StyledButton icon={closeIcon} onClick={setVisible} />
+  </ErrorWrapper>
+);
 
 Error.propTypes = {
   failure: PropTypes.string.isRequired,
+  setVisible: PropTypes.func.isRequired,
 };
 
 export default Error;

@@ -75,6 +75,7 @@ class Sign extends Component {
   state = {
     signUp: false,
     isEmail: false,
+    visible: true,
   };
 
   toggleSign = () => {
@@ -85,9 +86,13 @@ class Sign extends Component {
     this.setState((prevState) => ({ isEmail: !prevState.isEmail }));
   };
 
+  toggleVisible = () => {
+    this.setState((prevState) => ({ visible: !prevState.visible }));
+  };
+
   render() {
-    const { signUp, isEmail } = this.state;
-    const { toggleSign, toggleEmail } = this;
+    const { signUp, isEmail, visible } = this.state;
+    const { toggleSign, toggleEmail, toggleVisible } = this;
     const { authenticate, register, userID, loading, toggleLoading, failure } = this.props;
     if (userID) return <Redirect push to={routes.notes} />;
     return (
@@ -129,6 +134,7 @@ class Sign extends Component {
           })}
           onSubmit={(values, { setSubmitting }) => {
             setSubmitting(false);
+            if (!visible) toggleVisible();
             toggleLoading();
             try {
               if (!signUp) {
@@ -156,9 +162,9 @@ class Sign extends Component {
             <>
               <StyledHeading>{userID}</StyledHeading>
               <StyledHeading>{signUp ? 'Sign up' : 'Sign in'}</StyledHeading>
-              {failure ? (
+              {failure && visible ? (
                 <StyledErrorWrapper>
-                  <Error failure={failure} />
+                  <Error failure={failure} visible={visible} setVisible={toggleVisible} />
                 </StyledErrorWrapper>
               ) : null}
               <StyledForm>
