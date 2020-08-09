@@ -91,12 +91,13 @@ class Sign extends Component {
             confirmPassword: '',
           }}
           validationSchema={Yup.object({
-            name: isEmail
-              ? ''
-              : Yup.string()
-                  .max(30, 'Must be 30 characters or less')
-                  .min(8, 'Must be 8 characters or more')
-                  .required('Required'),
+            name:
+              isEmail || !signUp
+                ? ''
+                : Yup.string()
+                    .max(30, 'Must be 30 characters or less')
+                    .min(8, 'Must be 8 characters or more')
+                    .required('Required'),
             email:
               signUp || isEmail
                 ? Yup.string()
@@ -104,10 +105,12 @@ class Sign extends Component {
                     .max(40, 'Must be 40 characters or less')
                     .required('Required')
                 : '',
-            password: Yup.string()
-              .max(30, 'Must be 30 characters or less')
-              .min(8, 'Must be 8 characters or more')
-              .required('Required'),
+            password: signUp
+              ? Yup.string()
+                  .max(30, 'Must be 30 characters or less')
+                  .min(8, 'Must be 8 characters or more')
+                  .required('Required')
+              : '',
             confirmPassword: signUp
               ? Yup.string()
                   .max(30, 'Must be 30 characters or less')
