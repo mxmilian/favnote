@@ -79,7 +79,7 @@ class Sign extends Component {
   render() {
     const { signUp, isEmail } = this.state;
     const { toggleSign, toggleEmail } = this;
-    const { authenticate, register, userID, loading, toggleLoading } = this.props;
+    const { authenticate, register, userID, loading, toggleLoading, failure } = this.props;
     if (userID) return <Redirect push to={routes.notes} />;
     return (
       <AuthTemplate>
@@ -147,6 +147,11 @@ class Sign extends Component {
             <>
               <StyledHeading>{userID}</StyledHeading>
               <StyledHeading>{signUp ? 'Sign up' : 'Sign in'}</StyledHeading>
+              {failure ? (
+                <div>
+                  <p>{failure}</p>
+                </div>
+              ) : null}
               <StyledForm>
                 {signUp ? null : (
                   <>
@@ -255,14 +260,17 @@ Sign.propTypes = {
   userID: PropTypes.string,
   loading: PropTypes.bool.isRequired,
   toggleLoading: PropTypes.func.isRequired,
+  failure: PropTypes.string,
 };
 
 Sign.defaultProps = {
   userID: null,
+  failure: undefined,
 };
 
 const mapStateToProps = ({ users }) => ({
   userID: users.userID,
+  failure: users.failure,
 });
 
 const mapDispatchToProps = (dispatch) => ({

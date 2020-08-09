@@ -48,7 +48,14 @@ export const authenticate = (name, email, password) => (dispatch) => {
           },
         }),
       )
-      .catch((err) => dispatch({ type: AUTHENTICATE_FAILURE, err }));
+      .catch((err) =>
+        dispatch({
+          type: AUTHENTICATE_FAILURE,
+          payload: {
+            err,
+          },
+        }),
+      );
   }
   return axios
     .post('/api/v1/users/signin', {
@@ -64,7 +71,15 @@ export const authenticate = (name, email, password) => (dispatch) => {
         },
       }),
     )
-    .catch((err) => dispatch({ type: AUTHENTICATE_FAILURE, err }));
+    .catch((err) => {
+      console.log(err);
+      dispatch({
+        type: AUTHENTICATE_FAILURE,
+        payload: {
+          err,
+        },
+      });
+    });
 };
 
 export const deauthenticate = () => (dispatch) => {
