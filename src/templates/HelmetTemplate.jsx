@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 import withContext from 'hoc/withContext';
 
 const HelmetTemplate = ({ children, pageContext }) => (

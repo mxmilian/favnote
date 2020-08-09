@@ -11,20 +11,23 @@ import { useCurrentPage } from 'hooks/useCurrentPage';
 import { connect } from 'react-redux';
 import { useFetchUser } from 'hooks/useFetchUser';
 import UserContext from 'context/UserContext';
+import { HelmetProvider } from 'react-helmet-async';
 
 const MainTemplate = ({ children, location, user, fetchUser }) => {
   const pageType = useCurrentPage(location);
   useFetchUser(fetchUser, user);
 
   return (
-    <PageContext.Provider value={pageType}>
-      <UserContext.Provider value={user}>
-        <GlobalStyle />
-        <ThemeProvider theme={theme}>
-          <HelmetTemplate>{children}</HelmetTemplate>
-        </ThemeProvider>
-      </UserContext.Provider>
-    </PageContext.Provider>
+    <HelmetProvider>
+      <PageContext.Provider value={pageType}>
+        <UserContext.Provider value={user}>
+          <GlobalStyle />
+          <ThemeProvider theme={theme}>
+            <HelmetTemplate>{children}</HelmetTemplate>
+          </ThemeProvider>
+        </UserContext.Provider>
+      </PageContext.Provider>
+    </HelmetProvider>
   );
 };
 
