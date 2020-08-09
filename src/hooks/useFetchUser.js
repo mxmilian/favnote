@@ -5,5 +5,5 @@ export const useFetchUser = (fetchUser, user) => {
     if (!user) {
       fetchUser();
     }
-  }, [user]);
+  }, [user, fetchUser]);
 };

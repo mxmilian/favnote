@@ -64,8 +64,8 @@ const mapStateToProps = ({ notes, filters, users }) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchNotes: (itemType) => dispatch(fetchNotesAction(itemType)),
-    fetchFriendsNotes: (itemType) => dispatch(fetchFriendsNotesAction(itemType)),
+    fetchNotes: (itemType, source) => dispatch(fetchNotesAction(itemType, source)),
+    fetchFriendsNotes: (itemType, source) => dispatch(fetchFriendsNotesAction(itemType, source)),
   };
 };
 

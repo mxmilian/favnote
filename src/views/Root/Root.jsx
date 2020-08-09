@@ -19,7 +19,7 @@ const Root = () => (
         <Switch>
           <Route exact path={routes.home} render={() => <Redirect push to={routes.sign} />} />
           <ProtectedRoute exact path={routes.users} component={Users} />
-          <ProtectedRoute exact path={routes.notes} component={Notes} />
+          <Route exact path={routes.notes} component={Notes} />
           <ProtectedRoute path={routes.notesDetails} component={Details} />
           <ProtectedRoute exact path={routes.articles} component={Articles} />
           <ProtectedRoute path={routes.articlesDetails} component={Details} />

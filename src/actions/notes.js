@@ -24,13 +24,14 @@ export const EDIT_REQUEST = 'EDIT_REQUEST';
 export const EDIT_SUCCESS = 'EDIT_SUCCESS';
 export const EDIT_FAILURE = 'EDIT_FAILURE';
 
-export const fetchNotes = (itemType) => (dispatch) => {
+export const fetchNotes = (itemType, source) => (dispatch) => {
   dispatch({ type: FETCH_REQUEST });
   return axios
     .get('/api/v1/notes/type', {
       params: {
         type: itemType,
       },
+      cancelToken: source.token,
     })
     .then(({ data }) =>
       dispatch({
@@ -44,13 +45,14 @@ export const fetchNotes = (itemType) => (dispatch) => {
     .catch((err) => dispatch({ type: FETCH_FAILURE }, console.log(err)));
 };
 
-export const fetchFriendsNotes = (itemType) => (dispatch) => {
+export const fetchFriendsNotes = (itemType, source) => (dispatch) => {
   dispatch({ type: FETCH_FRIENDS_NOTES_REQUEST });
   return axios
     .get('/api/v1/notes/shared', {
       params: {
         type: itemType,
       },
+      cancelToken: source.token,
     })
     .then(({ data }) => {
       console.log(data);

@@ -63,8 +63,8 @@ const mapStateToProps = ({ notes, filters, users }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchNotes: (pageContext) => dispatch(fetchNotesAction(pageContext)),
-  fetchFriendsNotes: (itemType) => dispatch(fetchFriendsNotesAction(itemType)),
+  fetchNotes: (pageContext, source) => dispatch(fetchNotesAction(pageContext, source)),
+  fetchFriendsNotes: (itemType, source) => dispatch(fetchFriendsNotesAction(itemType, source)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Twitters);
