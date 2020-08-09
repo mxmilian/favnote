@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import { authenticate as authenticateAction, register as registerAction } from 'actions/user';
 import { Redirect } from 'react-router';
 import withLoader from 'hoc/withLoader';
+import Error from 'components/organisms/Error/Error';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -60,6 +61,14 @@ const StyledLink = styled.a`
   text-decoration: underline;
   margin-bottom: 5.5rem;
   cursor: pointer;
+`;
+
+const StyledErrorWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
 `;
 
 class Sign extends Component {
@@ -148,9 +157,9 @@ class Sign extends Component {
               <StyledHeading>{userID}</StyledHeading>
               <StyledHeading>{signUp ? 'Sign up' : 'Sign in'}</StyledHeading>
               {failure ? (
-                <div>
-                  <p>{failure}</p>
-                </div>
+                <StyledErrorWrapper>
+                  <Error failure={failure} />
+                </StyledErrorWrapper>
               ) : null}
               <StyledForm>
                 {signUp ? null : (
