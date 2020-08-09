@@ -33,10 +33,14 @@ const StyledAuthCard = styled.div`
   justify-content: center;
 `;
 
+const StyledHeading = styled(Heading)`
+  text-align: center;
+`;
+
 const AuthTemplate = ({ children }) => (
   <StyledWrapper>
     <StyledLogo src={logoImg} alt="Logo favnote" />
-    <Heading>Your new favorite online notes experience!</Heading>
+    <StyledHeading>Your new favorite online notes experience!</StyledHeading>
     <StyledAuthCard>{children}</StyledAuthCard>
   </StyledWrapper>
 );
