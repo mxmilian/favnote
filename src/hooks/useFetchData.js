@@ -5,12 +5,12 @@ export const useFetchData = (action, type) => {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const source = axios.CancelToken.source();
-    const fetchData = async () => {
+    const fetchData = () => {
       setLoading((prevState) => !prevState);
-      await action(type, source).then(() => setLoading((prevState) => !prevState));
+      action(type, source).then(() => setLoading((prevState) => !prevState));
     };
 
-    fetchData().then(() => '');
+    fetchData();
 
     return () => {
       source.cancel();

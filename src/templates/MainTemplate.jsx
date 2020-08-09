@@ -52,7 +52,7 @@ const mapStateToProps = ({ users }) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchUser: () => dispatch(fetchUserAction()),
+  fetchUser: (source) => dispatch(fetchUserAction(source)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(MainTemplate));

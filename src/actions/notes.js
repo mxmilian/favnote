@@ -42,7 +42,13 @@ export const fetchNotes = (itemType, source) => (dispatch) => {
         },
       }),
     )
-    .catch((err) => dispatch({ type: FETCH_FAILURE }, console.log(err)));
+    .catch((err) => {
+      if (!axios.isCancel(err)) {
+        console.log(err);
+      }
+
+      return dispatch({ type: FETCH_FAILURE });
+    });
 };
 
 export const fetchFriendsNotes = (itemType, source) => (dispatch) => {
@@ -64,7 +70,13 @@ export const fetchFriendsNotes = (itemType, source) => (dispatch) => {
         },
       });
     })
-    .catch((err) => dispatch({ type: FETCH_FRIENDS_NOTES_FAILURE }, console.log(err)));
+    .catch((err) => {
+      if (!axios.isCancel(err)) {
+        console.log(err);
+      }
+
+      return dispatch({ type: FETCH_FRIENDS_NOTES_FAILURE });
+    });
 };
 
 export const fetchOneNote = (id, itemType) => (dispatch) => {

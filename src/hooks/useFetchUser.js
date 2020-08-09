@@ -1,9 +1,19 @@
+import axios from 'axios';
 import { useEffect } from 'react';
 
 export const useFetchUser = (fetchUser, user) => {
   useEffect(() => {
-    if (!user) {
-      fetchUser();
-    }
+    const source = axios.CancelToken.source();
+
+    const fetchData = () => {
+      if (!user) {
+        fetchUser(source);
+      }
+    };
+    fetchData();
+
+    return () => {
+      source.cancel();
+    };
   }, [user, fetchUser]);
 };

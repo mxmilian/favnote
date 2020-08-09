@@ -87,10 +87,10 @@ export const deauthenticate = () => (dispatch) => {
     });
 };
 
-export const fetchUser = () => (dispatch) => {
+export const fetchUser = (source) => (dispatch) => {
   dispatch({ type: FETCH_ONE_USER_REQUEST });
   return axios
-    .get('/api/v1/users/user')
+    .get('/api/v1/users/user', { cancelToken: source.token })
     .then(({ data }) =>
       dispatch({
         type: FETCH_ONE_USER_SUCCESS,
@@ -128,9 +128,9 @@ export const register = (name, email, password, confirmPassword) => (dispatch) =
     });
 };
 
-export const fetchUsers = () => (dispatch) => {
+export const fetchUsers = (source) => (dispatch) => {
   dispatch({ type: FETCH_USERS_REQUEST });
-  return axios.get('/api/v1/friends/').then(({ data }) =>
+  return axios.get('/api/v1/friends/', { cancelToken: source.token }).then(({ data }) =>
     dispatch({
       type: FETCH_USERS_SUCCESS,
       payload: {

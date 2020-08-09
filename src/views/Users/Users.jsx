@@ -55,7 +55,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  fetchUsers: () => dispatch(fetchUsersAction()),
+  fetchUsers: (source) => dispatch(fetchUsersAction(source)),
 });
 
 export default withContext(connect(mapStateToProps, mapDispatchToProps)(withLoader(Users)));
