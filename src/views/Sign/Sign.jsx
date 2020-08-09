@@ -99,7 +99,7 @@ class Sign extends Component {
                     .min(8, 'Must be 8 characters or more')
                     .required('Required'),
             email:
-              signUp || isEmail
+              signUp || (isEmail && signUp)
                 ? Yup.string()
                     .email('Must be email')
                     .max(40, 'Must be 40 characters or less')
@@ -219,6 +219,7 @@ class Sign extends Component {
                 {signUp ? (
                   <>
                     <StyledInput
+                      type="password"
                       placeholder="Confirm password"
                       {...formik.getFieldProps('confirmPassword')}
                     />
