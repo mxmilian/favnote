@@ -1,5 +1,7 @@
+import { USERS } from 'utils/constants';
+
 const getVisibleNotes = (items = [], { text, sortBy, shared }, pageContext = '', userID = '') => {
-  if (pageContext === 'users')
+  if (pageContext === USERS)
     return items
       .filter(({ name }) => name.toLowerCase().trim().includes(text.toLowerCase().trim()))
       .sort((a, b) => {

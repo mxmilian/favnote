@@ -14,6 +14,7 @@ import {
 } from 'actions/filters';
 import Select from 'components/atoms/Select/Select';
 import Radio from 'components/atoms/Radio/Radio';
+import { USERS } from 'utils/constants';
 
 const StyledHeading = styled(Heading)`
   ::first-letter {
@@ -57,7 +58,7 @@ const Header = ({ pageContext, items, text, shared, setFilterText, setSortBy, se
           ]}
           setSortBy={setSortBy}
         />
-        {pageContext !== 'users' && (
+        {pageContext !== USERS && (
           <Radio
             pageContext={pageContext}
             content={`Show friends ${pageContext}`}
@@ -91,7 +92,7 @@ Header.defaultProps = {
 };
 
 const mapStateToProps = ({ filters, notes, users }, { pageContext }) => {
-  if (pageContext === 'users')
+  if (pageContext === USERS)
     return {
       items: getVisibleNotes(users[pageContext], filters, pageContext),
       text: filters.text,

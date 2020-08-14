@@ -8,9 +8,10 @@ import Tuple from 'components/molecules/Tuple/Tuple';
 import PropTypes from 'prop-types';
 import withContext from 'hoc/withContext';
 import withLoader from 'hoc/withLoader';
+import { USERS } from 'utils/constants';
 
 const Users = ({ users, yourID, pageContext, fetchUsers }) => {
-  const loading = useFetchData(users, fetchUsers, 'users');
+  const loading = useFetchData(users, fetchUsers, USERS);
 
   return (
     <UsersTemplate loading={loading} pageType={pageContext}>
@@ -50,7 +51,7 @@ Users.defaultProps = {
 };
 
 const mapStateToProps = (state) => ({
-  users: getVisibleNotes(state.users.users, state.filters, 'users'),
+  users: getVisibleNotes(state.users.users, state.filters, USERS),
   yourID: state.users.userID,
 });
 

@@ -8,6 +8,7 @@ import Button from 'components/atoms/Button/Button';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import withContext from 'hoc/withContext';
 import { Formik, Form } from 'formik';
+import { ARTICLES, TWITTERS } from 'utils/constants';
 import * as Yup from 'yup';
 
 const StyledWrapper = styled.div`
@@ -110,11 +111,11 @@ const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit }) => {
           .min(3, 'Must be 3 characters or more')
           .required('Required'),
         twitterName:
-          pageContext === 'twitters'
+          pageContext === TWITTERS
             ? Yup.string().max(20, 'Must be 20 characters or less').required('Required')
             : '',
         articleUrl:
-          pageContext === 'articles'
+          pageContext === ARTICLES
             ? Yup.string().url('Must be a valid URL').required('Required')
             : '',
       })}
@@ -135,7 +136,7 @@ const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit }) => {
               </StyledError>
             ) : null}
 
-            {pageContext === 'twitters' ? (
+            {pageContext === TWITTERS ? (
               <>
                 <StyledInput
                   placeholder="Account name eg. dan_abramov"
@@ -149,7 +150,7 @@ const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit }) => {
               </>
             ) : null}
 
-            {pageContext === 'articles' ? (
+            {pageContext === ARTICLES ? (
               <>
                 <StyledInput placeholder="article url" {...formik.getFieldProps('articleUrl')} />
                 {formik.touched.articleUrl && formik.errors.articleUrl ? (

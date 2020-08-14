@@ -3,7 +3,6 @@ import axios from 'axios';
 
 export const useFetchData = (state, action, type) => {
   const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     const source = axios.CancelToken.source();
 
@@ -18,6 +17,6 @@ export const useFetchData = (state, action, type) => {
     return () => {
       source.cancel();
     };
-  }, [type]);
+  }, [type, action]);
   return loading;
 };

@@ -6,9 +6,10 @@ import getVisibleNotes from 'selector';
 import GridTemplate from 'templates/GridTemplate';
 import { useFetchData } from 'hooks/useFetchData';
 import { fetchAllNotes as fetchAllNotesAction } from 'actions/notes';
+import { TWITTERS } from 'utils/constants';
 
 const Twitters = ({ twitters, fetchAllNotes }) => {
-  const loading = useFetchData(twitters, fetchAllNotes, 'twitters');
+  const loading = useFetchData(twitters, fetchAllNotes, TWITTERS);
 
   return (
     <GridTemplate loading={loading}>

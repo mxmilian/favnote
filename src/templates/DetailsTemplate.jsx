@@ -16,6 +16,7 @@ import * as Yup from 'yup';
 import { connect } from 'react-redux';
 import { editNote as editNoteAction } from 'actions/notes';
 import withLoader from 'hoc/withLoader';
+import { TWITTERS, ARTICLES } from 'utils/constants';
 
 const StyledWrapper = styled.div`
   position: relative;
@@ -173,7 +174,7 @@ const DetailsTemplate = ({
             By: <StyledHeaderParagraphContent>{author}</StyledHeaderParagraphContent>
           </StyledHeaderParagraph>
         </InfoWrapper>
-        {pageContext === 'twitters' ? (
+        {pageContext === TWITTERS ? (
           <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
         ) : null}
         {editContent ? (
@@ -187,11 +188,11 @@ const DetailsTemplate = ({
             validationSchema={Yup.object({
               title: Yup.string().max(20, 'Must be 20 characters or less').required('Required'),
               twitterName:
-                pageContext === 'twitters'
+                pageContext === TWITTERS
                   ? Yup.string().max(20, 'Must be 20 characters or less').required('Required')
                   : '',
               articleUrl:
-                pageContext === 'articles'
+                pageContext === ARTICLES
                   ? Yup.string().url('This field must be a valid URL').required('Required')
                   : '',
               content: Yup.string().max(250, 'Must be 250 characters or less').required('Required'),
@@ -241,7 +242,7 @@ const DetailsTemplate = ({
             </StyledEditButton>
           </StyledContentContainer>
         )}
-        {pageContext === 'articles' || pageContext === 'twitters' ? (
+        {pageContext === ARTICLES || pageContext === TWITTERS ? (
           <StyledLink href={articleUrl}>Open {pageContext}</StyledLink>
         ) : null}
         <Button activecolor={pageContext} as={Link} to={`/${pageContext}`}>

@@ -6,9 +6,10 @@ import getVisibleNotes from 'selector';
 import GridTemplate from 'templates/GridTemplate';
 import Card from 'components/molecules/Card/Card';
 import { useFetchData } from 'hooks/useFetchData';
+import { ARTICLES } from 'utils/constants';
 
 const Articles = ({ articles, fetchAllNotes }) => {
-  const loading = useFetchData(articles, fetchAllNotes, 'articles');
+  const loading = useFetchData(articles, fetchAllNotes, ARTICLES);
 
   return (
     <GridTemplate loading={loading}>

@@ -14,6 +14,7 @@ import Moment from 'react-moment';
 import withLoader from 'hoc/withLoader';
 import Loader from 'react-loader-spinner';
 import { theme as themeLoader } from 'theme/theme';
+import { ARTICLES, TWITTERS } from 'utils/constants';
 
 const StyledWrapper = styled.div`
   min-height: 38rem;
@@ -173,11 +174,11 @@ const Card = ({
               By: <StyledHeaderParagraphContent>{author}</StyledHeaderParagraphContent>
             </StyledHeaderParagraph>
           </InfoWrapper>
-          {pageContext === 'twitters' && (
+          {pageContext === TWITTERS && (
             <StyledAvatar src={`https://source.unsplash.com/1600x900/?${twitterName}`} />
           )}
 
-          {pageContext === 'articles' && <StyledLink href={articleUrl} />}
+          {pageContext === ARTICLES && <StyledLink href={articleUrl} />}
         </InnerWrapper>
         {!loading ? (
           <InnerWrapper flex>
