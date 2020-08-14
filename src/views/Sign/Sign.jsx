@@ -77,6 +77,7 @@ const Sign = ({ authenticate, register, userID, loading, toggleLoading, failure 
   const [visible, setVisible] = useState(true);
 
   const toggleSign = () => {
+    if (visible) setVisible((prevState) => !prevState);
     setSignUp((prevState) => !prevState);
   };
 
