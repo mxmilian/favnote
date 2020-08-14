@@ -54,7 +54,7 @@ export const fetchNotes = (itemType, source) => (dispatch) => {
 export const fetchAllNotes = (itemType, source) => (dispatch) => {
   dispatch({ type: FETCH_ALL_NOTES_REQUEST });
   return axios
-    .get('/api/v1/notes/shared', {
+    .get('/api/v1/notes/all', {
       params: {
         type: itemType,
       },
