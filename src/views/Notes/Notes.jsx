@@ -1,7 +1,4 @@
-import {
-  fetchNotes as fetchNotesAction,
-  fetchFriendsNotes as fetchFriendsNotesAction,
-} from 'actions/notes';
+import { fetchAllNotes as fetchAllNotesAction } from 'actions/notes';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -10,8 +7,8 @@ import GridTemplate from 'templates/GridTemplate';
 import Card from 'components/molecules/Card/Card';
 import { useFetchData } from 'hooks/useFetchData';
 
-const Notes = ({ notes, fetchFriendsNotes }) => {
-  const loading = useFetchData(notes, fetchFriendsNotes, 'notes');
+const Notes = ({ notes, fetchAllNotes }) => {
+  const loading = useFetchData(notes, fetchAllNotes, 'notes');
 
   return (
     <GridTemplate loading={loading}>
@@ -39,7 +36,7 @@ Notes.propTypes = {
       public: PropTypes.bool.isRequired,
     }),
   ),
-  fetchFriendsNotes: PropTypes.func.isRequired,
+  fetchAllNotes: PropTypes.func.isRequired,
 };
 
 Notes.defaultProps = {
@@ -52,8 +49,7 @@ const mapStateToProps = ({ notes, filters, users }) => ({
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchNotes: (itemType, source) => dispatch(fetchNotesAction(itemType, source)),
-    fetchFriendsNotes: (itemType, source) => dispatch(fetchFriendsNotesAction(itemType, source)),
+    fetchAllNotes: (itemType, source) => dispatch(fetchAllNotesAction(itemType, source)),
   };
 };
 

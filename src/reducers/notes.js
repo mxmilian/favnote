@@ -1,6 +1,6 @@
 import {
   FETCH_SUCCESS,
-  FETCH_FRIENDS_NOTES_SUCCESS,
+  FETCH_ALL_NOTES_SUCCESS,
   CREATE_SUCCESS,
   REMOVE_SUCCESS,
   EDIT_SUCCESS,
@@ -17,9 +17,7 @@ const notesReducer = (state = notesInitialState, action) => {
         ...state,
         [action.payload.itemType]: [...action.payload.data],
       };
-    case FETCH_FRIENDS_NOTES_SUCCESS:
-      console.log(action.payload.itemType);
-      console.log(action.payload.data);
+    case FETCH_ALL_NOTES_SUCCESS:
       return {
         ...state,
         [action.payload.itemType]: [
