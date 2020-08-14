@@ -10,12 +10,9 @@ import GridTemplate from 'templates/GridTemplate';
 import Card from 'components/molecules/Card/Card';
 import { useFetchData } from 'hooks/useFetchData';
 
-const Notes = ({ notes, shared, fetchNotes, fetchFriendsNotes }) => {
-  let fetchAction = fetchNotes;
-  if (shared) {
-    fetchAction = fetchFriendsNotes;
-  }
-  const loading = useFetchData(fetchAction, 'notes');
+const Notes = ({ notes, fetchFriendsNotes }) => {
+  const loading = useFetchData(notes, fetchFriendsNotes, 'notes');
+
   return (
     <GridTemplate loading={loading}>
       {notes.map(({ _id: id, title, createdAt, author, public: sharedNote, content }) => (
@@ -42,9 +39,7 @@ Notes.propTypes = {
       public: PropTypes.bool.isRequired,
     }),
   ),
-  fetchNotes: PropTypes.func.isRequired,
   fetchFriendsNotes: PropTypes.func.isRequired,
-  shared: PropTypes.bool.isRequired,
 };
 
 Notes.defaultProps = {
@@ -53,7 +48,6 @@ Notes.defaultProps = {
 
 const mapStateToProps = ({ notes, filters, users }) => ({
   notes: getVisibleNotes(notes.notes, filters, null, users.userID),
-  shared: filters.shared,
 });
 
 const mapDispatchToProps = (dispatch) => {

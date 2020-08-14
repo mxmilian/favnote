@@ -61,11 +61,10 @@ export const fetchFriendsNotes = (itemType, source) => (dispatch) => {
       cancelToken: source.token,
     })
     .then(({ data }) => {
-      console.log(data);
       return dispatch({
         type: FETCH_FRIENDS_NOTES_SUCCESS,
         payload: {
-          data: data.data.sharedNotes,
+          data: data.data,
           itemType,
         },
       });

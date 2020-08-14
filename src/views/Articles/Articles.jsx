@@ -10,12 +10,8 @@ import GridTemplate from 'templates/GridTemplate';
 import Card from 'components/molecules/Card/Card';
 import { useFetchData } from 'hooks/useFetchData';
 
-const Articles = ({ articles, shared, fetchNotes, fetchFriendsNotes }) => {
-  let fetchAction = fetchNotes;
-  if (shared) {
-    fetchAction = fetchFriendsNotes;
-  }
-  const loading = useFetchData(fetchAction, 'articles');
+const Articles = ({ articles, fetchFriendsNotes }) => {
+  const loading = useFetchData(articles, fetchFriendsNotes, 'articles');
 
   return (
     <GridTemplate loading={loading}>
@@ -48,9 +44,7 @@ Articles.propTypes = {
       public: PropTypes.bool.isRequired,
     }),
   ),
-  fetchNotes: PropTypes.func.isRequired,
   fetchFriendsNotes: PropTypes.func.isRequired,
-  shared: PropTypes.bool.isRequired,
 };
 
 Articles.defaultProps = {

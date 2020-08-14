@@ -10,12 +10,8 @@ import getVisibleNotes from 'selector';
 import GridTemplate from 'templates/GridTemplate';
 import { useFetchData } from 'hooks/useFetchData';
 
-const Twitters = ({ twitters, shared, fetchNotes, fetchFriendsNotes }) => {
-  let fetchAction = fetchNotes;
-  if (shared) {
-    fetchAction = fetchFriendsNotes;
-  }
-  const loading = useFetchData(fetchAction, 'twitters');
+const Twitters = ({ twitters, fetchFriendsNotes }) => {
+  const loading = useFetchData(twitters, fetchFriendsNotes, 'twitters');
 
   return (
     <GridTemplate loading={loading}>
@@ -48,9 +44,7 @@ Twitters.propTypes = {
       public: PropTypes.bool.isRequired,
     }),
   ),
-  fetchNotes: PropTypes.func.isRequired,
   fetchFriendsNotes: PropTypes.func.isRequired,
-  shared: PropTypes.bool.isRequired,
 };
 
 Twitters.defaultProps = {

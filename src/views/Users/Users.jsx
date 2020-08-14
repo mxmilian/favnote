@@ -10,7 +10,7 @@ import withContext from 'hoc/withContext';
 import withLoader from 'hoc/withLoader';
 
 const Users = ({ users, yourID, pageContext, fetchUsers }) => {
-  const loading = useFetchData(fetchUsers, 'users');
+  const loading = useFetchData(users, fetchUsers, 'users');
 
   return (
     <UsersTemplate loading={loading} pageType={pageContext}>

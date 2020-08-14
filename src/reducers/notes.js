@@ -18,9 +18,14 @@ const notesReducer = (state = notesInitialState, action) => {
         [action.payload.itemType]: [...action.payload.data],
       };
     case FETCH_FRIENDS_NOTES_SUCCESS:
+      console.log(action.payload.itemType);
+      console.log(action.payload.data);
       return {
         ...state,
-        [action.payload.itemType]: [...state[action.payload.itemType], ...action.payload.data],
+        [action.payload.itemType]: [
+          ...action.payload.data.ownNotes,
+          ...action.payload.data.sharedNotes,
+        ],
       };
     case FETCH_ONE_SUCCESS:
       return state;
