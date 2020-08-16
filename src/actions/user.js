@@ -106,14 +106,13 @@ export const deauthenticate = () => (dispatch) => {
 export const fetchUser = (source) => (dispatch) => {
   dispatch({ type: FETCH_ONE_USER_REQUEST });
   return axios
-    .get('/api/v1/users/user', { cancelToken: source.token })
+    .post('/api/v1/users/refresh_token', {}, { cancelToken: source.token })
     .then(({ data }) =>
       dispatch({
         type: FETCH_ONE_USER_SUCCESS,
         payload: {
-          // eslint-disable-next-line no-underscore-dangle
-          userID: data.data.readDoc._id,
-          name: data.data.readDoc.name,
+          accessToken: data.data.accessToken,
+          user: data.data.user,
         },
       }),
     )

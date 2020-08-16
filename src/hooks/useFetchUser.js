@@ -6,7 +6,7 @@ export const useFetchUser = (fetchUser, user) => {
     const source = axios.CancelToken.source();
 
     const fetchData = () => {
-      if (!user) {
+      if (Object.keys(user).length === 0) {
         fetchUser(source);
       }
     };

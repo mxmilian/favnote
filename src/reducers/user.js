@@ -46,8 +46,8 @@ const userReducer = (state = usersInitialState, action) => {
       return {
         ...state,
         failure: undefined,
-        userID: action.payload.userID,
-        name: action.payload.name,
+        user: action.payload.user,
+        accessToken: action.payload.accessToken,
       };
     case FETCH_USERS_SUCCESS:
       return {

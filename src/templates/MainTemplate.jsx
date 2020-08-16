@@ -16,7 +16,7 @@ import { HelmetProvider } from 'react-helmet-async';
 const MainTemplate = ({ children, location, user, fetchUser }) => {
   const pageType = useCurrentPage(location);
   useFetchUser(fetchUser, user);
-
+  console.log(user);
   return (
     <HelmetProvider>
       <PageContext.Provider value={pageType}>
