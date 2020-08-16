@@ -13,7 +13,6 @@ import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
 import { authenticate as authenticateAction, register as registerAction } from 'actions/user';
-import { Redirect } from 'react-router';
 import withLoader from 'hoc/withLoader';
 import Error from 'components/organisms/Error/Error';
 
@@ -71,7 +70,7 @@ const StyledErrorWrapper = styled.div`
   margin-top: 1rem;
 `;
 
-const Sign = ({ authenticate, register, userID, loading, toggleLoading, failure }) => {
+const Sign = ({ authenticate, register, userID, loading, toggleLoading, failure, history }) => {
   const [signUp, setSignUp] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
   const [visible, setVisible] = useState(true);
@@ -88,7 +87,6 @@ const Sign = ({ authenticate, register, userID, loading, toggleLoading, failure 
   const toggleVisible = () => {
     setVisible((prevState) => !prevState);
   };
-  if (userID) return <Redirect push to={routes.notes} />;
   return (
     <AuthTemplate>
       <Formik
@@ -134,11 +132,17 @@ const Sign = ({ authenticate, register, userID, loading, toggleLoading, failure 
             if (!signUp) {
               if (isEmail) {
                 authenticate(null, values.email, values.password)
-                  .then(() => toggleLoading())
+                  .then(() => {
+                    toggleLoading();
+                    history.push(routes.notes);
+                  })
                   .catch(() => toggleLoading());
               } else if (!isEmail) {
                 authenticate(values.name, null, values.password)
-                  .then(() => toggleLoading())
+                  .then(() => {
+                    toggleLoading();
+                    history.push(routes.notes);
+                  })
                   .catch(() => toggleLoading());
               }
             } else {
@@ -268,6 +272,9 @@ Sign.propTypes = {
   loading: PropTypes.bool.isRequired,
   toggleLoading: PropTypes.func.isRequired,
   failure: PropTypes.string,
+  history: PropTypes.objectOf({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
 
 Sign.defaultProps = {

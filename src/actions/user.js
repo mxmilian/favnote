@@ -39,15 +39,15 @@ export const authenticate = (name, email, password) => (dispatch) => {
         email,
         password,
       })
-      .then(({ data }) =>
+      .then(({ data }) => {
         dispatch({
           type: AUTHENTICATE_SUCCESS,
           payload: {
-            // eslint-disable-next-line no-underscore-dangle
-            userID: data.data.user._id,
+            accessToken: data.data.accessToken,
+            user: data.data.user,
           },
-        }),
-      )
+        });
+      })
       .catch((err) => {
         console.log(err);
         return dispatch({
@@ -63,15 +63,16 @@ export const authenticate = (name, email, password) => (dispatch) => {
       name,
       password,
     })
-    .then(({ data }) =>
+    .then(({ data }) => {
+      // eslint-disable-next-line no-underscore-dangle
       dispatch({
         type: AUTHENTICATE_SUCCESS,
         payload: {
-          // eslint-disable-next-line no-underscore-dangle
-          userID: data.data.user._id,
+          accessToken: data.data.accessToken,
+          user: data.data.user,
         },
-      }),
-    )
+      });
+    })
     .catch((err) => {
       return dispatch({
         type: AUTHENTICATE_FAILURE,

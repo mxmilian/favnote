@@ -1,16 +1,15 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { routes } from 'routes';
 import PropTypes from 'prop-types';
-import UserContext from 'context/UserContext';
+import { connect } from 'react-redux';
 
-const ProtectedRoute = ({ component: Component, ...rest }) => {
-  const user = useContext(UserContext);
+const ProtectedRoute = ({ component: Component, accessToken, ...rest }) => {
   return (
     <Route
       {...rest}
       render={(props) => {
-        if (user.userID) {
+        if (accessToken) {
           return <Component {...rest} {...props} />;
         }
         return (
@@ -30,6 +29,7 @@ const ProtectedRoute = ({ component: Component, ...rest }) => {
 
 ProtectedRoute.propTypes = {
   component: PropTypes.elementType.isRequired,
+  accessToken: PropTypes.string,
   location: PropTypes.shape({
     pathname: PropTypes.string.isRequired,
   }),
@@ -39,6 +39,11 @@ ProtectedRoute.defaultProps = {
   location: {
     pathname: '',
   },
+  accessToken: null,
 };
 
-export default ProtectedRoute;
+const mapStateToProps = ({ users }) => ({
+  accessToken: users.accessToken,
+});
+
+export default connect(mapStateToProps)(ProtectedRoute);

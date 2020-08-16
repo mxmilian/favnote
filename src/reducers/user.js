@@ -20,7 +20,8 @@ const userReducer = (state = usersInitialState, action) => {
         ...state,
         failure: undefined,
         // eslint-disable-next-line no-underscore-dangle
-        userID: action.payload.userID,
+        user: action.payload.user,
+        accessToken: action.payload.accessToken,
       };
     case AUTHENTICATE_FAILURE:
       return {
