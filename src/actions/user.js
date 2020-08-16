@@ -158,17 +158,16 @@ export const reqFriend = (id) => (dispatch) => {
     .post('/api/v1/friends/req', {
       id,
     })
-    .then(({ data }) => {
-      console.log(data.data.reqUser);
-      return dispatch({
+    .then(({ data }) =>
+      dispatch({
         type: REQ_SUCCESS,
         payload: {
           id,
           data: data.data.reqUser[0],
           itemType: 'users',
         },
-      });
-    })
+      }),
+    )
     .catch((err) => console.log(err));
 };
 
@@ -178,17 +177,16 @@ export const accFriend = (id) => (dispatch) => {
     .post('/api/v1/friends/acc', {
       id,
     })
-    .then(({ data }) => {
-      console.log(data.data.accUser);
-      return dispatch({
+    .then(({ data }) =>
+      dispatch({
         type: REQ_SUCCESS,
         payload: {
           id,
           data: data.data.accUser[0],
           itemType: 'users',
         },
-      });
-    })
+      }),
+    )
     .catch((err) => console.log(err));
 };
 
@@ -198,16 +196,15 @@ export const rejFriend = (id) => (dispatch) => {
     .post('/api/v1/friends/rej', {
       id,
     })
-    .then(({ data }) => {
-      console.log(data.data.rejUser);
-      return dispatch({
+    .then(({ data }) =>
+      dispatch({
         type: REQ_SUCCESS,
         payload: {
           id,
           data: data.data.rejUser[0],
           itemType: 'users',
         },
-      });
-    })
+      }),
+    )
     .catch((err) => console.log(err));
 };

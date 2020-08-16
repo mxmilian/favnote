@@ -61,7 +61,6 @@ export const fetchAllNotes = (itemType, source) => (dispatch) => {
   // } else {
   //   axios.defaults.headers.common.Authorization = null;
   // }
-  console.log(store.getState().users.accessToken);
   return axios
     .get('/api/v1/notes/all', {
       params: {

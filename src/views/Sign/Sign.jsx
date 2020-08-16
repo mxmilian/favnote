@@ -301,13 +301,10 @@ Sign.defaultProps = {
   accessToken: '',
 };
 
-const mapStateToProps = ({ users }) => {
-  console.log(users);
-  return {
-    accessToken: users.accessToken,
-    failure: users.failure,
-  };
-};
+const mapStateToProps = ({ users }) => ({
+  accessToken: users.accessToken,
+  failure: users.failure,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   authenticate: (name, email, password) => dispatch(authenticateAction(name, email, password)),
