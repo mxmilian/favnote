@@ -1,4 +1,5 @@
 import { SET_TEXT_FILTER, SET_SORT_BY, SET_SHARED } from 'actions/filters';
+import { DEAUTHENTICATE_SUCCESS } from 'actions/user';
 
 const filtersInitialState = {
   text: '',
@@ -18,6 +19,10 @@ const filtersReducer = (state = filtersInitialState, action) => {
       return {
         ...state,
         sortBy: action.sortBy,
+      };
+    case DEAUTHENTICATE_SUCCESS:
+      return {
+        ...filtersInitialState,
       };
     case SET_SHARED:
       return {

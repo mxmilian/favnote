@@ -36,10 +36,7 @@ const userReducer = (state = usersInitialState, action) => {
       };
     case DEAUTHENTICATE_SUCCESS:
       return {
-        ...state,
-        failure: undefined,
-        name: action.payload.name,
-        userID: action.payload.userID,
+        usersInitialState,
       };
     case FETCH_ONE_USER_SUCCESS:
       return {

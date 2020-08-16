@@ -90,10 +90,6 @@ export const deauthenticate = () => (dispatch) => {
     .then(() =>
       dispatch({
         type: DEAUTHENTICATE_SUCCESS,
-        payload: {
-          userID: undefined,
-          name: undefined,
-        },
       }),
     )
     .catch((err) => {

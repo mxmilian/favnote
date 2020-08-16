@@ -100,45 +100,51 @@ const StyledLinksList = styled.ul`
   }
 `;
 
-const Sidebar = ({ pageContext, deauthenticate }) => (
-  <StyledWrapper activeColor={pageContext}>
-    <StyledLogoLink to="/" />
-    <StyledLinkListWrapper>
-      <StyledLinksList>
-        <li>
-          <ButtonIcon as={NavLink} activeClassName="active" to={routes.users} icon={userIcon} />
-        </li>
-      </StyledLinksList>
-      <StyledLinksList>
-        <li>
-          <ButtonIcon as={NavLink} activeClassName="active" to={routes.notes} icon={penIcon} />
-        </li>
-        <li>
-          <ButtonIcon
-            as={NavLink}
-            activeClassName="active"
-            to={routes.twitters}
-            icon={twitterIcon}
-          />
-        </li>
-        <li>
-          <ButtonIcon as={NavLink} activeClassName="active" to={routes.articles} icon={bulbIcon} />
-        </li>
-      </StyledLinksList>
-    </StyledLinkListWrapper>
-    <StyledLogoutButton
-      as={NavLink}
-      to="/sign"
-      icon={logoutIcon}
-      onClick={() => {
-        deauthenticate().then(() => {
-          console.log('deauthenticate');
-          return <Redirect push to={routes.sign} />;
-        });
-      }}
-    />
-  </StyledWrapper>
-);
+const Sidebar = ({ pageContext, deauthenticate }) => {
+  return (
+    <StyledWrapper activeColor={pageContext}>
+      <StyledLogoLink to="/" />
+      <StyledLinkListWrapper>
+        <StyledLinksList>
+          <li>
+            <ButtonIcon as={NavLink} activeClassName="active" to={routes.users} icon={userIcon} />
+          </li>
+        </StyledLinksList>
+        <StyledLinksList>
+          <li>
+            <ButtonIcon as={NavLink} activeClassName="active" to={routes.notes} icon={penIcon} />
+          </li>
+          <li>
+            <ButtonIcon
+              as={NavLink}
+              activeClassName="active"
+              to={routes.twitters}
+              icon={twitterIcon}
+            />
+          </li>
+          <li>
+            <ButtonIcon
+              as={NavLink}
+              activeClassName="active"
+              to={routes.articles}
+              icon={bulbIcon}
+            />
+          </li>
+        </StyledLinksList>
+      </StyledLinkListWrapper>
+      <StyledLogoutButton
+        as={NavLink}
+        to="/sign"
+        icon={logoutIcon}
+        onClick={() => {
+          deauthenticate().then(() => {
+            return <Redirect push to={routes.sign} />;
+          });
+        }}
+      />
+    </StyledWrapper>
+  );
+};
 
 Sidebar.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles', 'users']).isRequired,

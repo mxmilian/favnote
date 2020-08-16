@@ -6,6 +6,7 @@ import {
   EDIT_SUCCESS,
   FETCH_ONE_SUCCESS,
 } from 'actions/notes';
+import { DEAUTHENTICATE_SUCCESS } from 'actions/user';
 
 const notesInitialState = {};
 
@@ -24,6 +25,10 @@ const notesReducer = (state = notesInitialState, action) => {
           ...action.payload.data.ownNotes,
           ...action.payload.data.sharedNotes,
         ],
+      };
+    case DEAUTHENTICATE_SUCCESS:
+      return {
+        notesInitialState,
       };
     case FETCH_ONE_SUCCESS:
       return state;
