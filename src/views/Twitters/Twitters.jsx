@@ -50,7 +50,8 @@ Twitters.defaultProps = {
 };
 
 const mapStateToProps = ({ notes, filters, users }) => ({
-  twitters: getVisibleNotes(notes.twitters, filters, null, users.userID),
+  // eslint-disable-next-line no-underscore-dangle
+  twitters: getVisibleNotes(notes.twitters, filters, null, users.user._id),
   shared: filters.shared,
 });
 

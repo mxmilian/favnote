@@ -19,7 +19,6 @@ const userReducer = (state = usersInitialState, action) => {
       return {
         ...state,
         failure: undefined,
-        // eslint-disable-next-line no-underscore-dangle
         user: action.payload.user,
         accessToken: action.payload.accessToken,
       };

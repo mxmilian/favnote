@@ -50,7 +50,8 @@ Articles.defaultProps = {
 };
 
 const mapStateToProps = ({ notes, filters, users }) => ({
-  articles: getVisibleNotes(notes.articles, filters, null, users.userID),
+  // eslint-disable-next-line no-underscore-dangle
+  articles: getVisibleNotes(notes.articles, filters, null, users.user._id),
   shared: filters.shared,
 });
 

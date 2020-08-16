@@ -100,7 +100,8 @@ const mapStateToProps = ({ filters, notes, users }, { pageContext }) => {
     };
 
   return {
-    items: getVisibleNotes(notes[pageContext], filters, null, users.userID),
+    // eslint-disable-next-line no-underscore-dangle
+    items: getVisibleNotes(notes[pageContext], filters, null, users.user._id),
     text: filters.text,
     sortBy: filters.sortBy,
     shared: filters.shared,

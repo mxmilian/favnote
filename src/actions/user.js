@@ -40,7 +40,7 @@ export const authenticate = (name, email, password) => (dispatch) => {
         password,
       })
       .then(({ data }) => {
-        dispatch({
+        return dispatch({
           type: AUTHENTICATE_SUCCESS,
           payload: {
             accessToken: data.data.accessToken,
@@ -64,8 +64,7 @@ export const authenticate = (name, email, password) => (dispatch) => {
       password,
     })
     .then(({ data }) => {
-      // eslint-disable-next-line no-underscore-dangle
-      dispatch({
+      return dispatch({
         type: AUTHENTICATE_SUCCESS,
         payload: {
           accessToken: data.data.accessToken,

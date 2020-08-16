@@ -1,4 +1,5 @@
 import axios from 'axios';
+import store from 'store';
 
 export const FETCH_REQUEST = 'FETCH_REQUEST';
 export const FETCH_SUCCESS = 'FETCH_SUCCESS';
@@ -53,10 +54,23 @@ export const fetchNotes = (itemType, source) => (dispatch) => {
 
 export const fetchAllNotes = (itemType, source) => (dispatch) => {
   dispatch({ type: FETCH_ALL_NOTES_REQUEST });
+  // const token = store.getState().users.accessToken;
+  // console.log(token);
+  // if (token) {
+  //   axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+  // } else {
+  //   axios.defaults.headers.common.Authorization = null;
+  // }
+  console.log(store.getState().users.accessToken);
   return axios
     .get('/api/v1/notes/all', {
       params: {
         type: itemType,
+      },
+      headers: {
+        authorization: store.getState().users.accessToken
+          ? `Bearer ${store.getState().users.accessToken}`
+          : '',
       },
       cancelToken: source.token,
     })

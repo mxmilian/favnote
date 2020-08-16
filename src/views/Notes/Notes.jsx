@@ -1,5 +1,4 @@
 import { fetchAllNotes as fetchAllNotesAction } from 'actions/notes';
-import InfoCard from 'components/molecules/InfoCard';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -11,7 +10,6 @@ import { NOTES } from 'utils/constants';
 
 const Notes = ({ notes, fetchAllNotes }) => {
   const loading = useFetchData(notes, fetchAllNotes, NOTES);
-  console.log(notes);
   return (
     <GridTemplate loading={loading}>
       {notes.map(({ _id: id, title, createdAt, author, public: sharedNote, content }) => (
@@ -25,8 +23,6 @@ const Notes = ({ notes, fetchAllNotes }) => {
           content={content}
         />
       ))}
-      {}
-      <InfoCard />
     </GridTemplate>
   );
 };
@@ -47,9 +43,12 @@ Notes.defaultProps = {
   notes: [],
 };
 
-const mapStateToProps = ({ notes, filters, users }) => ({
-  notes: getVisibleNotes(notes.notes, filters, null, users.userID),
-});
+const mapStateToProps = ({ notes, filters, users }) => {
+  return {
+    // eslint-disable-next-line no-underscore-dangle
+    notes: getVisibleNotes(notes.notes, filters, null, users.user._id),
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {

@@ -12,7 +12,11 @@ import { theme as themeLoader } from 'theme/theme';
 import * as Yup from 'yup';
 import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
-import { authenticate as authenticateAction, register as registerAction } from 'actions/user';
+import {
+  authenticate as authenticateAction,
+  AUTHENTICATE_SUCCESS,
+  register as registerAction,
+} from 'actions/user';
 import withLoader from 'hoc/withLoader';
 import Error from 'components/organisms/Error/Error';
 
@@ -70,7 +74,16 @@ const StyledErrorWrapper = styled.div`
   margin-top: 1rem;
 `;
 
-const Sign = ({ authenticate, register, userID, loading, toggleLoading, failure, history }) => {
+const Sign = ({
+  authenticate,
+  register,
+  userID,
+  loading,
+  toggleLoading,
+  failure,
+  history,
+  accessToken,
+}) => {
   const [signUp, setSignUp] = useState(false);
   const [isEmail, setIsEmail] = useState(false);
   const [visible, setVisible] = useState(true);
@@ -87,6 +100,7 @@ const Sign = ({ authenticate, register, userID, loading, toggleLoading, failure,
   const toggleVisible = () => {
     setVisible((prevState) => !prevState);
   };
+  if (accessToken) history.push(routes.notes);
   return (
     <AuthTemplate>
       <Formik
@@ -132,16 +146,19 @@ const Sign = ({ authenticate, register, userID, loading, toggleLoading, failure,
             if (!signUp) {
               if (isEmail) {
                 authenticate(null, values.email, values.password)
-                  .then(() => {
+                  .then(({ type }) => {
                     toggleLoading();
-                    history.push(routes.notes);
+                    if (type === AUTHENTICATE_SUCCESS) {
+                      history.push(routes.notes);
+                    }
                   })
                   .catch(() => toggleLoading());
               } else if (!isEmail) {
                 authenticate(values.name, null, values.password)
-                  .then(() => {
-                    toggleLoading();
-                    history.push(routes.notes);
+                  .then(({ type }) => {
+                    if (type === AUTHENTICATE_SUCCESS) {
+                      history.push(routes.notes);
+                    }
                   })
                   .catch(() => toggleLoading());
               }
@@ -275,17 +292,22 @@ Sign.propTypes = {
   history: PropTypes.objectOf({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  accessToken: PropTypes.string,
 };
 
 Sign.defaultProps = {
   userID: null,
   failure: undefined,
+  accessToken: '',
 };
 
-const mapStateToProps = ({ users }) => ({
-  userID: users.userID,
-  failure: users.failure,
-});
+const mapStateToProps = ({ users }) => {
+  console.log(users);
+  return {
+    accessToken: users.accessToken,
+    failure: users.failure,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => ({
   authenticate: (name, email, password) => dispatch(authenticateAction(name, email, password)),

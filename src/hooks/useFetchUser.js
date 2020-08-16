@@ -1,13 +1,15 @@
 import axios from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 export const useFetchUser = (fetchUser, user) => {
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const source = axios.CancelToken.source();
 
-    const fetchData = () => {
+    const fetchData = async () => {
       if (Object.keys(user).length === 0) {
-        fetchUser(source);
+        await fetchUser(source);
+        setLoading((prevState) => !prevState);
       }
     };
     fetchData();
@@ -16,4 +18,6 @@ export const useFetchUser = (fetchUser, user) => {
       source.cancel();
     };
   }, [user, fetchUser]);
+
+  return loading;
 };
