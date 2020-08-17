@@ -1,16 +1,22 @@
+import axios from 'axios';
 import React, { useEffect } from 'react';
 import DetailsTemplate from 'templates/DetailsTemplate';
 import withContext from 'hoc/withContext';
 import { connect } from 'react-redux';
-import { fetchNotes as fetchNotesAction } from 'actions/notes';
+import { fetchAllNotes as fetchAllNotesAction } from 'actions/notes';
 import PropTypes from 'prop-types';
 
-const Details = ({ fetchNotes, match, activeItem }) => {
+const Details = ({ fetchAllNotes, match, activeItem }) => {
   useEffect(() => {
+    const source = axios.CancelToken.source();
     // eslint-disable-next-line no-underscore-dangle
     if (!activeItem[0]._id) {
-      fetchNotes(match.path.split('/')[1]);
+      fetchAllNotes(match.path.split('/')[1], source);
     }
+
+    return () => {
+      source.cancel();
+    };
   });
 
   return (
@@ -47,7 +53,7 @@ Details.propTypes = {
       id: PropTypes.string.isRequired,
     }),
   }).isRequired,
-  fetchNotes: PropTypes.func.isRequired,
+  fetchAllNotes: PropTypes.func.isRequired,
   // pageContext: PropTypes.oneOf(['users', 'notes', 'twitters', 'articles']).isRequired,
 };
 
@@ -74,7 +80,7 @@ const mapStateToProps = ({ notes }, { pageContext, match }) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchNotes: (pageType) => dispatch(fetchNotesAction(pageType)),
+    fetchAllNotes: (itemType, source) => dispatch(fetchAllNotesAction(itemType, source)),
   };
 };
 

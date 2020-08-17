@@ -31,7 +31,10 @@ const notesReducer = (state = notesInitialState, action) => {
         notesInitialState,
       };
     case FETCH_ONE_SUCCESS:
-      return state;
+      return {
+        ...state,
+        [action.payload.itemType]: [action.payload.data],
+      };
     case REMOVE_SUCCESS:
       return {
         ...state,

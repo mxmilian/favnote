@@ -25,14 +25,13 @@ export const EDIT_REQUEST = 'EDIT_REQUEST';
 export const EDIT_SUCCESS = 'EDIT_SUCCESS';
 export const EDIT_FAILURE = 'EDIT_FAILURE';
 
-export const fetchNotes = (itemType, source) => (dispatch) => {
+export const fetchNotes = (itemType) => (dispatch) => {
   dispatch({ type: FETCH_REQUEST });
   return axios
     .get('/api/v1/notes/type', {
       params: {
         type: itemType,
       },
-      cancelToken: source.token,
     })
     .then(({ data }) =>
       dispatch({
@@ -91,19 +90,29 @@ export const fetchAllNotes = (itemType, source) => (dispatch) => {
     });
 };
 
-export const fetchOneNote = (id, itemType) => (dispatch) => {
+export const fetchOneNote = (itemType, id) => (dispatch) => {
   dispatch({ type: FETCH_ONE_REQUEST });
   return axios
-    .get(`/api/v1/notes/${id}`)
-    .then(({ data }) =>
-      dispatch({
+    .get(`/api/v1/notes/one`, {
+      params: {
+        id,
+      },
+      headers: {
+        authorization: store.getState().users.accessToken
+          ? `Bearer ${store.getState().users.accessToken}`
+          : '',
+      },
+    })
+    .then(({ data }) => {
+      console.log(data);
+      return dispatch({
         type: FETCH_ONE_SUCCESS,
         payload: {
           data: data.data.readDoc,
           itemType,
         },
-      }),
-    )
+      });
+    })
     .catch((err) => dispatch({ type: FETCH_ONE_FAILURE }, console.log(err)));
 };
 
