@@ -20,7 +20,7 @@ const Details = ({ fetchAllNotes, match, activeItem }) => {
   }, []);
 
   if (Object.keys(activeItem).length === 0) {
-    return <div>lol</div>;
+    return <div>loading</div>;
   }
   return (
     <DetailsTemplate

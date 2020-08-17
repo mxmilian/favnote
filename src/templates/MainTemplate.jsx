@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import { ThemeProvider } from 'styled-components';
 import PageContext from 'context/PageContext';
+import LoadingTemplate from 'templates/LoadingTemplate';
 import GlobalStyle from 'theme/GlobalStyle';
 import { theme } from 'theme/theme';
 import HelmetTemplate from 'templates/HelmetTemplate';
@@ -16,14 +17,13 @@ import { HelmetProvider } from 'react-helmet-async';
 const MainTemplate = ({ children, location, user, fetchUser }) => {
   const pageType = useCurrentPage(location);
   const loading = useFetchUser(fetchUser, user);
-  if (loading) return <div>loading...</div>;
   return (
     <HelmetProvider>
       <PageContext.Provider value={pageType}>
         <UserContext.Provider value={user}>
           <GlobalStyle />
           <ThemeProvider theme={theme}>
-            <HelmetTemplate>{children}</HelmetTemplate>
+            <HelmetTemplate>{loading ? <LoadingTemplate /> : children}</HelmetTemplate>
           </ThemeProvider>
         </UserContext.Provider>
       </PageContext.Provider>
