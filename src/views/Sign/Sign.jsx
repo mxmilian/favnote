@@ -151,6 +151,7 @@ const Sign = ({
                     if (type === AUTHENTICATE_SUCCESS) {
                       history.push(routes.notes);
                     }
+                    toggleLoading();
                   })
                   .catch(() => toggleLoading());
               } else if (!isEmail) {
@@ -159,6 +160,7 @@ const Sign = ({
                     if (type === AUTHENTICATE_SUCCESS) {
                       history.push(routes.notes);
                     }
+                    toggleLoading();
                   })
                   .catch(() => toggleLoading());
               }
