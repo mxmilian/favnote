@@ -60,7 +60,7 @@ const StyledSpan = styled.span`
   cursor: pointer;
 `;
 
-const GridTemplate = ({ createNote, children, pageContext, loading }) => {
+const GridTemplate = ({ createNote, children, pageContext, loading, failure }) => {
   const [showForm, setShowForm] = useState(false);
 
   const toggleForm = () => {
@@ -68,8 +68,10 @@ const GridTemplate = ({ createNote, children, pageContext, loading }) => {
   };
 
   const handleSubmit = (itemType, itemContent) => {
-    createNote(itemType, itemContent);
-    toggleForm();
+    createNote(itemType, itemContent).then(({ type }) => {
+      console.log(type);
+      if (type === 'CREATE_SUCCESS') toggleForm();
+    });
   };
 
   return (
@@ -99,7 +101,12 @@ const GridTemplate = ({ createNote, children, pageContext, loading }) => {
         icon={showForm ? minusIcon : plusIcon}
         onClick={toggleForm}
       />
-      <FormBar isVisible={showForm} toggleForm={toggleForm} handleSubmit={handleSubmit} />
+      <FormBar
+        isVisible={showForm}
+        toggleForm={toggleForm}
+        handleSubmit={handleSubmit}
+        failure={failure}
+      />
     </SidebarTemplate>
   );
 };
@@ -109,10 +116,19 @@ GridTemplate.propTypes = {
   children: PropTypes.arrayOf(PropTypes.object).isRequired,
   createNote: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  failure: PropTypes.string,
 };
+
+GridTemplate.defaultProps = {
+  failure: '',
+};
+
+const mapStateToProps = ({ notes }) => ({
+  failure: notes.failure,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   createNote: (itemType, itemContent) => dispatch(createNoteAction(itemType, itemContent)),
 });
 
-export default connect(null, mapDispatchToProps)(withContext(GridTemplate));
+export default connect(mapStateToProps, mapDispatchToProps)(withContext(GridTemplate));

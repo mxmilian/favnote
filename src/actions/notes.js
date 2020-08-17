@@ -134,10 +134,20 @@ export const removeNote = (id, itemType) => (dispatch) => {
 export const createNote = (itemType, itemContent) => (dispatch) => {
   dispatch({ type: CREATE_REQUEST });
   return axios
-    .post('/api/v1/notes/', {
-      type: itemType,
-      ...itemContent,
-    })
+    .post(
+      '/api/v1/notes/',
+      {
+        type: itemType,
+        ...itemContent,
+      },
+      // {
+      //   headers: {
+      //     authorization: store.getState().users.accessToken
+      //       ? `Bearer ${store.getState().users.accessToken}`
+      //       : '',
+      //   },
+      // },
+    )
     .then(({ data }) =>
       dispatch({
         type: CREATE_SUCCESS,
@@ -151,7 +161,12 @@ export const createNote = (itemType, itemContent) => (dispatch) => {
     )
     .catch((err) => {
       console.log(err);
-      return dispatch({ type: CREATE_FAILURE });
+      return dispatch({
+        type: CREATE_FAILURE,
+        payload: {
+          err: err.response.data.message,
+        },
+      });
     });
 };
 

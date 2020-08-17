@@ -5,6 +5,7 @@ import {
   REMOVE_SUCCESS,
   EDIT_SUCCESS,
   FETCH_ONE_SUCCESS,
+  CREATE_FAILURE,
 } from 'actions/notes';
 import { DEAUTHENTICATE_SUCCESS } from 'actions/user';
 
@@ -45,8 +46,15 @@ const notesReducer = (state = notesInitialState, action) => {
     case CREATE_SUCCESS:
       return {
         ...state,
+        failure: undefined,
         [action.payload.itemType]: [...state[action.payload.itemType], action.payload.item],
       };
+    case CREATE_FAILURE: {
+      return {
+        ...state,
+        failure: action.payload.err,
+      };
+    }
     case EDIT_SUCCESS:
       return {
         ...state,

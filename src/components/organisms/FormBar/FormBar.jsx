@@ -1,5 +1,6 @@
 import Radio from 'components/atoms/Radio/Radio';
-import React, { createRef, useEffect } from 'react';
+import Error from 'components/organisms/Error/Error';
+import React, { createRef, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Heading from 'components/atoms/Heading/Heading';
@@ -73,7 +74,11 @@ const StyledRadioWrapper = styled.div`
   margin-top: 3rem;
 `;
 
-const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit }) => {
+const StyledErrorWrapper = styled.div`
+  margin-top: 2.5rem;
+`;
+
+const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit, failure }) => {
   const wrapperRef = createRef();
 
   const handleClickOutside = (e) => {
@@ -84,6 +89,12 @@ const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit }) => {
       e.target.id !== 'toggleFormButton'
     )
       toggleForm();
+  };
+
+  const [visible, setVisible] = useState(true);
+
+  const toggleVisible = () => {
+    setVisible((prevState) => !prevState);
   };
 
   useEffect(() => {
@@ -122,6 +133,7 @@ const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit }) => {
       onSubmit={(values, { setSubmitting }) => {
         handleSubmit(pageContext, values);
         setSubmitting(false);
+        if (!visible) toggleVisible();
       }}
     >
       {(formik) => (
@@ -176,6 +188,13 @@ const FormBar = ({ isVisible, toggleForm, pageContext, handleSubmit }) => {
                 setChecked={() => formik.setFieldValue('public', !formik.values.public)}
               />
             </StyledRadioWrapper>
+            {failure && visible && (
+              <StyledErrorWrapper>
+                <Error failure={failure} setVisible={toggleVisible}>
+                  {failure}
+                </Error>
+              </StyledErrorWrapper>
+            )}
             <StyledButton activecolor={pageContext} type="submit">
               Add {pageContext.slice(0, -1)}
             </StyledButton>
@@ -191,6 +210,11 @@ FormBar.propTypes = {
   isVisible: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
   toggleForm: PropTypes.func.isRequired,
+  failure: PropTypes.string,
+};
+
+FormBar.defaultProps = {
+  failure: '',
 };
 
 export default withContext(FormBar);
