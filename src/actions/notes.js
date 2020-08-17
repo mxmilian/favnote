@@ -104,7 +104,6 @@ export const fetchOneNote = (itemType, id) => (dispatch) => {
       },
     })
     .then(({ data }) => {
-      console.log(data);
       return dispatch({
         type: FETCH_ONE_SUCCESS,
         payload: {

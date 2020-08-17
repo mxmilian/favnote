@@ -10,31 +10,34 @@ const Details = ({ fetchAllNotes, match, activeItem }) => {
   useEffect(() => {
     const source = axios.CancelToken.source();
     // eslint-disable-next-line no-underscore-dangle
-    if (!activeItem[0]._id) {
+    if (!activeItem._id) {
       fetchAllNotes(match.path.split('/')[1], source);
     }
 
     return () => {
       source.cancel();
     };
-  });
+  }, []);
 
+  if (Object.keys(activeItem).length === 0) {
+    return <div>lol</div>;
+  }
   return (
     <DetailsTemplate
-      title={activeItem[0].title}
-      createdAt={activeItem[0].createdAt}
-      content={activeItem[0].content}
-      author={activeItem[0].author}
-      articleUrl={activeItem[0].articleUrl}
-      twitterName={activeItem[0].twitterName}
+      title={activeItem.title}
+      createdAt={activeItem.createdAt}
+      content={activeItem.content}
+      author={activeItem.author}
+      articleUrl={activeItem.articleUrl}
+      twitterName={activeItem.twitterName}
       /* eslint-disable-next-line react/prop-types,no-underscore-dangle */
-      id={activeItem[0]._id}
+      id={activeItem._id}
     />
   );
 };
 
 Details.propTypes = {
-  activeItem: PropTypes.arrayOf(
+  activeItem: PropTypes.objectOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
@@ -43,12 +46,10 @@ Details.propTypes = {
       twitterName: PropTypes.string.isRequired,
       articleUrl: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
-    }).isRequired,
+    }),
   ).isRequired,
   match: PropTypes.shape({
-    path: PropTypes.shape({
-      split: PropTypes.string.isRequired,
-    }),
+    path: PropTypes.string.isRequired,
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
     }),
@@ -59,29 +60,16 @@ Details.propTypes = {
 
 const mapStateToProps = ({ notes }, { pageContext, match }) => {
   if (notes[pageContext]) {
+    const item = notes[pageContext].filter(({ _id: id }) => id === match.params.id);
     return {
-      activeItem: notes[pageContext].filter(({ _id: id }) => id === match.params.id),
+      activeItem: { ...item[0] },
     };
   }
-  return {
-    activeItem: [
-      {
-        _id: '',
-        title: 'Undefined',
-        createdAt: '139223123',
-        author: '',
-        twitterName: '',
-        articleUrl: '',
-        content: '',
-      },
-    ],
-  };
+  return { activeItem: {} };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchAllNotes: (itemType, source) => dispatch(fetchAllNotesAction(itemType, source)),
-  };
-};
+const mapDispatchToProps = (dispatch) => ({
+  fetchAllNotes: (itemType, source) => dispatch(fetchAllNotesAction(itemType, source)),
+});
 
 export default withContext(connect(mapStateToProps, mapDispatchToProps)(Details));
