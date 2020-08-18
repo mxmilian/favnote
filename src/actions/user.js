@@ -1,4 +1,5 @@
 import axios from 'axios';
+import store from 'store';
 
 export const AUTHENTICATE_REQUEST = 'AUTHENTICATE_REQUEST';
 export const AUTHENTICATE_SUCCESS = 'AUTHENTICATE_SUCCESS';
@@ -140,24 +141,43 @@ export const register = (name, email, password, confirmPassword) => (dispatch) =
 
 export const fetchUsers = (source) => (dispatch) => {
   dispatch({ type: FETCH_USERS_REQUEST });
-  return axios.get('/api/v1/friends/', { cancelToken: source.token }).then(({ data }) =>
-    dispatch({
-      type: FETCH_USERS_SUCCESS,
-      payload: {
-        userID: data.data.userID,
-        data: data.data.user,
-        itemType: 'users',
+  return axios
+    .get('/api/v1/friends/', {
+      cancelToken: source.token,
+      headers: {
+        authorization: store.getState().users.accessToken
+          ? `Bearer ${store.getState().users.accessToken}`
+          : '',
       },
-    }),
-  );
+    })
+    .then(({ data }) =>
+      dispatch({
+        type: FETCH_USERS_SUCCESS,
+        payload: {
+          userID: data.data.userID,
+          data: data.data.user,
+          itemType: 'users',
+        },
+      }),
+    );
 };
 
 export const reqFriend = (id) => (dispatch) => {
   dispatch({ type: REQ_REQUEST });
   return axios
-    .post('/api/v1/friends/req', {
-      id,
-    })
+    .post(
+      '/api/v1/friends/req',
+      {
+        id,
+      },
+      {
+        headers: {
+          authorization: store.getState().users.accessToken
+            ? `Bearer ${store.getState().users.accessToken}`
+            : '',
+        },
+      },
+    )
     .then(({ data }) =>
       dispatch({
         type: REQ_SUCCESS,
@@ -174,9 +194,19 @@ export const reqFriend = (id) => (dispatch) => {
 export const accFriend = (id) => (dispatch) => {
   dispatch({ type: ACC_REQUEST });
   return axios
-    .post('/api/v1/friends/acc', {
-      id,
-    })
+    .post(
+      '/api/v1/friends/acc',
+      {
+        id,
+      },
+      {
+        headers: {
+          authorization: store.getState().users.accessToken
+            ? `Bearer ${store.getState().users.accessToken}`
+            : '',
+        },
+      },
+    )
     .then(({ data }) =>
       dispatch({
         type: REQ_SUCCESS,
@@ -193,9 +223,19 @@ export const accFriend = (id) => (dispatch) => {
 export const rejFriend = (id) => (dispatch) => {
   dispatch({ type: REJ_REQUEST });
   return axios
-    .post('/api/v1/friends/rej', {
-      id,
-    })
+    .post(
+      '/api/v1/friends/rej',
+      {
+        id,
+      },
+      {
+        headers: {
+          authorization: store.getState().users.accessToken
+            ? `Bearer ${store.getState().users.accessToken}`
+            : '',
+        },
+      },
+    )
     .then(({ data }) =>
       dispatch({
         type: REQ_SUCCESS,

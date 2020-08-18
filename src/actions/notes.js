@@ -118,7 +118,13 @@ export const fetchOneNote = (itemType, id) => (dispatch) => {
 export const removeNote = (id, itemType) => (dispatch) => {
   dispatch({ type: REMOVE_REQUEST });
   return axios
-    .delete(`/api/v1/notes/${id}`)
+    .delete(`/api/v1/notes/${id}`, {
+      headers: {
+        authorization: store.getState().users.accessToken
+          ? `Bearer ${store.getState().users.accessToken}`
+          : '',
+      },
+    })
     .then(() =>
       dispatch({
         type: REMOVE_SUCCESS,
@@ -140,13 +146,13 @@ export const createNote = (itemType, itemContent) => (dispatch) => {
         type: itemType,
         ...itemContent,
       },
-      // {
-      //   headers: {
-      //     authorization: store.getState().users.accessToken
-      //       ? `Bearer ${store.getState().users.accessToken}`
-      //       : '',
-      //   },
-      // },
+      {
+        headers: {
+          authorization: store.getState().users.accessToken
+            ? `Bearer ${store.getState().users.accessToken}`
+            : '',
+        },
+      },
     )
     .then(({ data }) =>
       dispatch({
@@ -159,23 +165,32 @@ export const createNote = (itemType, itemContent) => (dispatch) => {
         },
       }),
     )
-    .catch((err) => {
-      console.log(err);
-      return dispatch({
+    .catch((err) =>
+      dispatch({
         type: CREATE_FAILURE,
         payload: {
           err: err.response.data.message,
         },
-      });
-    });
+      }),
+    );
 };
 
 export const editNote = (id, itemType, itemContent) => (dispatch) => {
   dispatch({ type: EDIT_REQUEST });
   return axios
-    .patch(`/api/v1/notes/${id}`, {
-      ...itemContent,
-    })
+    .patch(
+      `/api/v1/notes/${id}`,
+      {
+        ...itemContent,
+      },
+      {
+        headers: {
+          authorization: store.getState().users.accessToken
+            ? `Bearer ${store.getState().users.accessToken}`
+            : '',
+        },
+      },
+    )
     .then(({ data }) =>
       dispatch({
         type: EDIT_SUCCESS,
