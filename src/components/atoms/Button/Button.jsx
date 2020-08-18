@@ -23,11 +23,13 @@ const Button = styled.button`
   ${({ secondary }) =>
     secondary &&
     css`
-      background-color: ${({ theme, activecolor }) =>
-        activecolor ? theme[activecolor] : theme.grey200};
+      background-color: ${({ theme, activecolor, disabled }) =>
+        activecolor && !disabled ? theme[activecolor] : theme.grey200};
       width: 10.5rem;
       height: 3rem;
       font-size: 1rem;
+      color: ${({ theme, disabled }) => disabled && theme.grey300};
+      cursor: ${({ disabled }) => disabled && 'not-allowed'};
     `}
   ${({ tertiary }) =>
     tertiary &&

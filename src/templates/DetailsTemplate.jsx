@@ -144,6 +144,8 @@ const DetailsTemplate = ({
   editNote,
   loading,
   toggleLoading,
+  authorID,
+  userID,
 }) => {
   const [editContent, setEditContent] = useState(false);
 
@@ -237,7 +239,12 @@ const DetailsTemplate = ({
         ) : (
           <StyledContentContainer>
             <StyledContentParagraph ref={conRef}>{content}</StyledContentParagraph>
-            <StyledEditButton secondary activecolor={pageContext} onClick={editContentToggle}>
+            <StyledEditButton
+              disabled={authorID !== userID}
+              secondary
+              activecolor={pageContext}
+              onClick={editContentToggle}
+            >
               Edit {pageContext}
             </StyledEditButton>
           </StyledContentContainer>
@@ -265,6 +272,8 @@ DetailsTemplate.propTypes = {
   editNote: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
   toggleLoading: PropTypes.func.isRequired,
+  authorID: PropTypes.string.isRequired,
+  userID: PropTypes.string.isRequired,
 };
 
 DetailsTemplate.defaultProps = {
@@ -272,8 +281,16 @@ DetailsTemplate.defaultProps = {
   articleUrl: null,
 };
 
+const mapStateToProps = ({ users }) => ({
+  // eslint-disable-next-line no-underscore-dangle
+  userID: users.user._id,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   editNote: (id, itemType, itemContent) => dispatch(editNoteAction(id, itemType, itemContent)),
 });
 
-export default connect(null, mapDispatchToProps)(withLoader(withContext(DetailsTemplate)));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withLoader(withContext(DetailsTemplate)));

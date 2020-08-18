@@ -29,6 +29,7 @@ const Details = ({ fetchAllNotes, match, activeItem }) => {
       content={activeItem.content}
       author={activeItem.author}
       articleUrl={activeItem.articleUrl}
+      authorID={activeItem.userID}
       twitterName={activeItem.twitterName}
       /* eslint-disable-next-line react/prop-types,no-underscore-dangle */
       id={activeItem._id}
@@ -37,17 +38,16 @@ const Details = ({ fetchAllNotes, match, activeItem }) => {
 };
 
 Details.propTypes = {
-  activeItem: PropTypes.objectOf(
-    PropTypes.shape({
-      _id: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
-      createdAt: PropTypes.string.isRequired,
-      author: PropTypes.string.isRequired,
-      twitterName: PropTypes.string.isRequired,
-      articleUrl: PropTypes.string.isRequired,
-      content: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
+  activeItem: PropTypes.shape({
+    _id: PropTypes.string,
+    title: PropTypes.string,
+    createdAt: PropTypes.string,
+    content: PropTypes.string,
+    author: PropTypes.string,
+    articleUrl: PropTypes.string,
+    userID: PropTypes.string,
+    twitterName: PropTypes.string,
+  }),
   match: PropTypes.shape({
     path: PropTypes.string.isRequired,
     params: PropTypes.shape({
@@ -56,6 +56,19 @@ Details.propTypes = {
   }).isRequired,
   fetchAllNotes: PropTypes.func.isRequired,
   // pageContext: PropTypes.oneOf(['users', 'notes', 'twitters', 'articles']).isRequired,
+};
+
+Details.defaultProps = {
+  activeItem: PropTypes.shape({
+    _id: '',
+    title: '',
+    createdAt: '',
+    content: '',
+    author: '',
+    articleUrl: '',
+    userID: '',
+    twitterName: '',
+  }),
 };
 
 const mapStateToProps = ({ notes }, { pageContext, match }) => {
