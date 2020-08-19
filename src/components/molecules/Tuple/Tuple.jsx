@@ -19,7 +19,6 @@ import reqIcon from 'assets/request.svg';
 import accIcon from 'assets/accept.svg';
 import rejIcon from 'assets/reject.svg';
 import userIcon from 'assets/user.svg';
-import defaultPhoto from 'assets/photo.jpg';
 import { theme as themeLoader } from 'theme/theme';
 import withLoader from 'hoc/withLoader';
 
@@ -127,7 +126,10 @@ const Tuple = ({
   return (
     <StyledWrapper activeColor={pageContext}>
       <StyledInnerWrapper>
-        <Image icon={photo !== 'default.jpg' ? photo : defaultPhoto} activeColor={pageContext} />
+        <Image
+          icon={`http://localhost:1337/static/image/users/${photo}`}
+          activeColor={pageContext}
+        />
       </StyledInnerWrapper>
       <StyledHeadingWrapper>
         <Heading>{name}</Heading>
