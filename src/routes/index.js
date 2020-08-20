@@ -1,6 +1,7 @@
 export const routes = {
   home: '/',
   users: '/users',
+  user: '/users/me',
   notes: '/notes',
   notesDetails: '/notes/:id',
   twitters: '/twitters',

@@ -5,6 +5,8 @@ import {
 } from 'actions/user';
 import React from 'react';
 import Loader from 'react-loader-spinner';
+import { Link } from 'react-router-dom';
+import { routes } from 'routes';
 import styled from 'styled-components';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 import Heading from 'components/atoms/Heading/Heading';
@@ -98,7 +100,13 @@ const Tuple = ({
     func(givenId).then(() => toggleLoading());
   };
 
-  let Sign = () => <Heading>You!</Heading>;
+  let Sign = () => (
+    <StyledIconWrapper>
+      <ButtonIcon icon={userIcon} as={Link} to={routes.user}>
+        <Paragraph>You!</Paragraph>
+      </ButtonIcon>
+    </StyledIconWrapper>
+  );
   if (currentID !== id) {
     switch (friendsStatus) {
       case 0:
