@@ -3,8 +3,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
-import SidebarTemplate from 'templates/SidebarTemplate';
 import { theme as themeLoader } from 'theme/theme';
+
+const StyledWrapper = styled.div`
+  padding: 2.5rem 0;
+`;
 
 const StyledLoaderEmptyWrapper = styled.div`
   display: flex;
@@ -14,7 +17,7 @@ const StyledLoaderEmptyWrapper = styled.div`
 `;
 
 const UsersTemplate = ({ children, loading, pageType }) => (
-  <SidebarTemplate>
+  <StyledWrapper>
     <Header />
     {loading ? (
       <StyledLoaderEmptyWrapper>
@@ -23,7 +26,7 @@ const UsersTemplate = ({ children, loading, pageType }) => (
     ) : (
       children
     )}
-  </SidebarTemplate>
+  </StyledWrapper>
 );
 
 UsersTemplate.propTypes = {

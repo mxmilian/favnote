@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 
 const StyledWrapper = styled.div`
   position: relative;
-  padding: 3.5rem 0;
   max-width: 70rem;
 `;
 
