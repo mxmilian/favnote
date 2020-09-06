@@ -10,7 +10,6 @@ import Sign from 'views/Sign/Sign';
 import Twitters from 'views/Twitters/Twitters';
 import Articles from 'views/Articles/Articles';
 import { routes } from 'routes';
-import User from 'views/User/User';
 import Users from 'views/Users/Users';
 
 const Root = () => (
@@ -20,7 +19,6 @@ const Root = () => (
         <Switch>
           <Route exact path={routes.home} render={() => <Redirect push to={routes.sign} />} />
           <ProtectedRoute exact path={routes.users} component={Users} />
-          <ProtectedRoute path={routes.user} component={User} />
           <ProtectedRoute exact path={routes.notes} component={Notes} />
           <ProtectedRoute path={routes.notesDetails} component={Details} />
           <ProtectedRoute exact path={routes.articles} component={Articles} />

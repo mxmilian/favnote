@@ -8,25 +8,33 @@ import Tuple from 'components/molecules/Tuple/Tuple';
 import PropTypes from 'prop-types';
 import withContext from 'hoc/withContext';
 import withLoader from 'hoc/withLoader';
+import UserTemplate from 'templates/UserTemplate';
 import { USERS } from 'utils/constants';
+import styled from 'styled-components';
+
+const StyledWrapper = styled.div`
+  display: flex;
+`;
 
 const Users = ({ users, yourID, pageContext, fetchUsers }) => {
   const loading = useFetchData(users, fetchUsers, USERS);
-
   return (
-    <UsersTemplate loading={loading} pageType={pageContext}>
-      {users.map(({ _id: id, name, createdAt, photo, friendsStatus }) => (
-        <Tuple
-          key={id}
-          id={id}
-          currentID={yourID}
-          name={name}
-          createdAt={createdAt}
-          photo={photo}
-          friendsStatus={friendsStatus}
-        />
-      ))}
-    </UsersTemplate>
+    <StyledWrapper>
+      <UserTemplate id={yourID} />
+      <UsersTemplate loading={loading} pageType={pageContext}>
+        {users.map(({ _id: id, name, createdAt, photo, friendsStatus }) => (
+          <Tuple
+            key={id}
+            id={id}
+            currentID={yourID}
+            name={name}
+            createdAt={createdAt}
+            photo={photo}
+            friendsStatus={friendsStatus}
+          />
+        ))}
+      </UsersTemplate>
+    </StyledWrapper>
   );
 };
 
