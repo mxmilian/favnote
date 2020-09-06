@@ -13,7 +13,13 @@ import { USERS } from 'utils/constants';
 import styled from 'styled-components';
 
 const StyledWrapper = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+
+  @media (max-width: 1120px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
 
 const Users = ({ users, yourID, pageContext, fetchUsers }) => {

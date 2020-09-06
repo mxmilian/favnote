@@ -6,7 +6,8 @@ import styled from 'styled-components';
 import { theme as themeLoader } from 'theme/theme';
 
 const StyledWrapper = styled.div`
-  padding: 2.5rem 0;
+  padding: 2.5rem 2rem 2.5rem 0;
+  width: 100%;
 `;
 
 const StyledLoaderEmptyWrapper = styled.div`
