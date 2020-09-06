@@ -22,11 +22,12 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const Users = ({ users, yourID, pageContext, fetchUsers }) => {
+const Users = ({ users, yourID, user, pageContext, fetchUsers }) => {
   const loading = useFetchData(users, fetchUsers, USERS);
+  console.log(user);
   return (
     <StyledWrapper>
-      <UserTemplate id={yourID} />
+      <UserTemplate user={user} />
       <UsersTemplate loading={loading} pageType={pageContext}>
         {users.map(({ _id: id, name, createdAt, photo, friendsStatus }) => (
           <Tuple
@@ -57,16 +58,29 @@ Users.propTypes = {
       friendsStatus: PropTypes.oneOf([0, 1, 2, 3]).isRequired,
     }),
   ),
+  user: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    photo: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+  }),
 };
 
 Users.defaultProps = {
   users: [],
   yourID: '',
+  user: {
+    name: 'user',
+    email: 'user@undefinded',
+    photo: 'photo',
+    createdAt: 'null',
+  },
 };
 
 const mapStateToProps = (state) => ({
   users: getVisibleNotes(state.users.users, state.filters, USERS),
   yourID: state.users.userID,
+  user: state.users.user,
 });
 
 const mapDispatchToProps = (dispatch) => ({

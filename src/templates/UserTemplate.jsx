@@ -9,16 +9,30 @@ const StyledWrapper = styled.div`
   max-width: 70rem;
 `;
 
-const UserTemplate = ({ id }) => (
+const UserTemplate = ({ user }) => (
   <SidebarTemplate>
     <StyledWrapper>
-      <Heading big>{id}</Heading>
+      <Heading big>Hello, {user.name} :)</Heading>
     </StyledWrapper>
   </SidebarTemplate>
 );
 
 UserTemplate.propTypes = {
-  id: PropTypes.string.isRequired,
+  user: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    photo: PropTypes.string.isRequired,
+    createdAt: PropTypes.string.isRequired,
+  }),
+};
+
+UserTemplate.defaultProps = {
+  user: {
+    name: 'user',
+    email: 'user@undefinded',
+    photo: 'photo',
+    createdAt: 'null',
+  },
 };
 
 export default UserTemplate;
