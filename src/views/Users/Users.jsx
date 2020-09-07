@@ -63,18 +63,12 @@ Users.propTypes = {
     name: PropTypes.string.isRequired,
     photo: PropTypes.string.isRequired,
     createdAt: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
 };
 
 Users.defaultProps = {
   users: [],
   yourID: '',
-  user: {
-    name: 'user',
-    email: 'user@undefinded',
-    photo: 'photo',
-    createdAt: 'null',
-  },
 };
 
 const mapStateToProps = (state) => ({
