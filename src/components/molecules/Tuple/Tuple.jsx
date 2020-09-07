@@ -5,8 +5,6 @@ import {
 } from 'actions/user';
 import React from 'react';
 import Loader from 'react-loader-spinner';
-import { Link } from 'react-router-dom';
-import { routes } from 'routes';
 import styled from 'styled-components';
 import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 import Heading from 'components/atoms/Heading/Heading';
@@ -49,6 +47,13 @@ const StyledDateWrapper = styled.div`
 
 const StyledIconWrapper = styled.div`
   display: flex;
+`;
+
+const StyledYouIconWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const StyledDateCreated = styled(Paragraph)`
@@ -101,11 +106,10 @@ const Tuple = ({
   };
 
   let Sign = () => (
-    <StyledIconWrapper>
-      <ButtonIcon icon={userIcon} as={Link} to={routes.user}>
-        <Paragraph>You!</Paragraph>
-      </ButtonIcon>
-    </StyledIconWrapper>
+    <StyledYouIconWrapper>
+      <ButtonIcon icon={userIcon} onClick={() => console.log(id)} />
+      <Paragraph>You!</Paragraph>
+    </StyledYouIconWrapper>
   );
   if (currentID !== id) {
     switch (friendsStatus) {
