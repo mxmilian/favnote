@@ -1,4 +1,5 @@
 import Heading from 'components/atoms/Heading/Heading';
+import User from 'components/organisms/User/User';
 import React from 'react';
 import styled from 'styled-components';
 import SidebarTemplate from 'templates/SidebarTemplate';
@@ -12,7 +13,8 @@ const StyledWrapper = styled.div`
 const UserTemplate = ({ user }) => (
   <SidebarTemplate>
     <StyledWrapper>
-      <Heading big>Hello, {user.name} :)</Heading>
+      <Heading big>Hello</Heading>
+      <User name={user.name} photo={user.photo} />
     </StyledWrapper>
   </SidebarTemplate>
 );
