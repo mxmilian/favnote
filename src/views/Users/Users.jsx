@@ -27,7 +27,12 @@ const Users = ({ users, yourID, user, pageContext, fetchUsers }) => {
   console.log(user);
   return (
     <StyledWrapper>
-      <UserTemplate user={user} />
+      <UserTemplate
+        email={user.email}
+        name={user.name}
+        photo={user.photo}
+        createdAt={user.createdAt}
+      />
       <UsersTemplate loading={loading} pageType={pageContext}>
         {users.map(({ _id: id, name, createdAt, photo, friendsStatus }) => (
           <Tuple
