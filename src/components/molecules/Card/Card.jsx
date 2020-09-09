@@ -1,3 +1,4 @@
+import Date from 'components/molecules/Date/Date';
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
@@ -10,7 +11,6 @@ import Heading from 'components/atoms/Heading/Heading';
 import Button from 'components/atoms/Button/Button';
 import Modal from 'components/organisms/Modal/Modal';
 import linkIcon from 'assets/link.svg';
-import Moment from 'react-moment';
 import withLoader from 'hoc/withLoader';
 import Loader from 'react-loader-spinner';
 import { theme as themeLoader } from 'theme/theme';
@@ -101,24 +101,13 @@ const StyledHeaderParagraphContent = styled.span`
   font-weight: ${({ theme }) => theme.normal};
 `;
 
-const InfoWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const StyledDate = styled.div`
-  display: flex;
+const StyledDateWrapper = styled.div`
   margin-right: 0.8rem;
 `;
 
-const StyledDateCreated = styled(Paragraph)`
-  font-size: ${({ theme }) => theme.fontSize.xs};
-  font-weight: ${({ theme }) => theme.bold};
-  margin-right: 0.3rem;
-`;
-const StyledDateParagraph = styled(Moment)`
-  font-size: ${({ theme }) => theme.fontSize.xs};
-  font-weight: ${({ theme }) => theme.normal};
+const InfoWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 const Card = ({
@@ -166,10 +155,9 @@ const Card = ({
             )}
           </Heading>
           <InfoWrapper>
-            <StyledDate>
-              <StyledDateCreated>Created:</StyledDateCreated>
-              <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
-            </StyledDate>
+            <StyledDateWrapper>
+              <Date term="Created" createdAt={createdAt} />
+            </StyledDateWrapper>
             <StyledHeaderParagraph>
               By: <StyledHeaderParagraphContent>{author}</StyledHeaderParagraphContent>
             </StyledHeaderParagraph>

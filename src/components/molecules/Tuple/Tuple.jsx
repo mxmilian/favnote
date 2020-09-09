@@ -3,6 +3,7 @@ import {
   accFriend as accFriendAction,
   rejFriend as rejFriendAction,
 } from 'actions/user';
+import Date from 'components/molecules/Date/Date';
 import React from 'react';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
@@ -10,7 +11,6 @@ import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 import Heading from 'components/atoms/Heading/Heading';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import withContext from 'hoc/withContext';
-import Moment from 'react-moment';
 import { connect } from 'react-redux';
 import Image from 'components/atoms/Image/Image';
 import PropTypes from 'prop-types';
@@ -51,20 +51,8 @@ const StyledYouIconWrapper = styled.div`
   justify-content: center;
 `;
 
-const StyledDateCreated = styled(Paragraph)`
-  font-size: ${({ theme }) => theme.fontSize.xs};
-  font-weight: ${({ theme }) => theme.bold};
-  margin-right: 0.8rem;
-`;
-
 const StyledDateWrapper = styled.div`
   margin-top: 0.2rem;
-  display: flex;
-`;
-
-const StyledDateParagraph = styled(Moment)`
-  font-size: ${({ theme }) => theme.fontSize.xs};
-  font-weight: ${({ theme }) => theme.light};
 `;
 
 const StyledInnerWrapper = styled.div`
@@ -147,8 +135,7 @@ const Tuple = ({
       <StyledHeadingWrapper>
         <Heading>{name}</Heading>
         <StyledDateWrapper>
-          <StyledDateCreated>Joined:</StyledDateCreated>
-          <StyledDateParagraph fromNow>{createdAt}</StyledDateParagraph>
+          <Date term="Joined" createdAt={createdAt} />
         </StyledDateWrapper>
       </StyledHeadingWrapper>
       <StyledInnerWrapper>

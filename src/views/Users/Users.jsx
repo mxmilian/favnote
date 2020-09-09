@@ -24,7 +24,7 @@ const StyledWrapper = styled.div`
 
 const Users = ({ users, yourID, user, pageContext, fetchUsers }) => {
   const loading = useFetchData(users, fetchUsers, USERS);
-  console.log(user);
+
   return (
     <StyledWrapper>
       <UserTemplate

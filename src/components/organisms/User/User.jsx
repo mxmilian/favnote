@@ -2,6 +2,7 @@ import Button from 'components/atoms/Button/Button';
 import ButtonPhoto from 'components/atoms/ButtonPhoto/ButtonPhoto';
 import Input from 'components/atoms/Input/Input';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
+import Date from 'components/molecules/Date/Date';
 // import Error from 'components/organisms/Error/Error';
 import React from 'react';
 // import Loader from 'react-loader-spinner';
@@ -41,6 +42,10 @@ const StyledError = styled.div`
 const StyledParagraph = styled(Paragraph)`
   color: ${({ theme }) => theme.error};
   font-weight: ${({ theme }) => theme.bold};
+`;
+
+const StyledDateWrapper = styled.div`
+  margin-top: 1rem;
 `;
 
 // const StyledLoader = styled(Loader)`
@@ -149,7 +154,9 @@ const User = ({ name, photo, email, createdAt, pageContext }) => (
         {(formik) => (
           <>
             <ButtonPhoto icon={`http://localhost:1337/static/image/users/${photo}`} />
-            <p>{createdAt}</p>
+            <StyledDateWrapper>
+              <Date term="You joined us" createdAt={createdAt} />
+            </StyledDateWrapper>
             <StyledInput
               type="name"
               placeholder="Your new awesome name!"
