@@ -40,11 +40,6 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const StyledDateWrapper = styled.div`
-  margin-top: 0.2rem;
-  display: flex;
-`;
-
 const StyledIconWrapper = styled.div`
   display: flex;
 `;
@@ -61,6 +56,12 @@ const StyledDateCreated = styled(Paragraph)`
   font-weight: ${({ theme }) => theme.bold};
   margin-right: 0.8rem;
 `;
+
+const StyledDateWrapper = styled.div`
+  margin-top: 0.2rem;
+  display: flex;
+`;
+
 const StyledDateParagraph = styled(Moment)`
   font-size: ${({ theme }) => theme.fontSize.xs};
   font-weight: ${({ theme }) => theme.light};
