@@ -8,7 +8,7 @@ import React from 'react';
 // import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { Formik } from 'formik';
+import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import withContext from 'hoc/withContext';
 
@@ -23,6 +23,13 @@ const StyledFormWrapper = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 2rem;
+`;
+
+const StyledForm = styled(Form)`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
 const StyledInput = styled(Input)`
@@ -156,7 +163,7 @@ const User = ({ name, photo, email, createdAt, pageContext }) => (
         }}
       >
         {(formik) => (
-          <>
+          <StyledForm>
             <ButtonPhoto
               forInput="file"
               icon={`http://localhost:1337/static/image/users/${photo}`}
@@ -189,8 +196,10 @@ const User = ({ name, photo, email, createdAt, pageContext }) => (
                 <StyledParagraph>{formik.errors.email}!</StyledParagraph>
               </StyledError>
             ) : null}
-            <StyledButton activecolor={pageContext}>Save changes!</StyledButton>
-          </>
+            <StyledButton type="submit" activecolor={pageContext}>
+              Save changes!
+            </StyledButton>
+          </StyledForm>
         )}
       </Formik>
     </StyledFormWrapper>

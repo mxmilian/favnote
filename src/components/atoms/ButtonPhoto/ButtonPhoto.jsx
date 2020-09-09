@@ -40,7 +40,7 @@ const StyledButtonHover = styled.div`
 
 const ButtonPhoto = ({ icon, forInput }) => (
   <>
-    <StyledButtonPhoto icon={icon}>
+    <StyledButtonPhoto icon={icon} type="button">
       {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
       <label htmlFor={forInput}>
         <StyledButtonHover />
