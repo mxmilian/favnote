@@ -30,6 +30,10 @@ const StyledInput = styled(Input)`
   margin-top: 3rem;
 `;
 
+const StyledFileInput = styled(Input)`
+  display: none;
+`;
+
 const StyledButton = styled(Button)`
   margin-top: 3rem;
   margin-bottom: 2rem;
@@ -153,7 +157,19 @@ const User = ({ name, photo, email, createdAt, pageContext }) => (
       >
         {(formik) => (
           <>
-            <ButtonPhoto icon={`http://localhost:1337/static/image/users/${photo}`} />
+            <ButtonPhoto
+              forInput="file"
+              icon={`http://localhost:1337/static/image/users/${photo}`}
+            />
+            <StyledFileInput
+              id="file"
+              name="file"
+              type="file"
+              onChange={(e) => {
+                formik.setFieldValue('file', e.currentTarget.files[0]);
+              }}
+            />
+
             <StyledDateWrapper>
               <Date term="You joined us" createdAt={createdAt} />
             </StyledDateWrapper>

@@ -38,15 +38,19 @@ const StyledButtonHover = styled.div`
   }
 `;
 
-const ButtonPhoto = ({ icon }) => (
+const ButtonPhoto = ({ icon, forInput }) => (
   <>
-    <StyledButtonPhoto icon={icon} onClick={() => console.log('Xd')}>
-      <StyledButtonHover />
+    <StyledButtonPhoto icon={icon}>
+      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <label htmlFor={forInput}>
+        <StyledButtonHover />
+      </label>
     </StyledButtonPhoto>
   </>
 );
 
 ButtonPhoto.propTypes = {
+  forInput: PropTypes.string.isRequired,
   icon: PropTypes.string.isRequired,
 };
 
